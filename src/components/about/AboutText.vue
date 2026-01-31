@@ -1,117 +1,83 @@
 <template>
   <div class="about-text">
     <div class="about-section">
-      <h2>Hakkımda</h2>
-      <p>
-        Bilgisayar Programcılığı mezunuyum. Kariyerime web scraping ve veri toplama projeleri geliştirerek başladım.
-        Bu süreçte farklı kaynaklardan veri çekme, temizleme ve işleme üzerine çalışmalar yaptım.
-      </p>
-      <p>
-        Daha sonra IT tarafında görev alarak ağ yapısı, donanım, kullanıcı yönetimi ve sistem operasyonlarıyla ilgilendim.
-        Yaklaşık 1 yıl boyunca bir şirkette IT Manager rolünde çalışarak tüm IT altyapısından sorumlu oldum.
-      </p>
-      <p>
-        Sonrasında odağımı backend geliştirmeye çevirerek çok kullanıcılı (multi-tenant) çalışan iş uygulamaları geliştirmeye başladım.
-      </p>
-      <p>
-        Şu anda backend mimarisi, veri modeli tasarımı ve performans odaklı API geliştirme üzerine çalışıyorum.
+      <h2>{{ t('about.title') }}</h2>
+      <p v-for="(paragraph, index) in t('about.paragraphs')" :key="index">
+        {{ paragraph }}
       </p>
     </div>
 
     <div class="about-section">
-      <h3>Uzmanlık Alanlarım</h3>
+      <h3>{{ t('about.expertise.title') }}</h3>
 
       <div class="expertise-category">
-        <h4 class="expertise-title">Backend Development</h4>
+        <h4 class="expertise-title">{{ t('about.expertise.backend.title') }}</h4>
         <ul class="expertise-list">
-          <li>NestJS (Auth, JWT, Guards, Interceptors)</li>
-          <li>Multi-tenant mimari (company bazlı veri izolasyonu)</li>
-          <li>REST API tasarımı</li>
-          <li>Business logic modelleme</li>
+          <li v-for="(item, index) in t('about.expertise.backend.items')" :key="index">
+            {{ item }}
+          </li>
         </ul>
       </div>
 
       <div class="expertise-category">
-        <h4 class="expertise-title">Database</h4>
+        <h4 class="expertise-title">{{ t('about.expertise.database.title') }}</h4>
         <ul class="expertise-list">
-          <li>PostgreSQL</li>
-          <li>Entity tasarımı</li>
-          <li>Index ve performans optimizasyonu</li>
-          <li>Soft delete & relation yönetimi</li>
+          <li v-for="(item, index) in t('about.expertise.database.items')" :key="index">
+            {{ item }}
+          </li>
         </ul>
       </div>
 
       <div class="expertise-category">
-        <h4 class="expertise-title">DevOps & Infrastructure</h4>
+        <h4 class="expertise-title">{{ t('about.expertise.devops.title') }}</h4>
         <ul class="expertise-list">
-          <li>Docker & Docker Compose</li>
-          <li>GitHub Actions (CI/CD)</li>
-          <li>Linux server yönetimi</li>
-          <li>Nginx</li>
+          <li v-for="(item, index) in t('about.expertise.devops.items')" :key="index">
+            {{ item }}
+          </li>
         </ul>
       </div>
 
       <div class="expertise-category">
-        <h4 class="expertise-title">IT Management Experience</h4>
+        <h4 class="expertise-title">{{ t('about.expertise.it.title') }}</h4>
         <ul class="expertise-list">
-          <li>Kullanıcı ve cihaz yönetimi</li>
-          <li>Network & donanım altyapısı</li>
-          <li>Sistem sürekliliği</li>
-          <li>IT süreçleri ve dokümantasyon</li>
-          <li>Teknik destek ve problem çözme</li>
+          <li v-for="(item, index) in t('about.expertise.it.items')" :key="index">
+            {{ item }}
+          </li>
         </ul>
       </div>
 
       <div class="expertise-category">
-        <h4 class="expertise-title">Web Scraping & Data</h4>
+        <h4 class="expertise-title">{{ t('about.expertise.scraping.title') }}</h4>
         <ul class="expertise-list">
-          <li>Farklı kaynaklardan veri toplama</li>
-          <li>Veri temizleme ve dönüştürme</li>
-          <li>Otomasyon scriptleri</li>
+          <li v-for="(item, index) in t('about.expertise.scraping.items')" :key="index">
+            {{ item }}
+          </li>
         </ul>
       </div>
     </div>
 
     <div class="about-section">
-      <h3>Deneyim</h3>
+      <h3>{{ t('about.experience.title') }}</h3>
 
-      <div class="experience-item">
+      <div
+        v-for="(position, index) in t('about.experience.positions')"
+        :key="index"
+        class="experience-item"
+      >
         <div class="experience-header">
-          <h4 class="experience-title">Backend Developer</h4>
-          <span class="experience-period">Ağu 2025 - Günümüz</span>
+          <h4 class="experience-title">{{ position.title }}</h4>
+          <span class="experience-period">{{ position.period }}</span>
         </div>
-        <p class="experience-company">Bibs Teknoloji · Trabzon</p>
-      </div>
-
-      <div class="experience-item">
-        <div class="experience-header">
-          <h4 class="experience-title">IT Manager</h4>
-          <span class="experience-period">Şub 2025 - Ağu 2025</span>
-        </div>
-        <p class="experience-company">Karadeniz Kardeşler Gıda · Vakfıkebir, Trabzon</p>
-      </div>
-
-      <div class="experience-item">
-        <div class="experience-header">
-          <h4 class="experience-title">IT Specialist</h4>
-          <span class="experience-period">Mar 2024 - Nis 2025</span>
-        </div>
-        <p class="experience-company">Karadeniz Kardeşler Gıda · Vakfıkebir, Trabzon</p>
-      </div>
-
-      <div class="experience-item">
-        <div class="experience-header">
-          <h4 class="experience-title">Data Processing Specialist</h4>
-          <span class="experience-period">Kas 2023 - Mar 2024</span>
-        </div>
-        <p class="experience-company">Ali Osman Ulusoy Turizm · Trabzon</p>
+        <p class="experience-company">{{ position.company }}</p>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-// Professional profile with expertise areas
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 </script>
 
 <style scoped>
