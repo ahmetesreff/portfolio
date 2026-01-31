@@ -13,8 +13,14 @@
 </template>
 
 <script setup>
+import { onMounted } from 'vue'
 import Header from './components/layout/Header.vue'
 import Footer from './components/layout/Footer.vue'
+
+// Ensure page starts at top on load/refresh
+onMounted(() => {
+  window.scrollTo(0, 0)
+})
 </script>
 
 <style>

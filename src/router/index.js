@@ -17,8 +17,13 @@ const router = createRouter({
   ],
   scrollBehavior(to, from, savedPosition) {
     // Always scroll to top on page navigation
-    return { top: 0, behavior: 'smooth' }
+    return { top: 0 }
   }
 })
+
+// Disable browser's automatic scroll restoration
+if ('scrollRestoration' in window.history) {
+  window.history.scrollRestoration = 'manual'
+}
 
 export default router
