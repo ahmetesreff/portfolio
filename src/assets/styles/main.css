@@ -1,0 +1,248 @@
+/* Global stiller ve yardımcı sınıflar */
+
+/* Tipografi */
+h1, .h1 {
+  font-size: var(--font-size-h1);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+  margin-bottom: var(--spacing-md);
+  color: var(--color-primary);
+}
+
+h2, .h2 {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+  margin-bottom: var(--spacing-sm);
+  color: var(--color-primary);
+}
+
+h3, .h3 {
+  font-size: var(--font-size-h3);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-tight);
+  margin-bottom: var(--spacing-sm);
+  color: var(--color-primary);
+}
+
+h4, .h4 {
+  font-size: var(--font-size-h4);
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: var(--spacing-xs);
+  color: var(--color-primary);
+}
+
+p {
+  margin-bottom: var(--spacing-sm);
+  color: var(--color-text);
+}
+
+/* Layout yardımcıları */
+.container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--spacing-sm);
+  padding-right: var(--spacing-sm);
+}
+
+.container-narrow {
+  max-width: var(--max-width-narrow);
+}
+
+.section {
+  padding: var(--spacing-xl) 0;
+}
+
+.section-sm {
+  padding: var(--spacing-lg) 0;
+}
+
+/* Card bileşeni */
+.card {
+  background: var(--color-surface);
+  border-radius: var(--border-radius);
+  padding: var(--spacing-md);
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.card-white {
+  background: var(--color-background);
+  border: 1px solid var(--color-border);
+}
+
+/* Buton stilleri */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-xs) var(--spacing-md);
+  font-weight: var(--font-weight-medium);
+  border-radius: var(--border-radius);
+  transition: var(--transition);
+  cursor: pointer;
+  text-align: center;
+}
+
+.btn-primary {
+  background-color: var(--color-secondary);
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-outline {
+  border: 2px solid var(--color-secondary);
+  color: var(--color-secondary);
+}
+
+.btn-outline:hover {
+  background-color: var(--color-secondary);
+  color: white;
+}
+
+/* Link stilleri */
+.link {
+  color: var(--color-secondary);
+  transition: var(--transition-fast);
+}
+
+.link:hover {
+  color: var(--color-hover);
+  text-decoration: underline;
+}
+
+/* Flexbox yardımcıları */
+.flex {
+  display: flex;
+}
+
+.flex-column {
+  flex-direction: column;
+}
+
+.flex-center {
+  justify-content: center;
+  align-items: center;
+}
+
+.flex-between {
+  justify-content: space-between;
+  align-items: center;
+}
+
+.flex-gap-sm {
+  gap: var(--spacing-sm);
+}
+
+.flex-gap-md {
+  gap: var(--spacing-md);
+}
+
+/* Grid yardımcıları */
+.grid {
+  display: grid;
+  gap: var(--spacing-md);
+}
+
+.grid-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.grid-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+/* Responsive grid */
+@media (max-width: 768px) {
+  .grid-2,
+  .grid-3 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Metin yardımcıları */
+.text-center {
+  text-align: center;
+}
+
+.text-light {
+  color: var(--color-text-light);
+}
+
+.text-primary {
+  color: var(--color-primary);
+}
+
+.text-secondary {
+  color: var(--color-secondary);
+}
+
+/* Boşluk yardımcıları */
+.mt-sm { margin-top: var(--spacing-sm); }
+.mt-md { margin-top: var(--spacing-md); }
+.mt-lg { margin-top: var(--spacing-lg); }
+
+.mb-sm { margin-bottom: var(--spacing-sm); }
+.mb-md { margin-bottom: var(--spacing-md); }
+.mb-lg { margin-bottom: var(--spacing-lg); }
+
+.pt-sm { padding-top: var(--spacing-sm); }
+.pt-md { padding-top: var(--spacing-md); }
+.pt-lg { padding-top: var(--spacing-lg); }
+
+.pb-sm { padding-bottom: var(--spacing-sm); }
+.pb-md { padding-bottom: var(--spacing-md); }
+.pb-lg { padding-bottom: var(--spacing-lg); }
+
+/* Responsive tipografi */
+@media (max-width: 768px) {
+  :root {
+    --font-size-h1: 2rem;       /* 32px */
+    --font-size-h2: 1.5rem;     /* 24px */
+    --font-size-h3: 1.25rem;    /* 20px */
+  }
+
+  .section {
+    padding: var(--spacing-lg) 0;
+  }
+}
+
+/* Animasyon yardımcıları */
+.fade-in {
+  animation: fadeIn 0.6s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Gizleme yardımcıları */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}

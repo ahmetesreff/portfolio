@@ -1,0 +1,65 @@
+:root {
+  /* Renkler - Minimalist palet */
+  --color-primary: #2c3e50;      /* Koyu mavi-gri (metin) */
+  --color-secondary: #3498db;     /* Vurgu mavisi (linkler/butonlar) */
+  --color-background: #ffffff;    /* Beyaz arka plan */
+  --color-surface: #f8f9fa;       /* Açık gri (kartlar) */
+  --color-border: #e0e0e0;        /* Kenarlıklar */
+  --color-text: #333333;          /* Ana metin rengi */
+  --color-text-light: #666666;    /* İkincil metin */
+  --color-hover: #2980b9;         /* Hover durumu */
+
+  /* Tipografi */
+  --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+                  'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans',
+                  'Droid Sans', 'Helvetica Neue', sans-serif;
+  --font-size-base: 16px;
+  --font-size-sm: 0.875rem;      /* 14px */
+  --font-size-md: 1rem;          /* 16px */
+  --font-size-lg: 1.125rem;      /* 18px */
+  --font-size-xl: 1.25rem;       /* 20px */
+  --font-size-h1: 2.5rem;        /* 40px */
+  --font-size-h2: 2rem;          /* 32px */
+  --font-size-h3: 1.5rem;        /* 24px */
+  --font-size-h4: 1.25rem;       /* 20px */
+  --line-height: 1.6;
+  --line-height-tight: 1.3;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* Boşluk sistemi */
+  --spacing-xs: 0.5rem;    /* 8px */
+  --spacing-sm: 1rem;      /* 16px */
+  --spacing-md: 2rem;      /* 32px */
+  --spacing-lg: 3rem;      /* 48px */
+  --spacing-xl: 4rem;      /* 64px */
+  --spacing-2xl: 6rem;     /* 96px */
+
+  /* Layout */
+  --max-width: 1200px;
+  --max-width-narrow: 800px;
+  --border-radius: 8px;
+  --border-radius-sm: 4px;
+  --border-radius-lg: 12px;
+  --border-radius-full: 50%;
+
+  /* Gölgeler */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+               0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+               0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+               0 10px 10px -5px rgba(0, 0, 0, 0.04);
+
+  /* Geçiş efektleri */
+  --transition: all 0.3s ease;
+  --transition-fast: all 0.15s ease;
+
+  /* Z-index katmanları */
+  --z-index-header: 100;
+  --z-index-overlay: 200;
+  --z-index-modal: 300;
+}

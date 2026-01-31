@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  portfolio:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: portfolio-web
+    restart: unless-stopped
+    ports:
+      - "3000:80"
+    networks:
+      - portfolio-network
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+
+networks:
+  portfolio-network:
+    driver: bridge

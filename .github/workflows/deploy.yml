@@ -1,0 +1,68 @@
+name: Deploy to Hetzner
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+env:
+  DOCKER_IMAGE_NAME: portfolio
+  CONTAINER_NAME: portfolio-web
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build Docker image
+        run: |
+          docker build -t ${{ env.DOCKER_IMAGE_NAME }}:latest .
+          docker save ${{ env.DOCKER_IMAGE_NAME }}:latest | gzip > portfolio.tar.gz
+
+      - name: Copy files to server
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          source: "portfolio.tar.gz,docker-compose.yml"
+          target: "/home/${{ secrets.SERVER_USER }}/portfolio"
+
+      - name: Deploy on server
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd /home/${{ secrets.SERVER_USER }}/portfolio
+
+            # Load Docker image
+            docker load < portfolio.tar.gz
+            rm portfolio.tar.gz
+
+            # Stop and remove old container
+            docker compose down || true
+
+            # Start new container
+            docker compose up -d
+
+            # Clean up old images
+            docker image prune -af
+
+      - name: Health check
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            sleep 5
+            docker ps | grep portfolio-web
+            curl -f http://localhost:3000 || exit 1
