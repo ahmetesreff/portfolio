@@ -17,12 +17,12 @@
         <p class="profile-bio">{{ bio }}</p>
 
         <div class="profile-actions">
-          <a
-            href="#contact"
+          <router-link
+            to="/iletisim"
             class="btn btn-primary"
           >
             İletişim
-          </a>
+          </router-link>
         </div>
 
         <div class="social-links">
