@@ -53,18 +53,22 @@ const closeMenu = () => {
 .header {
   position: sticky;
   top: 0;
-  background: var(--color-background);
-  border-bottom: 1px solid var(--color-border);
-  padding: var(--spacing-sm) 0;
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: 0.5px solid rgba(0, 0, 0, 0.08);
+  padding: 0;
   z-index: var(--z-index-header);
-  backdrop-filter: blur(10px);
-  background: rgba(255, 255, 255, 0.95);
 }
 
 .nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  height: 52px;
+  max-width: var(--max-width-wide);
+  margin: 0 auto;
+  padding: 0 var(--spacing-md);
 }
 
 .logo {
@@ -72,38 +76,42 @@ const closeMenu = () => {
 }
 
 .logo-text {
-  font-size: var(--font-size-xl);
-  font-weight: var(--font-weight-bold);
+  font-size: 21px;
+  font-weight: var(--font-weight-semibold);
   color: var(--color-primary);
   transition: var(--transition-fast);
+  letter-spacing: -0.01em;
 }
 
 .logo:hover .logo-text {
-  color: var(--color-secondary);
+  opacity: 0.7;
 }
 
 .nav-menu {
   display: flex;
-  gap: var(--spacing-md);
+  gap: 0;
   align-items: center;
 }
 
 .nav-link {
-  color: var(--color-text);
-  font-weight: var(--font-weight-medium);
-  padding: var(--spacing-xs) var(--spacing-sm);
-  border-radius: var(--border-radius-sm);
+  color: var(--color-primary);
+  font-size: 14px;
+  font-weight: var(--font-weight-normal);
+  padding: 0 var(--spacing-sm);
+  height: 52px;
+  display: flex;
+  align-items: center;
   transition: var(--transition-fast);
   position: relative;
+  opacity: 0.88;
 }
 
 .nav-link:hover {
-  color: var(--color-secondary);
-  background: var(--color-surface);
+  opacity: 1;
 }
 
 .nav-link.router-link-active {
-  color: var(--color-secondary);
+  opacity: 1;
 }
 
 .nav-link.router-link-active::after {
@@ -112,8 +120,8 @@ const closeMenu = () => {
   bottom: 0;
   left: var(--spacing-sm);
   right: var(--spacing-sm);
-  height: 2px;
-  background: var(--color-secondary);
+  height: 1px;
+  background: var(--color-primary);
 }
 
 .nav-toggle {
@@ -121,58 +129,64 @@ const closeMenu = () => {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 40px;
-  height: 40px;
+  width: 48px;
+  height: 48px;
   cursor: pointer;
+  margin-right: -12px;
 }
 
 .hamburger {
-  width: 24px;
-  height: 2px;
+  width: 17px;
+  height: 1px;
   background: var(--color-primary);
   position: relative;
-  transition: var(--transition);
+  transition: var(--transition-fast);
 }
 
 .hamburger::before,
 .hamburger::after {
   content: '';
   position: absolute;
-  width: 24px;
-  height: 2px;
+  width: 17px;
+  height: 1px;
   background: var(--color-primary);
-  transition: var(--transition);
+  transition: var(--transition-fast);
 }
 
 .hamburger::before {
-  top: -8px;
+  top: -6px;
 }
 
 .hamburger::after {
-  top: 8px;
+  top: 6px;
 }
 
 /* Mobile styles */
 @media (max-width: 768px) {
+  .nav {
+    padding: 0 var(--spacing-sm);
+  }
+
   .nav-toggle {
     display: flex;
   }
 
   .nav-menu {
     position: fixed;
-    top: 73px;
+    top: 52px;
     left: 0;
     right: 0;
-    background: var(--color-background);
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: saturate(180%) blur(20px);
     flex-direction: column;
-    padding: var(--spacing-md);
-    gap: var(--spacing-sm);
-    border-bottom: 1px solid var(--color-border);
-    box-shadow: var(--shadow-lg);
+    padding: var(--spacing-sm) 0;
+    gap: 0;
+    border-bottom: 0.5px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
     transform: translateY(-100%);
     opacity: 0;
     visibility: hidden;
-    transition: all 0.3s ease;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .nav-menu-open {
@@ -184,6 +198,13 @@ const closeMenu = () => {
   .nav-link {
     width: 100%;
     text-align: center;
+    justify-content: center;
+    height: 44px;
+    font-size: 17px;
+  }
+
+  .nav-link.router-link-active::after {
+    display: none;
   }
 
   .nav-menu-open + .nav-toggle .hamburger {

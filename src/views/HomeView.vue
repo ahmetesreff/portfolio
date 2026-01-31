@@ -1,12 +1,14 @@
 <template>
   <div class="home-view">
-    <section class="section hero-section">
+    <section class="hero-section">
       <div class="container">
         <ProfileCard />
       </div>
     </section>
 
-    <section class="section about-section">
+    <Skills />
+
+    <section class="about-section">
       <div class="container">
         <AboutText />
       </div>
@@ -17,29 +19,38 @@
 <script setup>
 import ProfileCard from '../components/about/ProfileCard.vue'
 import AboutText from '../components/about/AboutText.vue'
+import Skills from '../components/about/Skills.vue'
 </script>
 
 <style scoped>
 .home-view {
   flex: 1;
+  background: var(--color-background);
 }
 
 .hero-section {
-  background: linear-gradient(135deg, var(--color-surface) 0%, var(--color-background) 100%);
-  padding: var(--spacing-2xl) 0;
+  background: var(--color-background);
+  padding: var(--spacing-2xl) 0 var(--spacing-xl) 0;
 }
 
 .about-section {
-  padding: var(--spacing-xl) 0;
+  padding: var(--spacing-3xl) 0;
+  background: var(--color-background);
+}
+
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--spacing-md);
 }
 
 @media (max-width: 768px) {
   .hero-section {
-    padding: var(--spacing-lg) 0;
+    padding: var(--spacing-xl) 0 var(--spacing-lg) 0;
   }
 
   .about-section {
-    padding: var(--spacing-md) 0;
+    padding: var(--spacing-xl) 0;
   }
 }
 </style>

@@ -50,61 +50,86 @@
 
 <style scoped>
 .about-text {
-  max-width: 700px;
+  max-width: var(--max-width-narrow);
   margin: 0 auto;
 }
 
 .about-section {
-  margin-bottom: var(--spacing-lg);
+  margin-bottom: var(--spacing-2xl);
+}
+
+.about-section:last-child {
+  margin-bottom: 0;
 }
 
 .about-section h2 {
   color: var(--color-primary);
-  margin-bottom: var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: -0.02em;
 }
 
 .about-section h3 {
   color: var(--color-primary);
-  margin-bottom: var(--spacing-sm);
-  font-size: var(--font-size-xl);
+  margin-bottom: var(--spacing-md);
+  font-size: var(--font-size-h3);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: -0.015em;
 }
 
 .about-section p {
-  line-height: var(--line-height);
-  color: var(--color-text);
-  margin-bottom: var(--spacing-sm);
+  line-height: 1.6;
+  color: var(--color-text-secondary);
+  margin-bottom: var(--spacing-md);
+  font-size: var(--font-size-lg);
 }
 
 .interests {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--spacing-xs);
+  gap: var(--spacing-sm);
 }
 
 .interest-tag {
-  display: inline-block;
-  padding: var(--spacing-xs) var(--spacing-sm);
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 18px;
   background: var(--color-surface);
-  color: var(--color-text);
-  border-radius: var(--border-radius);
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
+  color: var(--color-primary);
+  border-radius: 980px;
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-normal);
   transition: var(--transition-fast);
+  border: 1px solid rgba(0, 0, 0, 0.04);
 }
 
 .interest-tag:hover {
-  background: var(--color-secondary);
-  color: white;
-  transform: translateY(-2px);
+  background: var(--color-accent);
+  border-color: rgba(0, 0, 0, 0.08);
+  transform: translateY(-1px);
 }
 
 @media (max-width: 768px) {
+  .about-section {
+    margin-bottom: var(--spacing-xl);
+  }
+
   .about-section h2 {
-    font-size: var(--font-size-h2);
+    font-size: var(--font-size-h3);
   }
 
   .about-section h3 {
-    font-size: var(--font-size-lg);
+    font-size: var(--font-size-xl);
+  }
+
+  .about-section p {
+    font-size: var(--font-size-md);
+  }
+
+  .interest-tag {
+    font-size: var(--font-size-sm);
+    padding: 8px 16px;
   }
 }
 </style>

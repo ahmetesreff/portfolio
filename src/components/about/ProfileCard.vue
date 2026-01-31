@@ -1,44 +1,50 @@
 <template>
-  <div class="profile-card card-white">
-    <div class="profile-image-wrapper">
-      <img
-        :src="profileImage"
-        alt="Profil Fotoğrafı"
-        class="profile-image"
-      />
-    </div>
-
-    <div class="profile-info">
-      <h1 class="profile-name">{{ name }}</h1>
-      <p class="profile-title">{{ title }}</p>
-
-      <div class="profile-actions">
-        <a
-          href="/assets/cv.pdf"
-          download
-          class="btn btn-primary"
-        >
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-            <polyline points="7 10 12 15 17 10"></polyline>
-            <line x1="12" y1="15" x2="12" y2="3"></line>
-          </svg>
-          CV İndir
-        </a>
+  <div class="profile-card">
+    <div class="profile-content">
+      <div class="profile-image-wrapper">
+        <div class="image-container">
+          <img
+            :src="profileImage"
+            alt="Profil Fotoğrafı"
+            class="profile-image"
+          />
+        </div>
       </div>
 
-      <div class="social-links-horizontal">
-        <a
-          v-for="link in socialLinks"
-          :key="link.name"
-          :href="link.url"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="social-link-item"
-          :aria-label="link.name"
-        >
-          <component :is="link.icon" />
-        </a>
+      <div class="profile-info">
+        <h1 class="profile-name">{{ name }}</h1>
+        <p class="profile-title">{{ title }}</p>
+        <p class="profile-bio">{{ bio }}</p>
+
+        <div class="profile-actions">
+          <a
+            href="/assets/cv.pdf"
+            download
+            class="btn btn-primary"
+          >
+            CV İndir
+          </a>
+          <a
+            href="#contact"
+            class="btn btn-outline"
+          >
+            İletişim
+          </a>
+        </div>
+
+        <div class="social-links">
+          <a
+            v-for="link in socialLinks"
+            :key="link.name"
+            :href="link.url"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="social-link"
+            :aria-label="link.name"
+          >
+            <component :is="link.icon" />
+          </a>
+        </div>
       </div>
     </div>
   </div>
@@ -47,9 +53,10 @@
 <script setup>
 import { h } from 'vue'
 
-const name = 'Adınız Soyadınız'
-const title = 'Profesyonel Unvanınız'
-const profileImage = 'https://via.placeholder.com/300x300/3498db/ffffff?text=Profil'
+const name = 'Ahmet Eşref Karabulut'
+const title = 'Software Engineer'
+const bio = 'Yazılım geliştirme ve modern web teknolojileri konusunda tutkulu bir mühendis.'
+const profileImage = 'https://via.placeholder.com/400x400/0071e3/ffffff?text=AEK'
 
 // SVG icon components
 const GitHubIcon = () => h('svg', { width: 24, height: 24, viewBox: '0 0 24 24', fill: 'currentColor' }, [
@@ -73,26 +80,39 @@ const socialLinks = [
 
 <style scoped>
 .profile-card {
+  width: 100%;
+  animation: slideUp 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.profile-content {
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  padding: var(--spacing-xl);
-  max-width: 500px;
+  max-width: 640px;
   margin: 0 auto;
+  padding: var(--spacing-2xl) var(--spacing-md);
 }
 
 .profile-image-wrapper {
-  margin-bottom: var(--spacing-md);
+  margin-bottom: var(--spacing-xl);
+}
+
+.image-container {
+  position: relative;
+  border-radius: var(--border-radius-full);
+  padding: 4px;
+  background: linear-gradient(135deg, var(--color-secondary), var(--color-hover));
+  box-shadow: var(--shadow-lg);
 }
 
 .profile-image {
-  width: 200px;
-  height: 200px;
+  width: 160px;
+  height: 160px;
   border-radius: var(--border-radius-full);
   object-fit: cover;
-  border: 4px solid var(--color-secondary);
-  box-shadow: var(--shadow-lg);
+  display: block;
+  border: 4px solid var(--color-background);
 }
 
 .profile-info {
@@ -100,65 +120,96 @@ const socialLinks = [
 }
 
 .profile-name {
+  font-size: var(--font-size-h1);
   margin-bottom: var(--spacing-xs);
   color: var(--color-primary);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: -0.03em;
 }
 
 .profile-title {
-  font-size: var(--font-size-lg);
-  color: var(--color-text-light);
+  font-size: var(--font-size-xl);
+  color: var(--color-text-secondary);
   margin-bottom: var(--spacing-md);
+  font-weight: var(--font-weight-medium);
+}
+
+.profile-bio {
+  font-size: var(--font-size-lg);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--spacing-xl);
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.5;
 }
 
 .profile-actions {
-  margin-bottom: var(--spacing-md);
+  display: flex;
+  gap: var(--spacing-sm);
+  justify-content: center;
+  margin-bottom: var(--spacing-xl);
+  flex-wrap: wrap;
 }
 
-.btn {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--spacing-xs);
-}
-
-.social-links-horizontal {
+.social-links {
   display: flex;
   justify-content: center;
-  gap: var(--spacing-sm);
-  padding-top: var(--spacing-md);
-  border-top: 1px solid var(--color-border);
+  gap: var(--spacing-md);
+  padding-top: var(--spacing-lg);
 }
 
-.social-link-item {
+.social-link {
   display: flex;
   align-items: center;
   justify-content: center;
   width: 44px;
   height: 44px;
-  border-radius: var(--border-radius);
-  background: var(--color-surface);
-  color: var(--color-text);
-  transition: var(--transition);
+  border-radius: var(--border-radius-full);
+  color: var(--color-text-secondary);
+  transition: var(--transition-fast);
+  background: transparent;
 }
 
-.social-link-item:hover {
-  background: var(--color-secondary);
-  color: white;
-  transform: translateY(-3px);
-  box-shadow: var(--shadow-md);
+.social-link:hover {
+  color: var(--color-secondary);
+  background: var(--color-accent);
+  transform: translateY(-2px);
+}
+
+.social-link:active {
+  transform: translateY(0) scale(0.95);
 }
 
 @media (max-width: 768px) {
-  .profile-card {
-    padding: var(--spacing-md);
-  }
-
-  .profile-image {
-    width: 150px;
-    height: 150px;
+  .profile-content {
+    padding: var(--spacing-xl) var(--spacing-sm);
   }
 
   .profile-name {
     font-size: var(--font-size-h2);
+  }
+
+  .profile-title {
+    font-size: var(--font-size-lg);
+  }
+
+  .profile-bio {
+    font-size: var(--font-size-md);
+  }
+
+  .profile-image {
+    width: 140px;
+    height: 140px;
+  }
+
+  .profile-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .btn {
+    width: 100%;
   }
 }
 </style>

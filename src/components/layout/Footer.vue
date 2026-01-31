@@ -43,52 +43,65 @@ const currentYear = computed(() => new Date().getFullYear())
 <style scoped>
 .footer {
   background: var(--color-surface);
-  border-top: 1px solid var(--color-border);
-  padding: var(--spacing-lg) 0;
+  border-top: 0.5px solid rgba(0, 0, 0, 0.08);
+  padding: var(--spacing-xl) 0;
   margin-top: auto;
 }
 
 .footer-content {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  gap: var(--spacing-md);
+  gap: var(--spacing-lg);
   flex-wrap: wrap;
 }
 
 .copyright {
   margin: 0;
-  color: var(--color-text-light);
-  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  font-size: 12px;
+  font-weight: var(--font-weight-normal);
 }
 
 .social-links {
   display: flex;
-  gap: var(--spacing-sm);
+  gap: var(--spacing-md);
 }
 
 .social-link {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
-  border-radius: var(--border-radius);
-  background: var(--color-background);
-  color: var(--color-text);
-  transition: var(--transition);
+  width: 36px;
+  height: 36px;
+  border-radius: var(--border-radius-full);
+  background: transparent;
+  color: var(--color-text-secondary);
+  transition: var(--transition-fast);
 }
 
 .social-link:hover {
-  background: var(--color-secondary);
-  color: white;
-  transform: translateY(-3px);
-  box-shadow: var(--shadow-md);
+  color: var(--color-secondary);
+  background: var(--color-accent);
+}
+
+.social-link:active {
+  transform: scale(0.95);
+}
+
+.social-link svg {
+  width: 20px;
+  height: 20px;
 }
 
 @media (max-width: 768px) {
+  .footer {
+    padding: var(--spacing-lg) 0;
+  }
+
   .footer-content {
     flex-direction: column;
+    gap: var(--spacing-sm);
     text-align: center;
   }
 }
