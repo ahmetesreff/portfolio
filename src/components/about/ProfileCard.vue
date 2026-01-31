@@ -12,9 +12,9 @@
       </div>
 
       <div class="profile-info">
-        <h1 class="profile-name">{{ name }}</h1>
-        <p class="profile-title">{{ title }}</p>
-        <p class="profile-bio">{{ bio }}</p>
+        <h1 class="profile-name">{{ t('profile.name') }}</h1>
+        <p class="profile-title">{{ t('profile.title') }}</p>
+        <p class="profile-bio">{{ t('profile.bio') }}</p>
 
         <div class="profile-actions">
           <router-link
@@ -50,10 +50,6 @@ import { useI18n } from 'vue-i18n'
 import profilePhoto from '../../assets/images/profile.jpg'
 
 const { t } = useI18n()
-
-const name = t('profile.name')
-const title = t('profile.title')
-const bio = t('profile.bio')
 const profileImage = profilePhoto
 
 // SVG icon components
