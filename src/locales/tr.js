@@ -10,91 +10,71 @@ export default {
     contactButton: 'İletişim'
   },
   about: {
-    journey: {
-      title: 'Yolculuğum',
-      intro: 'Yazılım kariyerime web scraping projeleri ile başladım ve zamanla backend geliştirme alanında uzmanlaştım. IT yönetimi ve operasyon süreçlerinde edindiğim deneyim, teknik bilgimi operasyonel anlayışla birleştirmeme olanak sağladı.',
-      career: 'Şu an backend sistemler geliştirirken, multi-tenant mimariler ve ölçeklenebilir sistemler üzerinde çalışıyorum. NestJS ve PostgreSQL kullanarak kurumsal seviye projeler geliştiriyorum.',
-      approach: 'Temiz kod prensipleri, test odaklı geliştirme ve sürekli öğrenme felsefesine inanıyorum.'
-    },
+    title: 'Hakkımda',
+    p1: 'Bilgisayar Programcılığı mezunuyum. Kariyerime web scraping ve veri toplama projeleri geliştirerek başladım. Bu süreçte farklı kaynaklardan veri çekme, temizleme ve işleme üzerine çalışmalar yaptım.',
+    p2: 'Daha sonra IT tarafında görev alarak ağ yapısı, donanım, kullanıcı yönetimi ve sistem operasyonlarıyla ilgilendim. Yaklaşık 1 yıl boyunca bir şirkette IT Manager rolünde çalışarak tüm IT altyapısından sorumlu oldum.',
+    p3: 'Sonrasında odağımı backend geliştirmeye çevirerek çok kullanıcılı (multi-tenant) çalışan iş uygulamaları geliştirmeye başladım.',
+    p4: 'Şu anda backend mimarisi, veri modeli tasarımı ve performans odaklı API geliştirme üzerine çalışıyorum.',
     expertise: {
       title: 'Uzmanlık Alanlarım',
       backend: {
         title: 'Backend Development',
-        items: [
-          'NestJS ile RESTful API geliştirme',
-          'Multi-tenant sistem mimarileri',
-          'JWT authentication & authorization',
-          'TypeScript ile tip güvenli geliştirme'
-        ]
+        i1: 'NestJS (Auth, JWT, Guards, Interceptors)',
+        i2: 'Multi-tenant mimari (company bazlı veri izolasyonu)',
+        i3: 'REST API tasarımı',
+        i4: 'Business logic modelleme'
       },
       database: {
-        title: 'Database & Caching',
-        items: [
-          'PostgreSQL veritabanı tasarımı ve optimizasyonu',
-          'TypeORM ile ORM yönetimi',
-          'Redis ile caching stratejileri',
-          'Veritabanı migration ve seed yönetimi'
-        ]
+        title: 'Database',
+        i1: 'PostgreSQL',
+        i2: 'Entity tasarımı',
+        i3: 'Index ve performans optimizasyonu',
+        i4: 'Soft delete & relation yönetimi'
       },
       devops: {
         title: 'DevOps & Infrastructure',
-        items: [
-          'Docker containerization',
-          'CI/CD pipeline kurulumu',
-          'Linux server yönetimi',
-          'Nginx web server konfigürasyonu'
-        ]
+        i1: 'Docker & Docker Compose',
+        i2: 'GitHub Actions (CI/CD)',
+        i3: 'Linux server yönetimi',
+        i4: 'Nginx'
       },
       it: {
-        title: 'IT Management',
-        items: [
-          'Kurumsal IT altyapı yönetimi',
-          'Network yapılandırma ve güvenlik',
-          'Sistem optimizasyonu ve monitoring',
-          'Teknik destek ve problem çözme'
-        ]
+        title: 'IT Management Experience',
+        i1: 'Kullanıcı ve cihaz yönetimi',
+        i2: 'Network & donanım altyapısı',
+        i3: 'Sistem sürekliliği',
+        i4: 'IT süreçleri ve dokümantasyon',
+        i5: 'Teknik destek ve problem çözme'
       },
       scraping: {
-        title: 'Web Scraping',
-        items: [
-          'Python ile web scraping',
-          'Veri toplama ve işleme',
-          'API entegrasyonları',
-          'Otomasyon scriptleri'
-        ]
+        title: 'Web Scraping & Data',
+        i1: 'Farklı kaynaklardan veri toplama',
+        i2: 'Veri temizleme ve dönüştürme',
+        i3: 'Otomasyon scriptleri'
       }
     },
     experience: {
       title: 'Deneyim',
-      positions: [
-        {
-          title: 'Backend Developer',
-          company: 'Tetra Yazılım',
-          period: 'Ağu 2024 - Halen',
-          description: 'NestJS, PostgreSQL ve Docker kullanarak multi-tenant SaaS projeler geliştiriyorum.'
-        },
-        {
-          title: 'IT Manager',
-          company: 'Aksa Jeneratör',
-          period: 'May 2023 - Ağu 2024',
-          description: 'Kurumsal IT altyapısı, network yönetimi ve sistem operasyonlarından sorumluydum.'
-        },
-        {
-          title: 'IT Specialist',
-          company: 'Aksa Jeneratör',
-          period: 'Eki 2021 - May 2023',
-          description: 'IT sistemleri, teknik destek ve altyapı yönetimi konularında çalıştım.'
-        },
-        {
-          title: 'Web Scraping Developer',
-          company: 'Freelance',
-          period: '2020 - 2021',
-          description: 'Python kullanarak web scraping projeleri geliştirdim.'
-        }
-      ]
-    },
-    skills: {
-      title: 'Teknolojiler'
+      pos1: {
+        title: 'Backend Developer',
+        company: 'Bibs Teknoloji · Trabzon',
+        period: 'Ağu 2025 - Günümüz'
+      },
+      pos2: {
+        title: 'IT Manager',
+        company: 'Karadeniz Kardeşler Gıda · Vakfıkebir, Trabzon',
+        period: 'Şub 2025 - Ağu 2025'
+      },
+      pos3: {
+        title: 'IT Specialist',
+        company: 'Karadeniz Kardeşler Gıda · Vakfıkebir, Trabzon',
+        period: 'Mar 2024 - Nis 2025'
+      },
+      pos4: {
+        title: 'Data Processing Specialist',
+        company: 'Ali Osman Ulusoy Turizm · Trabzon',
+        period: 'Kas 2023 - Mar 2024'
+      }
     }
   },
   contact: {
