@@ -3,49 +3,75 @@
     <div class="about-section">
       <h2>Merhaba!</h2>
       <p>
-        Ben [Adınız Soyadınız], [profesyonel unvanınız]. [Şehir, Ülke] merkezliyim
-        ve [kaç yıldır] süredir [alanınız] alanında çalışıyorum.
+        Trabzon merkezli bir yazılım geliştiriciyim. Backend geliştirme, veri işleme ve
+        kurumsal yazılım çözümleri konusunda deneyimliyim.
       </p>
       <p>
-        [İşiniz ve tutkularınız hakkında 2-3 cümle. Örneğin: "Modern web teknolojileri
-        ile kullanıcı deneyimini ön planda tutan uygulamalar geliştirmeyi seviyorum.
-        Vue.js, React ve Node.js ile projeler üretmekten keyif alıyorum."]
+        Modern web teknolojileri, veritabanı yönetimi ve iş süreçlerini optimize etmek
+        için yazılım geliştirmeyi seviyorum.
       </p>
     </div>
 
     <div class="about-section">
       <h3>Deneyim</h3>
-      <p>
-        [Profesyonel deneyiminiz hakkında bilgi. Örneğin: "Son 5 yıldır farklı
-        şirketlerde frontend developer olarak çalıştım. E-ticaret, fintech ve
-        SaaS projelerinde yer aldım."]
-      </p>
+
+      <div class="experience-item">
+        <div class="experience-header">
+          <h4 class="experience-title">Backend Developer</h4>
+          <span class="experience-period">Ağu 2025 - Günümüz</span>
+        </div>
+        <p class="experience-company">Bibs Teknoloji · Trabzon</p>
+      </div>
+
+      <div class="experience-item">
+        <div class="experience-header">
+          <h4 class="experience-title">IT Manager</h4>
+          <span class="experience-period">Şub 2025 - Ağu 2025</span>
+        </div>
+        <p class="experience-company">Karadeniz Kardeşler Gıda · Vakfıkebir, Trabzon</p>
+      </div>
+
+      <div class="experience-item">
+        <div class="experience-header">
+          <h4 class="experience-title">IT Specialist</h4>
+          <span class="experience-period">Mar 2024 - Nis 2025</span>
+        </div>
+        <p class="experience-company">Karadeniz Kardeşler Gıda · Vakfıkebir, Trabzon</p>
+        <div class="experience-skills">
+          <span class="skill-badge">ERP</span>
+          <span class="skill-badge">SQL</span>
+        </div>
+      </div>
+
+      <div class="experience-item">
+        <div class="experience-header">
+          <h4 class="experience-title">Data Processing Specialist</h4>
+          <span class="experience-period">Kas 2023 - Mar 2024</span>
+        </div>
+        <p class="experience-company">Ali Osman Ulusoy Turizm · Trabzon</p>
+        <div class="experience-skills">
+          <span class="skill-badge">Veri Analizi</span>
+          <span class="skill-badge">JavaScript</span>
+        </div>
+      </div>
     </div>
 
     <div class="about-section">
-      <h3>Eğitim</h3>
-      <p>
-        [Eğitim geçmişiniz. Örneğin: "Bilgisayar Mühendisliği lisans derecesine
-        sahibim. Sürekli öğrenmeye inanıyor ve yeni teknolojileri takip ediyorum."]
-      </p>
-    </div>
-
-    <div class="about-section">
-      <h3>İlgi Alanları</h3>
+      <h3>Teknik Yetenekler</h3>
       <div class="interests">
-        <span class="interest-tag">Web Geliştirme</span>
-        <span class="interest-tag">UI/UX Tasarım</span>
-        <span class="interest-tag">Açık Kaynak</span>
-        <span class="interest-tag">Teknoloji Blogları</span>
-        <span class="interest-tag">Fotoğrafçılık</span>
+        <span class="interest-tag">Backend Development</span>
+        <span class="interest-tag">SQL & Veritabanı</span>
+        <span class="interest-tag">ERP Sistemleri</span>
+        <span class="interest-tag">JavaScript</span>
+        <span class="interest-tag">Veri Analizi</span>
+        <span class="interest-tag">Vue.js</span>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-// Bu bileşende dinamik içerik yok,
-// isterseniz props ile dışarıdan veri alabilirsiniz
+// Experience data from LinkedIn
 </script>
 
 <style scoped>
@@ -72,7 +98,7 @@
 
 .about-section h3 {
   color: var(--color-primary);
-  margin-bottom: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
   font-size: var(--font-size-h3);
   font-weight: var(--font-weight-semibold);
   letter-spacing: -0.015em;
@@ -85,6 +111,65 @@
   font-size: var(--font-size-lg);
 }
 
+/* Experience items */
+.experience-item {
+  margin-bottom: var(--spacing-lg);
+  padding-bottom: var(--spacing-lg);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.experience-item:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.experience-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: var(--spacing-xs);
+  gap: var(--spacing-sm);
+}
+
+.experience-title {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-primary);
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.experience-period {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+  font-weight: var(--font-weight-normal);
+}
+
+.experience-company {
+  font-size: var(--font-size-md);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--spacing-sm);
+}
+
+.experience-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-xs);
+  margin-top: var(--spacing-sm);
+}
+
+.skill-badge {
+  font-size: 12px;
+  padding: 4px 12px;
+  background: var(--color-surface);
+  color: var(--color-text-secondary);
+  border-radius: 6px;
+  font-weight: var(--font-weight-normal);
+}
+
+/* Interest tags */
 .interests {
   display: flex;
   flex-wrap: wrap;
@@ -125,6 +210,24 @@
 
   .about-section p {
     font-size: var(--font-size-md);
+  }
+
+  .experience-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-xs);
+  }
+
+  .experience-title {
+    font-size: var(--font-size-md);
+  }
+
+  .experience-period {
+    font-size: 12px;
+  }
+
+  .experience-company {
+    font-size: var(--font-size-sm);
   }
 
   .interest-tag {
