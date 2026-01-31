@@ -53,10 +53,12 @@
 <script setup>
 import { h } from 'vue'
 
+import profilePhoto from '../assets/images/profile.jpg'
+
 const name = 'Ahmet Eşref Karabulut'
 const title = 'Backend Developer & IT Management Experience'
 const bio = 'Backend sistemler geliştirirken aynı zamanda kurumsal IT altyapısı ve operasyon süreçleri konusunda tecrübeye sahibim.'
-const profileImage = 'https://via.placeholder.com/400x400/0071e3/ffffff?text=AEK'
+const profileImage = profilePhoto
 
 // SVG icon components
 const GitHubIcon = () => h('svg', { width: 24, height: 24, viewBox: '0 0 24 24', fill: 'currentColor' }, [

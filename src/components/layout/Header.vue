@@ -3,7 +3,7 @@
     <div class="container">
       <nav class="nav">
         <router-link to="/" class="logo">
-          <span class="logo-text">Portfolio</span>
+          <span class="logo-initials">AEK</span>
         </router-link>
 
         <div class="nav-menu" :class="{ 'nav-menu-open': isMenuOpen }">
@@ -75,15 +75,16 @@ const closeMenu = () => {
   text-decoration: none;
 }
 
-.logo-text {
-  font-size: 21px;
-  font-weight: var(--font-weight-semibold);
+.logo-initials {
+  font-size: 20px;
+  font-weight: var(--font-weight-bold);
   color: var(--color-primary);
   transition: var(--transition-fast);
-  letter-spacing: -0.01em;
+  letter-spacing: -0.02em;
+  font-family: var(--font-primary);
 }
 
-.logo:hover .logo-text {
+.logo:hover .logo-initials {
   opacity: 0.7;
 }
 
