@@ -86,28 +86,21 @@ const TwitterIcon = () => h('svg', { width: 28, height: 28, viewBox: '0 0 24 24'
 const contactItems = [
   {
     label: 'E-posta',
-    value: 'ornek@email.com',
-    link: 'mailto:ornek@email.com',
+    value: 'ahmetesrefkarabulut@gmail.com',
+    link: 'mailto:ahmetesrefkarabulut@gmail.com',
     icon: EmailIcon
   },
   {
-    label: 'Telefon',
-    value: '+90 555 123 45 67',
-    link: 'tel:+905551234567',
-    icon: PhoneIcon
-  },
-  {
     label: 'Konum',
-    value: 'İstanbul, Türkiye',
+    value: 'Trabzon, Türkiye',
     link: null,
     icon: LocationIcon
   }
 ]
 
 const socialLinks = [
-  { name: 'GitHub', url: 'https://github.com', icon: GitHubIcon },
-  { name: 'LinkedIn', url: 'https://linkedin.com', icon: LinkedInIcon },
-  { name: 'Twitter', url: 'https://twitter.com', icon: TwitterIcon }
+  { name: 'GitHub', url: 'https://github.com/ahmetesreff', icon: GitHubIcon },
+  { name: 'LinkedIn', url: 'https://www.linkedin.com/in/ahmetesrefkarabulut/', icon: LinkedInIcon }
 ]
 </script>
 

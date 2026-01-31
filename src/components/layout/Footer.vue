@@ -7,7 +7,7 @@
         </p>
         <div class="social-links">
           <a
-            href="https://github.com"
+            href="https://github.com/ahmetesreff"
             target="_blank"
             rel="noopener noreferrer"
             class="social-link"
@@ -18,7 +18,7 @@
             </svg>
           </a>
           <a
-            href="https://linkedin.com"
+            href="https://www.linkedin.com/in/ahmetesrefkarabulut/"
             target="_blank"
             rel="noopener noreferrer"
             class="social-link"
