@@ -6,7 +6,8 @@
           <span class="logo-initials">AEK</span>
         </router-link>
 
-        <div class="nav-menu" :class="{ 'nav-menu-open': isMenuOpen }">
+        <div class="nav-right">
+          <div class="nav-menu" :class="{ 'nav-menu-open': isMenuOpen }">
           <router-link
             to="/"
             class="nav-link"
@@ -21,15 +22,18 @@
           >
             İletişim
           </router-link>
-        </div>
+          </div>
 
-        <button
+          <ThemeToggle />
+
+          <button
           class="nav-toggle"
           @click="toggleMenu"
           aria-label="Menu"
         >
           <span class="hamburger"></span>
         </button>
+        </div>
       </nav>
     </div>
   </header>
@@ -37,6 +41,7 @@
 
 <script setup>
 import { ref } from 'vue'
+import ThemeToggle from '../ThemeToggle.vue'
 
 const isMenuOpen = ref(false)
 
@@ -56,9 +61,14 @@ const closeMenu = () => {
   background: rgba(255, 255, 255, 0.72);
   backdrop-filter: saturate(180%) blur(20px);
   -webkit-backdrop-filter: saturate(180%) blur(20px);
-  border-bottom: 0.5px solid rgba(0, 0, 0, 0.08);
+  border-bottom: 0.5px solid var(--color-border);
   padding: 0;
   z-index: var(--z-index-header);
+}
+
+[data-theme="dark"] .header {
+  background: rgba(28, 28, 30, 0.72);
+  border-bottom: 0.5px solid var(--color-border);
 }
 
 .nav {
@@ -86,6 +96,12 @@ const closeMenu = () => {
 
 .logo:hover .logo-initials {
   opacity: 0.7;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
 }
 
 .nav-menu {
@@ -168,6 +184,10 @@ const closeMenu = () => {
     padding: 0 var(--spacing-sm);
   }
 
+  .nav-right {
+    gap: 0;
+  }
+
   .nav-toggle {
     display: flex;
   }
@@ -182,12 +202,16 @@ const closeMenu = () => {
     flex-direction: column;
     padding: var(--spacing-sm) 0;
     gap: 0;
-    border-bottom: 0.5px solid rgba(0, 0, 0, 0.08);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    border-bottom: 0.5px solid var(--color-border);
+    box-shadow: var(--shadow-md);
     transform: translateY(-100%);
     opacity: 0;
     visibility: hidden;
     transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  [data-theme="dark"] .nav-menu {
+    background: rgba(28, 28, 30, 0.92);
   }
 
   .nav-menu-open {

@@ -63,3 +63,22 @@
   --z-index-overlay: 200;
   --z-index-modal: 300;
 }
+
+/* Dark Mode - Apple-style */
+[data-theme="dark"] {
+  --color-primary: #f5f5f7;        /* Light text for dark bg */
+  --color-secondary: #2997ff;      /* Brighter blue for dark mode */
+  --color-background: #000000;     /* Pure black */
+  --color-surface: #1c1c1e;        /* Dark surface */
+  --color-border: #38383a;         /* Darker border */
+  --color-text: #f5f5f7;           /* Light text */
+  --color-text-secondary: #98989d; /* Muted light gray */
+  --color-hover: #409cff;          /* Even brighter blue */
+  --color-accent: #2c2c2e;         /* Dark accent */
+
+  /* Gölgeler - Darker shadows for dark mode */
+  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 16px 0 rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+  --shadow-xl: 0 16px 48px 0 rgba(0, 0, 0, 0.6);
+}
