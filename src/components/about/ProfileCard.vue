@@ -54,8 +54,8 @@
 import { h } from 'vue'
 
 const name = 'Ahmet Eşref Karabulut'
-const title = 'Full Stack Developer'
-const bio = 'Yazılım geliştirme ve modern web teknolojileri konusunda tutkulu bir mühendis. Clean code ve kullanıcı deneyimi odaklı çözümler üretiyorum.'
+const title = 'Backend Developer & IT Management Experience'
+const bio = 'Backend sistemler geliştirirken aynı zamanda kurumsal IT altyapısı ve operasyon süreçleri konusunda tecrübeye sahibim.'
 const profileImage = 'https://via.placeholder.com/400x400/0071e3/ffffff?text=AEK'
 
 // SVG icon components

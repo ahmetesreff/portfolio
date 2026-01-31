@@ -1,16 +1,16 @@
 <template>
   <div class="skills-section">
     <div class="skills-container">
-      <h2 class="skills-title">Yetenekler</h2>
-      <p class="skills-subtitle">Teknolojiler ve araçlar</p>
+      <h2 class="skills-title">Teknoloji Stack</h2>
+      <p class="skills-subtitle">Backend, DevOps ve IT altyapı teknolojileri</p>
 
       <div class="skills-grid">
         <div
           v-for="skill in skills"
-          :key="skill.name"
+          :key="skill"
           class="skill-item"
         >
-          <span class="skill-name">{{ skill.name }}</span>
+          <span class="skill-name">{{ skill }}</span>
         </div>
       </div>
     </div>
@@ -19,18 +19,18 @@
 
 <script setup>
 const skills = [
-  { name: 'JavaScript' },
-  { name: 'TypeScript' },
-  { name: 'Vue.js' },
-  { name: 'React' },
-  { name: 'Node.js' },
-  { name: 'Python' },
-  { name: 'Docker' },
-  { name: 'Git' },
-  { name: 'PostgreSQL' },
-  { name: 'MongoDB' },
-  { name: 'AWS' },
-  { name: 'CI/CD' },
+  'NestJS',
+  'PostgreSQL',
+  'Redis',
+  'Docker',
+  'CI/CD',
+  'Linux',
+  'Network',
+  'IT Operations',
+  'Web Scraping',
+  'Nginx',
+  'JWT',
+  'REST API',
 ]
 </script>
 
