@@ -91,5 +91,9 @@ export default {
   theme: {
     light: 'Switch to light theme',
     dark: 'Switch to dark theme'
+  },
+  terminal: {
+    welcome: 'Welcome to the terminal simulator! Type "help" to explore commands.',
+    hint: 'Tip: Tab for autocomplete, ↑↓ for command history'
   }
 }

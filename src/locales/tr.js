@@ -91,5 +91,9 @@ export default {
   theme: {
     light: 'Açık temaya geç',
     dark: 'Koyu temaya geç'
+  },
+  terminal: {
+    welcome: 'Terminal simülatörüne hoş geldiniz! Komutları keşfetmek için "help" yazın.',
+    hint: 'İpucu: Tab ile otomatik tamamlama, ↑↓ ile komut geçmişi'
   }
 }

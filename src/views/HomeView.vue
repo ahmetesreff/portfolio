@@ -13,6 +13,12 @@
         <AboutText />
       </div>
     </section>
+
+    <section class="terminal-section">
+      <div class="container">
+        <Terminal />
+      </div>
+    </section>
   </div>
 </template>
 
@@ -20,6 +26,7 @@
 import ProfileCard from '../components/about/ProfileCard.vue'
 import AboutText from '../components/about/AboutText.vue'
 import Skills from '../components/about/Skills.vue'
+import Terminal from '../components/Terminal.vue'
 </script>
 
 <style scoped>
@@ -38,6 +45,11 @@ import Skills from '../components/about/Skills.vue'
   background: var(--color-background);
 }
 
+.terminal-section {
+  padding: var(--spacing-3xl) 0;
+  background: var(--color-surface);
+}
+
 .container {
   max-width: var(--max-width);
   margin: 0 auto;
@@ -50,6 +62,10 @@ import Skills from '../components/about/Skills.vue'
   }
 
   .about-section {
+    padding: var(--spacing-xl) 0;
+  }
+
+  .terminal-section {
     padding: var(--spacing-xl) 0;
   }
 }
