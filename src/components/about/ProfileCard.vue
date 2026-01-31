@@ -53,7 +53,7 @@
 <script setup>
 import { h } from 'vue'
 
-import profilePhoto from '../assets/images/profile.jpg'
+import profilePhoto from '../../assets/images/profile.jpg'
 
 const name = 'Ahmet Eşref Karabulut'
 const title = 'Backend Developer & IT Management Experience'
