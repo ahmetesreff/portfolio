@@ -16,11 +16,8 @@ const router = createRouter({
     }
   ],
   scrollBehavior(to, from, savedPosition) {
-    if (savedPosition) {
-      return savedPosition
-    } else {
-      return { top: 0, behavior: 'smooth' }
-    }
+    // Always scroll to top on page navigation
+    return { top: 0, behavior: 'smooth' }
   }
 })
 
