@@ -13,17 +13,18 @@
             class="nav-link"
             @click="closeMenu"
           >
-            Hakkımda
+            {{ t('nav.about') }}
           </router-link>
           <router-link
             to="/iletisim"
             class="nav-link"
             @click="closeMenu"
           >
-            İletişim
+            {{ t('nav.contact') }}
           </router-link>
           </div>
 
+          <LanguageToggle />
           <ThemeToggle />
 
           <button
@@ -41,7 +42,11 @@
 
 <script setup>
 import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import ThemeToggle from '../ThemeToggle.vue'
+import LanguageToggle from '../LanguageToggle.vue'
+
+const { t } = useI18n()
 
 const isMenuOpen = ref(false)
 

@@ -3,7 +3,7 @@
     <div class="container">
       <div class="footer-content">
         <p class="copyright">
-          &copy; {{ currentYear }} Portfolio. Tüm hakları saklıdır.
+          &copy; {{ currentYear }} {{ t('footer.copyright') }}
         </p>
         <div class="social-links">
           <a
@@ -36,7 +36,9 @@
 
 <script setup>
 import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 const currentYear = computed(() => new Date().getFullYear())
 </script>
 

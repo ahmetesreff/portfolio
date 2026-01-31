@@ -2,7 +2,7 @@
   <button
     @click="toggleTheme"
     class="theme-toggle"
-    :aria-label="isDark ? 'Açık temaya geç' : 'Koyu temaya geç'"
+    :aria-label="isDark ? t('theme.light') : t('theme.dark')"
   >
     <svg v-if="isDark" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <circle cx="12" cy="12" r="5"/>
@@ -22,8 +22,10 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch } from 'vue'
+import { ref, onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 const isDark = ref(false)
 
 const setTheme = (dark) => {

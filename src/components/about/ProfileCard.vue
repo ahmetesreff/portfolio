@@ -21,7 +21,7 @@
             to="/iletisim"
             class="btn btn-primary"
           >
-            İletişim
+            {{ t('profile.contactButton') }}
           </router-link>
         </div>
 
@@ -45,12 +45,15 @@
 
 <script setup>
 import { h } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 import profilePhoto from '../../assets/images/profile.jpg'
 
-const name = 'Ahmet Eşref Karabulut'
-const title = 'Backend Developer & IT Management Experience'
-const bio = 'Backend sistemler geliştirirken aynı zamanda kurumsal IT altyapısı ve operasyon süreçleri konusunda tecrübeye sahibim.'
+const { t } = useI18n()
+
+const name = t('profile.name')
+const title = t('profile.title')
+const bio = t('profile.bio')
 const profileImage = profilePhoto
 
 // SVG icon components

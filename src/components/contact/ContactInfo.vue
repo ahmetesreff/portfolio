@@ -1,9 +1,9 @@
 <template>
   <div class="contact-info">
     <div class="contact-header">
-      <h1>İletişime Geçin</h1>
+      <h1>{{ t('contact.title') }}</h1>
       <p class="contact-subtitle">
-        Benimle iletişime geçmek için aşağıdaki bilgileri kullanabilirsiniz
+        {{ t('contact.subtitle') }}
       </p>
     </div>
 
@@ -33,7 +33,7 @@
     </div>
 
     <div class="social-section">
-      <h3>Sosyal Medya</h3>
+      <h3>{{ t('contact.social') }}</h3>
       <div class="social-links-grid">
         <a
           v-for="social in socialLinks"
@@ -55,6 +55,9 @@
 
 <script setup>
 import { h } from 'vue'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 
 // SVG Icons
 const EmailIcon = () => h('svg', { width: 32, height: 32, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', 'stroke-width': 2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, [
@@ -85,14 +88,14 @@ const TwitterIcon = () => h('svg', { width: 28, height: 28, viewBox: '0 0 24 24'
 
 const contactItems = [
   {
-    label: 'E-posta',
+    label: t('contact.email'),
     value: 'ahmetesrefkarabulut@gmail.com',
     link: 'mailto:ahmetesrefkarabulut@gmail.com',
     icon: EmailIcon
   },
   {
-    label: 'Konum',
-    value: 'Trabzon, Türkiye',
+    label: t('contact.location'),
+    value: t('contact.locationValue'),
     link: null,
     icon: LocationIcon
   }
