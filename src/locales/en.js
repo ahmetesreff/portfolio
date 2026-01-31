@@ -10,57 +10,56 @@ export default {
     contactButton: 'Contact'
   },
   about: {
-    title: 'About Me',
-    paragraphs: [
-      'I am a Computer Programming graduate. I started my career by developing web scraping and data collection projects. During this process, I worked on extracting, cleaning, and processing data from different sources.',
-      'Later, I took on a role in IT, dealing with network structure, hardware, user management, and system operations. I worked as an IT Manager at a company for approximately 1 year, being responsible for the entire IT infrastructure.',
-      'Afterwards, I shifted my focus to backend development and started developing multi-tenant business applications.',
-      'Currently, I am working on backend architecture, data model design, and performance-focused API development.'
-    ],
+    journey: {
+      title: 'My Journey',
+      intro: 'I started my software career with web scraping projects and gradually specialized in backend development. My experience in IT management and operational processes allowed me to combine technical knowledge with operational understanding.',
+      career: 'Currently, I work on backend systems, multi-tenant architectures, and scalable systems. I develop enterprise-level projects using NestJS and PostgreSQL.',
+      approach: 'I believe in clean code principles, test-driven development, and continuous learning philosophy.'
+    },
     expertise: {
       title: 'Areas of Expertise',
       backend: {
         title: 'Backend Development',
         items: [
-          'NestJS (Auth, JWT, Guards, Interceptors)',
-          'Multi-tenant architecture (company-based data isolation)',
-          'REST API design',
-          'Business logic modeling'
+          'RESTful API development with NestJS',
+          'Multi-tenant system architectures',
+          'JWT authentication & authorization',
+          'Type-safe development with TypeScript'
         ]
       },
       database: {
-        title: 'Database',
+        title: 'Database & Caching',
         items: [
-          'PostgreSQL',
-          'Entity design',
-          'Index and performance optimization',
-          'Soft delete & relation management'
+          'PostgreSQL database design and optimization',
+          'ORM management with TypeORM',
+          'Caching strategies with Redis',
+          'Database migration and seed management'
         ]
       },
       devops: {
         title: 'DevOps & Infrastructure',
         items: [
-          'Docker & Docker Compose',
-          'GitHub Actions (CI/CD)',
+          'Docker containerization',
+          'CI/CD pipeline setup',
           'Linux server management',
-          'Nginx'
+          'Nginx web server configuration'
         ]
       },
       it: {
-        title: 'IT Management Experience',
+        title: 'IT Management',
         items: [
-          'User and device management',
-          'Network & hardware infrastructure',
-          'System continuity',
-          'IT processes and documentation',
+          'Corporate IT infrastructure management',
+          'Network configuration and security',
+          'System optimization and monitoring',
           'Technical support and problem solving'
         ]
       },
       scraping: {
-        title: 'Web Scraping & Data',
+        title: 'Web Scraping',
         items: [
-          'Data collection from various sources',
-          'Data cleaning and transformation',
+          'Web scraping with Python',
+          'Data collection and processing',
+          'API integrations',
           'Automation scripts'
         ]
       }
@@ -70,23 +69,27 @@ export default {
       positions: [
         {
           title: 'Backend Developer',
-          company: 'Bibs Teknoloji · Trabzon',
-          period: 'Aug 2025 - Present'
+          company: 'Tetra Yazılım',
+          period: 'Aug 2024 - Present',
+          description: 'I develop multi-tenant SaaS projects using NestJS, PostgreSQL and Docker.'
         },
         {
           title: 'IT Manager',
-          company: 'Karadeniz Kardeşler Gıda · Vakfıkebir, Trabzon',
-          period: 'Feb 2025 - Aug 2025'
+          company: 'Aksa Jeneratör',
+          period: 'May 2023 - Aug 2024',
+          description: 'I was responsible for corporate IT infrastructure, network management and system operations.'
         },
         {
           title: 'IT Specialist',
-          company: 'Karadeniz Kardeşler Gıda · Vakfıkebir, Trabzon',
-          period: 'Mar 2024 - Apr 2025'
+          company: 'Aksa Jeneratör',
+          period: 'Oct 2021 - May 2023',
+          description: 'I worked on IT systems, technical support and infrastructure management.'
         },
         {
-          title: 'Data Processing Specialist',
-          company: 'Ali Osman Ulusoy Turizm · Trabzon',
-          period: 'Nov 2023 - Mar 2024'
+          title: 'Web Scraping Developer',
+          company: 'Freelance',
+          period: '2020 - 2021',
+          description: 'I developed web scraping projects using Python.'
         }
       ]
     },
