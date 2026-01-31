@@ -18,15 +18,8 @@
 
         <div class="profile-actions">
           <a
-            href="/assets/cv.pdf"
-            download
-            class="btn btn-primary"
-          >
-            CV İndir
-          </a>
-          <a
             href="#contact"
-            class="btn btn-outline"
+            class="btn btn-primary"
           >
             İletişim
           </a>
