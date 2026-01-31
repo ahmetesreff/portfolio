@@ -90,7 +90,7 @@ p {
   border: 1px solid var(--color-border);
 }
 
-/* Buton stilleri - Apple style */
+/* Buton stilleri - Apple style minimal */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -113,11 +113,11 @@ p {
 
 .btn-primary:hover {
   background-color: var(--color-hover);
-  box-shadow: 0 4px 12px rgba(0, 113, 227, 0.25);
+  opacity: 0.9;
 }
 
 .btn-primary:active {
-  transform: scale(0.98);
+  opacity: 0.8;
 }
 
 .btn-outline {
@@ -128,7 +128,7 @@ p {
 
 .btn-outline:hover {
   border-color: var(--color-primary);
-  background-color: var(--color-accent);
+  background-color: rgba(0, 0, 0, 0.03);
 }
 
 /* Link stilleri */
