@@ -1,6 +1,6 @@
 <template>
   <div class="about-text">
-    <div class="about-section" v-scroll-reveal="{ type: 'fade-up' }">
+    <div class="about-section">
       <h2>{{ t('about.title') }}</h2>
       <p>{{ t('about.p1') }}</p>
       <p>{{ t('about.p2') }}</p>

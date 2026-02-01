@@ -1,14 +1,10 @@
 <template>
   <div class="about-view">
-    <div v-scroll-reveal="{ type: 'fade-up', delay: 100 }">
-      <Skills />
-    </div>
+    <Skills />
 
     <section class="about-section">
       <div class="container">
-        <div v-scroll-reveal="{ type: 'fade-up', delay: 150 }">
-          <AboutText />
-        </div>
+        <AboutText />
       </div>
     </section>
   </div>
