@@ -82,6 +82,9 @@ const { t } = useI18n()
   padding: var(--spacing-lg);
   border: 1px solid var(--color-border);
   transition: var(--transition-fast);
+  min-height: 420px;
+  display: flex;
+  flex-direction: column;
 }
 
 .tool-card:hover {
