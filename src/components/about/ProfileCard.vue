@@ -13,7 +13,7 @@
 
       <div class="profile-info">
         <h1 class="profile-name">{{ t('profile.name') }}</h1>
-        <p class="profile-title">{{ t('profile.title') }}</p>
+        <p class="profile-title"><TypeWriter /></p>
         <p class="profile-bio">{{ t('profile.bio') }}</p>
 
         <div class="profile-actions">
@@ -46,6 +46,7 @@
 <script setup>
 import { h } from 'vue'
 import { useI18n } from 'vue-i18n'
+import TypeWriter from '../TypeWriter.vue'
 
 import profilePhoto from '../../assets/images/profile.jpg'
 
