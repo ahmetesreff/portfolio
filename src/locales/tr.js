@@ -132,7 +132,9 @@ export default {
       excellent: 'Mükemmel hız!',
       good: 'İyi hız',
       average: 'Ortalama hız',
-      slow: 'Yavaş bağlantı'
+      slow: 'Yavaş bağlantı',
+      speed: 'Hız',
+      duration: 'Süre'
     },
     jsonFormatter: {
       title: 'JSON Formatlayıcı',

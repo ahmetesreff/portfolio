@@ -17,8 +17,33 @@
         <div class="speed-unit">Mbps</div>
       </div>
 
-      <div class="speed-bar">
-        <div class="speed-progress" :style="{ width: progressWidth }"></div>
+      <div class="progress-bars">
+        <div class="progress-item">
+          <div class="progress-label">
+            <span>{{ t('tools.speedTest.speed') }}</span>
+            <span class="progress-value">{{ displaySpeed }} / 1000 Mbps</span>
+          </div>
+          <div class="progress-bar">
+            <div
+              class="progress-fill speed-fill"
+              :class="speedClass"
+              :style="{ width: speedBarWidth }"
+            ></div>
+          </div>
+        </div>
+
+        <div class="progress-item">
+          <div class="progress-label">
+            <span>{{ t('tools.speedTest.duration') }}</span>
+            <span class="progress-value">{{ progressPercent }}%</span>
+          </div>
+          <div class="progress-bar">
+            <div
+              class="progress-fill time-fill"
+              :style="{ width: progressWidth }"
+            ></div>
+          </div>
+        </div>
       </div>
 
       <div class="speed-status">
@@ -43,7 +68,29 @@ const result = ref(null)
 const currentSpeed = ref(0)
 const progress = ref(0)
 
+const MAX_SPEED = 1000 // Max speed in Mbps
+
 const progressWidth = computed(() => `${progress.value}%`)
+const progressPercent = computed(() => Math.round(progress.value))
+
+const displaySpeed = computed(() => {
+  const speed = testing.value ? currentSpeed.value : (result.value || 0)
+  return speed.toFixed(1)
+})
+
+const speedBarWidth = computed(() => {
+  const speed = testing.value ? currentSpeed.value : (result.value || 0)
+  const percentage = Math.min((speed / MAX_SPEED) * 100, 100)
+  return `${percentage}%`
+})
+
+const speedClass = computed(() => {
+  const speed = testing.value ? currentSpeed.value : (result.value || 0)
+  if (speed >= 500) return 'speed-excellent'
+  if (speed >= 200) return 'speed-good'
+  if (speed >= 50) return 'speed-average'
+  return 'speed-slow'
+})
 
 const statusText = computed(() => {
   if (testing.value) return t('tools.speedTest.measuring')
@@ -145,19 +192,70 @@ const startTest = async () => {
   margin-top: var(--spacing-xs);
 }
 
-.speed-bar {
+.progress-bars {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.progress-item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.progress-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+}
+
+.progress-value {
+  font-weight: var(--font-weight-medium);
+  color: var(--color-primary);
+  font-family: 'Monaco', 'Menlo', monospace;
+}
+
+.progress-bar {
   width: 100%;
   height: 8px;
   background: var(--color-accent);
   border-radius: 4px;
   overflow: hidden;
+  position: relative;
 }
 
-.speed-progress {
+.progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, var(--color-secondary), var(--color-hover));
   border-radius: 4px;
-  transition: width 0.1s linear;
+  transition: width 0.3s ease, background 0.3s ease;
+}
+
+.speed-fill {
+  transition: width 0.1s linear, background 0.3s ease;
+}
+
+.speed-slow {
+  background: linear-gradient(90deg, #f44336, #e91e63);
+}
+
+.speed-average {
+  background: linear-gradient(90deg, #ff9800, #ffc107);
+}
+
+.speed-good {
+  background: linear-gradient(90deg, #4caf50, #8bc34a);
+}
+
+.speed-excellent {
+  background: linear-gradient(90deg, #00bcd4, #03a9f4);
+}
+
+.time-fill {
+  background: linear-gradient(90deg, var(--color-secondary), var(--color-hover));
 }
 
 .speed-status {

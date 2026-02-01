@@ -132,7 +132,9 @@ export default {
       excellent: 'Excellent speed!',
       good: 'Good speed',
       average: 'Average speed',
-      slow: 'Slow connection'
+      slow: 'Slow connection',
+      speed: 'Speed',
+      duration: 'Duration'
     },
     jsonFormatter: {
       title: 'JSON Formatter',
