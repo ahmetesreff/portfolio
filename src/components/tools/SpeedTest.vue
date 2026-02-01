@@ -198,12 +198,16 @@ const startTest = async () => {
   currentPing.value = realPing
   progress.value = 10
 
-  // Download test with increasing file sizes
+  // Download test with larger file sizes for accurate measurement
+  // Total: ~500MB for high-speed connections
   const testSizes = [
-    1000000,    // 1MB - warm up
-    5000000,    // 5MB
-    10000000,   // 10MB
+    10000000,   // 10MB - warm up
     25000000,   // 25MB
+    50000000,   // 50MB
+    50000000,   // 50MB
+    100000000,  // 100MB
+    100000000,  // 100MB
+    100000000,  // 100MB
   ]
 
   const speeds = []
