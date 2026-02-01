@@ -2,7 +2,8 @@ export default {
   nav: {
     home: 'Home',
     about: 'About',
-    contact: 'Contact'
+    contact: 'Contact',
+    tools: 'Tools'
   },
   profile: {
     name: 'Ahmet Eşref Karabulut',
@@ -96,5 +97,56 @@ export default {
   terminal: {
     welcome: 'Welcome to the terminal simulator! Type "help" to explore commands.',
     hint: 'Tip: Tab for autocomplete, ↑↓ for command history'
+  },
+  tools: {
+    title: 'IT Tools',
+    subtitle: 'Useful tools for your daily IT tasks',
+    loading: 'Loading...',
+    error: 'An error occurred',
+    copy: 'Copy',
+    copied: 'Copied!',
+    ipChecker: {
+      title: 'IP Address',
+      yourIp: 'Your IP Address',
+      location: 'Location',
+      isp: 'ISP',
+      refresh: 'Refresh'
+    },
+    speedTest: {
+      title: 'Speed Test',
+      start: 'Start Test',
+      testing: 'Testing...',
+      measuring: 'Measuring speed...',
+      ready: 'Ready to test',
+      excellent: 'Excellent speed!',
+      good: 'Good speed',
+      average: 'Average speed',
+      slow: 'Slow connection'
+    },
+    jsonFormatter: {
+      title: 'JSON Formatter',
+      placeholder: 'Paste your JSON code here...',
+      format: 'Format',
+      minify: 'Minify',
+      invalidJson: 'Invalid JSON format'
+    },
+    passwordGenerator: {
+      title: 'Password Generator',
+      length: 'Length',
+      uppercase: 'Uppercase',
+      lowercase: 'Lowercase',
+      numbers: 'Numbers',
+      symbols: 'Symbols',
+      generate: 'Generate',
+      weak: 'Weak',
+      medium: 'Medium',
+      strong: 'Strong'
+    },
+    qrGenerator: {
+      title: 'QR Code Generator',
+      placeholder: 'Enter text or URL...',
+      generate: 'Generate QR Code',
+      download: 'Download'
+    }
   }
 }

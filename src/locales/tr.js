@@ -2,7 +2,8 @@ export default {
   nav: {
     home: 'Ana Sayfa',
     about: 'Hakkımda',
-    contact: 'İletişim'
+    contact: 'İletişim',
+    tools: 'Araçlar'
   },
   profile: {
     name: 'Ahmet Eşref Karabulut',
@@ -96,5 +97,56 @@ export default {
   terminal: {
     welcome: 'Terminal simülatörüne hoş geldiniz! Komutları keşfetmek için "help" yazın.',
     hint: 'İpucu: Tab ile otomatik tamamlama, ↑↓ ile komut geçmişi'
+  },
+  tools: {
+    title: 'IT Araçları',
+    subtitle: 'Günlük IT işleriniz için faydalı araçlar',
+    loading: 'Yükleniyor...',
+    error: 'Bir hata oluştu',
+    copy: 'Kopyala',
+    copied: 'Kopyalandı!',
+    ipChecker: {
+      title: 'IP Adresi',
+      yourIp: 'IP Adresiniz',
+      location: 'Konum',
+      isp: 'İnternet Sağlayıcı',
+      refresh: 'Yenile'
+    },
+    speedTest: {
+      title: 'Hız Testi',
+      start: 'Testi Başlat',
+      testing: 'Test Ediliyor...',
+      measuring: 'Hız ölçülüyor...',
+      ready: 'Teste hazır',
+      excellent: 'Mükemmel hız!',
+      good: 'İyi hız',
+      average: 'Ortalama hız',
+      slow: 'Yavaş bağlantı'
+    },
+    jsonFormatter: {
+      title: 'JSON Formatlayıcı',
+      placeholder: 'JSON kodunuzu buraya yapıştırın...',
+      format: 'Formatla',
+      minify: 'Küçült',
+      invalidJson: 'Geçersiz JSON formatı'
+    },
+    passwordGenerator: {
+      title: 'Şifre Oluşturucu',
+      length: 'Uzunluk',
+      uppercase: 'Büyük harf',
+      lowercase: 'Küçük harf',
+      numbers: 'Rakamlar',
+      symbols: 'Semboller',
+      generate: 'Oluştur',
+      weak: 'Zayıf',
+      medium: 'Orta',
+      strong: 'Güçlü'
+    },
+    qrGenerator: {
+      title: 'QR Kod Oluşturucu',
+      placeholder: 'Metin veya URL girin...',
+      generate: 'QR Kod Oluştur',
+      download: 'İndir'
+    }
   }
 }

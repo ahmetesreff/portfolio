@@ -18,6 +18,11 @@ const router = createRouter({
       path: '/iletisim',
       name: 'contact',
       component: () => import('../views/ContactView.vue')
+    },
+    {
+      path: '/araclar',
+      name: 'tools',
+      component: () => import('../views/ToolsView.vue')
     }
   ],
   scrollBehavior(to, from, savedPosition) {

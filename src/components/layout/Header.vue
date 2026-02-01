@@ -29,6 +29,13 @@
           >
             {{ t('nav.contact') }}
           </router-link>
+          <router-link
+            to="/araclar"
+            class="nav-link"
+            @click="closeMenu"
+          >
+            {{ t('nav.tools') }}
+          </router-link>
           </div>
 
           <LanguageToggle />
