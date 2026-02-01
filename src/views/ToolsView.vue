@@ -82,9 +82,34 @@ const { t } = useI18n()
   padding: var(--spacing-lg);
   border: 1px solid var(--color-border);
   transition: var(--transition-fast);
-  min-height: 420px;
+  min-height: 450px;
   display: flex;
   flex-direction: column;
+}
+
+/* Ensure all tools fill the card */
+.tool-card :deep(.tool) {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.tool-card :deep(.tool-content) {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Fixed header width for all tools */
+.tool-card :deep(.tool-header h3) {
+  min-width: 180px;
+  white-space: nowrap;
+}
+
+/* Fixed button widths */
+.tool-card :deep(.tool-btn) {
+  min-width: 100px;
+  text-align: center;
 }
 
 .tool-card:hover {
