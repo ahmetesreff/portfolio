@@ -97,8 +97,6 @@ const socialLinks = [
 .image-container {
   position: relative;
   border-radius: var(--border-radius-full);
-  padding: 4px;
-  background: linear-gradient(135deg, var(--color-secondary), var(--color-hover));
   box-shadow: var(--shadow-lg);
 }
 
@@ -108,7 +106,7 @@ const socialLinks = [
   border-radius: var(--border-radius-full);
   object-fit: cover;
   display: block;
-  border: 4px solid var(--color-background);
+  border: 1px solid var(--color-border);
 }
 
 .profile-info {
