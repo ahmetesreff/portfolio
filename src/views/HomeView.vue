@@ -15,6 +15,14 @@
       </div>
     </section>
 
+    <section class="terminal-section">
+      <div class="container">
+        <div v-scroll-reveal="{ type: 'fade-scale', delay: 100 }">
+          <Terminal />
+        </div>
+      </div>
+    </section>
+
     <div v-scroll-reveal="{ type: 'fade-up', delay: 100 }">
       <Skills />
     </div>
@@ -23,14 +31,6 @@
       <div class="container">
         <div v-scroll-reveal="{ type: 'fade-up', delay: 150 }">
           <AboutText />
-        </div>
-      </div>
-    </section>
-
-    <section class="terminal-section">
-      <div class="container">
-        <div v-scroll-reveal="{ type: 'fade-scale', delay: 100 }">
-          <Terminal />
         </div>
       </div>
     </section>
