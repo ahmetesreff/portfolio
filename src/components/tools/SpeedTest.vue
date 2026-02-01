@@ -167,6 +167,24 @@ const getRealPing = async () => {
   return 50 // Fallback if all pings fail
 }
 
+// Measure real download speed using Cloudflare
+const measureDownloadSpeed = async (bytes) => {
+  const startTime = performance.now()
+  try {
+    const response = await fetch(`https://speed.cloudflare.com/__down?bytes=${bytes}`, {
+      cache: 'no-cache'
+    })
+    await response.blob()
+    const endTime = performance.now()
+    const durationSeconds = (endTime - startTime) / 1000
+    const bitsLoaded = bytes * 8
+    const speedMbps = (bitsLoaded / durationSeconds) / 1000000
+    return speedMbps
+  } catch (error) {
+    return null
+  }
+}
+
 const startTest = async () => {
   testing.value = true
   result.value = null
@@ -177,34 +195,41 @@ const startTest = async () => {
 
   // Measure real ping first
   const realPing = await getRealPing()
+  currentPing.value = realPing
+  progress.value = 10
 
-  const testDuration = 5000 // 5 seconds
-  const updateInterval = 100
-  const startTime = Date.now()
+  // Download test with increasing file sizes
+  const testSizes = [
+    1000000,    // 1MB - warm up
+    5000000,    // 5MB
+    10000000,   // 10MB
+    25000000,   // 25MB
+  ]
 
-  // Simulate speed test with realistic fluctuation
-  const baseSpeed = 50 + Math.random() * 100 // Random base between 50-150
+  const speeds = []
 
-  const interval = setInterval(() => {
-    const elapsed = Date.now() - startTime
-    progress.value = Math.min((elapsed / testDuration) * 100, 100)
-
-    // Add realistic fluctuation for speed
-    const speedFluctuation = (Math.random() - 0.5) * 20
-    currentSpeed.value = Math.max(0, baseSpeed + speedFluctuation + (elapsed / testDuration) * 10)
-
-    // Show real ping with slight fluctuation
-    const pingFluctuation = (Math.random() - 0.5) * 5
-    currentPing.value = Math.max(5, realPing + pingFluctuation)
-
-    if (elapsed >= testDuration) {
-      clearInterval(interval)
-      testing.value = false
-      result.value = baseSpeed + Math.random() * 20
-      resultPing.value = realPing + (Math.random() - 0.5) * 3
-      progress.value = 100
+  for (let i = 0; i < testSizes.length; i++) {
+    const speed = await measureDownloadSpeed(testSizes[i])
+    if (speed !== null) {
+      speeds.push(speed)
+      currentSpeed.value = speed
     }
-  }, updateInterval)
+    progress.value = 10 + ((i + 1) / testSizes.length) * 90
+
+    // Update ping with slight variation
+    currentPing.value = realPing + (Math.random() - 0.5) * 3
+  }
+
+  // Calculate average speed (excluding first warm-up measurement)
+  const relevantSpeeds = speeds.length > 1 ? speeds.slice(1) : speeds
+  const avgSpeed = relevantSpeeds.length > 0
+    ? relevantSpeeds.reduce((a, b) => a + b, 0) / relevantSpeeds.length
+    : 0
+
+  testing.value = false
+  result.value = avgSpeed
+  resultPing.value = realPing
+  progress.value = 100
 }
 </script>
 
