@@ -43,6 +43,7 @@
 
           <button
           class="nav-toggle"
+          :class="{ 'is-active': isMenuOpen }"
           @click="toggleMenu"
           aria-label="Menu"
         >
@@ -288,16 +289,16 @@ onUnmounted(() => {
     display: none;
   }
 
-  .nav-menu-open + .nav-toggle .hamburger {
+  .nav-toggle.is-active .hamburger {
     background: transparent;
   }
 
-  .nav-menu-open + .nav-toggle .hamburger::before {
+  .nav-toggle.is-active .hamburger::before {
     transform: rotate(45deg);
     top: 0;
   }
 
-  .nav-menu-open + .nav-toggle .hamburger::after {
+  .nav-toggle.is-active .hamburger::after {
     transform: rotate(-45deg);
     top: 0;
   }
