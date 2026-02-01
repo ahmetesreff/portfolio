@@ -103,6 +103,7 @@ p {
   cursor: pointer;
   text-align: center;
   min-height: 44px;
+  min-width: 130px;
   white-space: nowrap;
 }
 

@@ -90,6 +90,9 @@ import Terminal from '../components/Terminal.vue'
   padding: var(--spacing-2xl) 0 var(--spacing-xl) 0;
   position: relative;
   z-index: 1;
+  min-height: 600px;
+  display: flex;
+  align-items: center;
 }
 
 .terminal-section {
