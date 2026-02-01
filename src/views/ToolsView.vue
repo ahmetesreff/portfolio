@@ -19,10 +19,14 @@
       </div>
 
       <div class="tool-card" v-scroll-reveal="{ type: 'fade-up', delay: 150 }">
-        <PasswordGenerator />
+        <JsonViewer />
       </div>
 
       <div class="tool-card" v-scroll-reveal="{ type: 'fade-up', delay: 200 }">
+        <PasswordGenerator />
+      </div>
+
+      <div class="tool-card" v-scroll-reveal="{ type: 'fade-up', delay: 250 }">
         <QrGenerator />
       </div>
     </div>
@@ -34,6 +38,7 @@ import { useI18n } from 'vue-i18n'
 import IpChecker from '../components/tools/IpChecker.vue'
 import SpeedTest from '../components/tools/SpeedTest.vue'
 import JsonFormatter from '../components/tools/JsonFormatter.vue'
+import JsonViewer from '../components/tools/JsonViewer.vue'
 import PasswordGenerator from '../components/tools/PasswordGenerator.vue'
 import QrGenerator from '../components/tools/QrGenerator.vue'
 

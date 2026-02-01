@@ -130,6 +130,13 @@ export default {
       minify: 'Küçült',
       invalidJson: 'Geçersiz JSON formatı'
     },
+    jsonViewer: {
+      title: 'JSON Görüntüleyici',
+      placeholder: 'JSON kodunuzu buraya yapıştırın...',
+      expandAll: 'Tümünü Aç',
+      collapseAll: 'Tümünü Kapat',
+      invalidJson: 'Geçersiz JSON formatı'
+    },
     passwordGenerator: {
       title: 'Şifre Oluşturucu',
       length: 'Uzunluk',

@@ -130,6 +130,13 @@ export default {
       minify: 'Minify',
       invalidJson: 'Invalid JSON format'
     },
+    jsonViewer: {
+      title: 'JSON Viewer',
+      placeholder: 'Paste your JSON code here...',
+      expandAll: 'Expand All',
+      collapseAll: 'Collapse All',
+      invalidJson: 'Invalid JSON format'
+    },
     passwordGenerator: {
       title: 'Password Generator',
       length: 'Length',
