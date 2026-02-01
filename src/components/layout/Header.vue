@@ -76,10 +76,15 @@ const closeMenu = () => {
 const handleClickOutside = (event) => {
   const navMenu = document.querySelector('.nav-menu')
   const navToggle = document.querySelector('.nav-toggle')
+  const themeToggle = document.querySelector('.theme-toggle')
+  const languageToggle = document.querySelector('.language-toggle')
 
+  // Don't close if clicking on menu, toggle button, theme button, or language button
   if (navMenu && navToggle &&
       !navMenu.contains(event.target) &&
-      !navToggle.contains(event.target)) {
+      !navToggle.contains(event.target) &&
+      !(themeToggle && themeToggle.contains(event.target)) &&
+      !(languageToggle && languageToggle.contains(event.target))) {
     closeMenu()
   }
 }
@@ -90,7 +95,7 @@ watch(isMenuOpen, (isOpen) => {
     // Small delay to prevent immediate close from toggle click
     setTimeout(() => {
       document.addEventListener('click', handleClickOutside)
-    }, 100)
+    }, 50)
   } else {
     document.removeEventListener('click', handleClickOutside)
   }
