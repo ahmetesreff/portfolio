@@ -54,4 +54,13 @@ const toggleLanguage = () => {
 .language-toggle:active {
   transform: scale(0.95);
 }
+
+.language-toggle:focus {
+  outline: none;
+}
+
+.language-toggle:focus-visible {
+  outline: 2px solid var(--color-secondary);
+  outline-offset: 2px;
+}
 </style>

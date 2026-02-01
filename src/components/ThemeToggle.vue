@@ -81,6 +81,15 @@ onMounted(() => {
   transform: scale(0.95);
 }
 
+.theme-toggle:focus {
+  outline: none;
+}
+
+.theme-toggle:focus-visible {
+  outline: 2px solid var(--color-secondary);
+  outline-offset: 2px;
+}
+
 .theme-toggle svg {
   display: block;
 }
