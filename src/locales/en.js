@@ -87,7 +87,7 @@ export default {
     social: 'Social Media'
   },
   footer: {
-    copyright: 'Portfolio. All rights reserved.'
+    copyright: 'Ahmet Eşref Karabulut · Trabzon'
   },
   theme: {
     light: 'Switch to light theme',
