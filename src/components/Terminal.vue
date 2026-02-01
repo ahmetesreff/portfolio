@@ -41,7 +41,6 @@
             @keydown.down.prevent="navigateHistory('down')"
             @keydown.tab.prevent="autocomplete"
             class="terminal-input"
-            autofocus
             spellcheck="false"
           />
         </div>
