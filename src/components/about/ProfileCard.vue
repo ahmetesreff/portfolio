@@ -140,6 +140,7 @@ const socialLinks = [
   margin-left: auto;
   margin-right: auto;
   line-height: 1.5;
+  min-height: 80px;
 }
 
 .profile-actions {
