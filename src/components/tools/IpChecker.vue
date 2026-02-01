@@ -61,19 +61,19 @@ const checkIp = async () => {
   error.value = null
 
   try {
-    // Get IP
-    const ipResponse = await fetch('https://api.ipify.org?format=json')
-    const { ip } = await ipResponse.json()
+    // Use ipwho.is - reliable free API with no rate limits
+    const response = await fetch('https://ipwho.is/')
+    const data = await response.json()
 
-    // Get location info
-    const geoResponse = await fetch(`https://ipapi.co/${ip}/json/`)
-    const geoData = await geoResponse.json()
+    if (data.success === false) {
+      throw new Error('API error')
+    }
 
     ipData.value = {
-      ip: ip,
-      city: geoData.city,
-      country: geoData.country_name,
-      org: geoData.org
+      ip: data.ip,
+      city: data.city,
+      country: data.country,
+      org: data.connection?.isp || data.connection?.org || 'N/A'
     }
   } catch (err) {
     error.value = t('tools.error')
