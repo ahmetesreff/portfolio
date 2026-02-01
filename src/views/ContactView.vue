@@ -2,7 +2,9 @@
   <div class="contact-view">
     <section class="section">
       <div class="container">
-        <ContactInfo />
+        <div v-scroll-reveal="{ type: 'fade-up', duration: 800 }">
+          <ContactInfo />
+        </div>
       </div>
     </section>
   </div>

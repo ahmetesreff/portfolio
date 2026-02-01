@@ -1,14 +1,15 @@
 <template>
   <div class="skills-section">
     <div class="skills-container">
-      <h2 class="skills-title">Teknoloji Stack</h2>
-      <p class="skills-subtitle">Backend, DevOps ve IT altyapı teknolojileri</p>
+      <h2 class="skills-title" v-scroll-reveal="{ type: 'fade-up' }">Teknoloji Stack</h2>
+      <p class="skills-subtitle" v-scroll-reveal="{ type: 'fade-up', delay: 50 }">Backend, DevOps ve IT altyapı teknolojileri</p>
 
       <div class="skills-grid">
         <div
-          v-for="skill in skills"
+          v-for="(skill, index) in skills"
           :key="skill"
           class="skill-item"
+          v-scroll-reveal="{ type: 'fade-scale', delay: index * 30 }"
         >
           <span class="skill-name">{{ skill }}</span>
         </div>

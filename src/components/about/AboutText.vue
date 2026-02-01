@@ -1,6 +1,6 @@
 <template>
   <div class="about-text">
-    <div class="about-section">
+    <div class="about-section" v-scroll-reveal="{ type: 'fade-up' }">
       <h2>{{ t('about.title') }}</h2>
       <p>{{ t('about.p1') }}</p>
       <p>{{ t('about.p2') }}</p>
@@ -9,9 +9,9 @@
     </div>
 
     <div class="about-section">
-      <h3>{{ t('about.expertise.title') }}</h3>
+      <h3 v-scroll-reveal="{ type: 'fade-up' }">{{ t('about.expertise.title') }}</h3>
 
-      <div class="expertise-category">
+      <div class="expertise-category" v-scroll-reveal="{ type: 'fade-left', delay: 0 }">
         <h4 class="expertise-title">{{ t('about.expertise.backend.title') }}</h4>
         <ul class="expertise-list">
           <li>{{ t('about.expertise.backend.i1') }}</li>
@@ -21,7 +21,7 @@
         </ul>
       </div>
 
-      <div class="expertise-category">
+      <div class="expertise-category" v-scroll-reveal="{ type: 'fade-left', delay: 50 }">
         <h4 class="expertise-title">{{ t('about.expertise.database.title') }}</h4>
         <ul class="expertise-list">
           <li>{{ t('about.expertise.database.i1') }}</li>
@@ -31,7 +31,7 @@
         </ul>
       </div>
 
-      <div class="expertise-category">
+      <div class="expertise-category" v-scroll-reveal="{ type: 'fade-left', delay: 100 }">
         <h4 class="expertise-title">{{ t('about.expertise.devops.title') }}</h4>
         <ul class="expertise-list">
           <li>{{ t('about.expertise.devops.i1') }}</li>
@@ -41,7 +41,7 @@
         </ul>
       </div>
 
-      <div class="expertise-category">
+      <div class="expertise-category" v-scroll-reveal="{ type: 'fade-left', delay: 150 }">
         <h4 class="expertise-title">{{ t('about.expertise.it.title') }}</h4>
         <ul class="expertise-list">
           <li>{{ t('about.expertise.it.i1') }}</li>
@@ -52,7 +52,7 @@
         </ul>
       </div>
 
-      <div class="expertise-category">
+      <div class="expertise-category" v-scroll-reveal="{ type: 'fade-left', delay: 200 }">
         <h4 class="expertise-title">{{ t('about.expertise.scraping.title') }}</h4>
         <ul class="expertise-list">
           <li>{{ t('about.expertise.scraping.i1') }}</li>
@@ -63,9 +63,9 @@
     </div>
 
     <div class="about-section">
-      <h3>{{ t('about.experience.title') }}</h3>
+      <h3 v-scroll-reveal="{ type: 'fade-up' }">{{ t('about.experience.title') }}</h3>
 
-      <div class="experience-item">
+      <div class="experience-item" v-scroll-reveal="{ type: 'fade-right', delay: 0 }">
         <div class="experience-header">
           <h4 class="experience-title">{{ t('about.experience.pos1.title') }}</h4>
           <span class="experience-period">{{ t('about.experience.pos1.period') }}</span>
@@ -73,7 +73,7 @@
         <p class="experience-company">{{ t('about.experience.pos1.company') }}</p>
       </div>
 
-      <div class="experience-item">
+      <div class="experience-item" v-scroll-reveal="{ type: 'fade-right', delay: 50 }">
         <div class="experience-header">
           <h4 class="experience-title">{{ t('about.experience.pos2.title') }}</h4>
           <span class="experience-period">{{ t('about.experience.pos2.period') }}</span>
@@ -81,7 +81,7 @@
         <p class="experience-company">{{ t('about.experience.pos2.company') }}</p>
       </div>
 
-      <div class="experience-item">
+      <div class="experience-item" v-scroll-reveal="{ type: 'fade-right', delay: 100 }">
         <div class="experience-header">
           <h4 class="experience-title">{{ t('about.experience.pos3.title') }}</h4>
           <span class="experience-period">{{ t('about.experience.pos3.period') }}</span>
@@ -89,7 +89,7 @@
         <p class="experience-company">{{ t('about.experience.pos3.company') }}</p>
       </div>
 
-      <div class="experience-item">
+      <div class="experience-item" v-scroll-reveal="{ type: 'fade-right', delay: 150 }">
         <div class="experience-header">
           <h4 class="experience-title">{{ t('about.experience.pos4.title') }}</h4>
           <span class="experience-period">{{ t('about.experience.pos4.period') }}</span>
