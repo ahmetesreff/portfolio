@@ -126,6 +126,10 @@ const socialLinks = [
   color: var(--color-text-secondary);
   margin-bottom: var(--spacing-md);
   font-weight: var(--font-weight-medium);
+  min-height: 1.5em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .profile-bio {
