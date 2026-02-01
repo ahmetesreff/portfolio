@@ -171,9 +171,11 @@ onUnmounted(() => {
   height: 52px;
   display: flex;
   align-items: center;
+  justify-content: center;
   transition: var(--transition-fast);
   position: relative;
   opacity: 0.88;
+  min-width: 85px;
 }
 
 .nav-link:hover {
