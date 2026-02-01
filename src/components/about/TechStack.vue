@@ -168,7 +168,7 @@ const techStack = [
 <style scoped>
 .tech-stack-section {
   width: 100%;
-  padding: var(--spacing-3xl) 0;
+  padding: var(--spacing-xl) 0;
   background: var(--color-surface);
 }
 
@@ -179,7 +179,7 @@ const techStack = [
 }
 
 .section-title {
-  font-size: var(--font-size-h2);
+  font-size: var(--font-size-h3);
   text-align: center;
   margin-bottom: var(--spacing-xs);
   color: var(--color-primary);
@@ -188,74 +188,71 @@ const techStack = [
 }
 
 .section-subtitle {
-  font-size: var(--font-size-lg);
+  font-size: var(--font-size-md);
   text-align: center;
   color: var(--color-text-secondary);
-  margin-bottom: var(--spacing-2xl);
+  margin-bottom: var(--spacing-lg);
 }
 
 .categories {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-2xl);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--spacing-md);
 }
 
 .category {
   background: var(--color-background);
-  border-radius: var(--border-radius);
-  padding: var(--spacing-xl);
+  border-radius: var(--border-radius-sm);
+  padding: var(--spacing-md);
   border: 1px solid var(--color-border);
 }
 
 .category-title {
-  font-size: var(--font-size-h4);
-  color: var(--color-primary);
-  margin-bottom: var(--spacing-md);
-  font-weight: var(--font-weight-semibold);
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-xs);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--spacing-sm);
+  font-weight: var(--font-weight-medium);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .category-title::before {
-  content: '';
-  width: 4px;
-  height: 20px;
-  background: var(--color-secondary);
-  border-radius: 2px;
+  display: none;
 }
 
 .tech-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: var(--spacing-md);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-xs);
 }
 
 .tech-item {
   display: flex;
   align-items: center;
-  gap: var(--spacing-sm);
-  padding: var(--spacing-md);
+  gap: var(--spacing-xs);
+  padding: 6px 10px;
   background: var(--color-surface);
   border: 1px solid var(--color-border);
-  border-radius: var(--border-radius-sm);
+  border-radius: 20px;
   transition: all var(--transition-fast);
   cursor: default;
 }
 
 .tech-item:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
   border-color: var(--color-secondary);
 }
 
 .tech-item.tech-expert {
-  border-left: 3px solid var(--color-secondary);
+  border-left: none;
+  background: rgba(var(--color-secondary-rgb), 0.1);
+  border-color: var(--color-secondary);
 }
 
 .tech-icon {
-  width: 32px;
-  height: 32px;
+  width: 18px;
+  height: 18px;
   flex-shrink: 0;
   display: flex;
   align-items: center;
@@ -269,58 +266,46 @@ const techStack = [
 
 .tech-info {
   display: flex;
-  flex-direction: column;
-  gap: 2px;
+  align-items: center;
+  gap: 4px;
   min-width: 0;
 }
 
 .tech-name {
-  font-size: var(--font-size-md);
-  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
   color: var(--color-primary);
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .tech-experience {
-  font-size: var(--font-size-xs);
-  color: var(--color-text-secondary);
+  display: none;
 }
 
 @media (max-width: 768px) {
   .tech-stack-section {
-    padding: var(--spacing-xl) 0;
+    padding: var(--spacing-lg) 0;
   }
 
-  .section-title {
-    font-size: var(--font-size-h3);
-  }
-
-  .section-subtitle {
-    font-size: var(--font-size-md);
+  .categories {
+    grid-template-columns: 1fr;
   }
 
   .category {
-    padding: var(--spacing-md);
-  }
-
-  .tech-grid {
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    gap: var(--spacing-sm);
-  }
-
-  .tech-item {
     padding: var(--spacing-sm);
   }
 
+  .tech-item {
+    padding: 4px 8px;
+  }
+
   .tech-icon {
-    width: 28px;
-    height: 28px;
+    width: 16px;
+    height: 16px;
   }
 
   .tech-name {
-    font-size: var(--font-size-sm);
+    font-size: var(--font-size-xs);
   }
 }
 </style>

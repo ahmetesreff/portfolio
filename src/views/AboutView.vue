@@ -1,12 +1,12 @@
 <template>
   <div class="about-view">
-    <TechStack />
-
     <section class="about-section">
       <div class="container">
         <AboutText />
       </div>
     </section>
+
+    <TechStack />
   </div>
 </template>
 
