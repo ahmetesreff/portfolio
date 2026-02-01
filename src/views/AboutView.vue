@@ -1,6 +1,6 @@
 <template>
   <div class="about-view">
-    <Skills />
+    <TechStack />
 
     <section class="about-section">
       <div class="container">
@@ -12,7 +12,7 @@
 
 <script setup>
 import AboutText from '../components/about/AboutText.vue'
-import Skills from '../components/about/Skills.vue'
+import TechStack from '../components/about/TechStack.vue'
 </script>
 
 <style scoped>

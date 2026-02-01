@@ -77,6 +77,17 @@ export default {
         company: 'Ali Osman Ulusoy Turizm · Trabzon',
         period: 'Nov 2023 - Mar 2024'
       }
+    },
+    techStack: {
+      title: 'Tech Stack',
+      subtitle: 'Technologies and tools I use',
+      categories: {
+        backend: 'Backend',
+        database: 'Database',
+        devops: 'DevOps & Infrastructure',
+        frontend: 'Frontend & Web',
+        tools: 'Tools & Other'
+      }
     }
   },
   contact: {
