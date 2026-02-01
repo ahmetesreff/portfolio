@@ -13,7 +13,7 @@ export default {
   },
   about: {
     title: 'About Me',
-    p1: 'I am a Computer Programming graduate. I started my career by developing web scraping and data collection projects. During this process, I worked on extracting, cleaning, and processing data from different sources.',
+    p1: 'I started my career by developing web scraping and data collection projects. During this process, I worked on extracting, cleaning, and processing data from different sources.',
     p2: 'Later, I took on a role in IT, dealing with network structure, hardware, user management, and system operations. I worked as an IT Manager at a company for approximately 1 year, being responsible for the entire IT infrastructure.',
     p3: 'Afterwards, I shifted my focus to backend development and started developing multi-tenant business applications.',
     p4: 'Currently, I am working on backend architecture, data model design, and performance-focused API development.',
