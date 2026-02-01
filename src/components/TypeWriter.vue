@@ -43,15 +43,16 @@ const words = {
   ]
 }
 
-const displayText = ref('')
-const isTyping = ref(true)
+const currentWords = computed(() => words[locale.value] || words.tr)
+
+// Start with first word already displayed
+const displayText = ref(currentWords.value[0])
+const isTyping = ref(false)
 const currentWordIndex = ref(0)
-const currentCharIndex = ref(0)
+const currentCharIndex = ref(currentWords.value[0].length)
 const isDeleting = ref(false)
 
 let timeout = null
-
-const currentWords = computed(() => words[locale.value] || words.tr)
 
 const type = () => {
   const currentWord = currentWords.value[currentWordIndex.value]
@@ -88,7 +89,9 @@ const type = () => {
 }
 
 onMounted(() => {
-  timeout = setTimeout(type, 1000)
+  // Start deleting after initial pause (first word is already displayed)
+  isDeleting.value = true
+  timeout = setTimeout(type, props.pauseTime)
 })
 
 onUnmounted(() => {
