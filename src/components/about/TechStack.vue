@@ -4,32 +4,20 @@
       <h2 class="section-title" v-scroll-reveal="{ type: 'fade-up' }">
         {{ t('about.techStack.title') }}
       </h2>
-      <p class="section-subtitle" v-scroll-reveal="{ type: 'fade-up', delay: 50 }">
-        {{ t('about.techStack.subtitle') }}
-      </p>
 
-      <div class="categories">
+      <div class="categories" v-scroll-reveal="{ type: 'fade-up', delay: 50 }">
         <div
-          v-for="(category, index) in techStack"
-          :key="category.name"
+          v-for="category in techStack"
+          :key="category.key"
           class="category"
-          v-scroll-reveal="{ type: 'fade-up', delay: index * 100 }"
         >
-          <h3 class="category-title">{{ t(`about.techStack.categories.${category.key}`) }}</h3>
-          <div class="tech-grid">
-            <div
-              v-for="tech in category.technologies"
+          <span class="category-title">{{ t(`about.techStack.categories.${category.key}`) }}</span>
+          <span class="tech-list">
+            <span
+              v-for="(tech, index) in category.technologies"
               :key="tech.name"
-              class="tech-item"
-              :class="{ 'tech-expert': tech.level === 'expert' }"
-            >
-              <div class="tech-icon" v-html="tech.icon"></div>
-              <div class="tech-info">
-                <span class="tech-name">{{ tech.name }}</span>
-                <span v-if="tech.experience" class="tech-experience">{{ tech.experience }}</span>
-              </div>
-            </div>
-          </div>
+            >{{ tech.name }}<span v-if="index < category.technologies.length - 1" class="separator"> · </span></span>
+          </span>
         </div>
       </div>
     </div>
@@ -173,113 +161,48 @@ const techStack = [
 }
 
 .tech-stack-container {
-  max-width: var(--max-width-wide);
+  max-width: var(--max-width);
   margin: 0 auto;
   padding: 0 var(--spacing-md);
 }
 
 .section-title {
-  font-size: var(--font-size-h3);
+  font-size: var(--font-size-lg);
   text-align: center;
-  margin-bottom: var(--spacing-xs);
+  margin-bottom: var(--spacing-lg);
   color: var(--color-primary);
   font-weight: var(--font-weight-semibold);
-  letter-spacing: -0.02em;
-}
-
-.section-subtitle {
-  font-size: var(--font-size-md);
-  text-align: center;
-  color: var(--color-text-secondary);
-  margin-bottom: var(--spacing-lg);
 }
 
 .categories {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: var(--spacing-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
 }
 
 .category {
-  background: var(--color-background);
-  border-radius: var(--border-radius-sm);
-  padding: var(--spacing-md);
-  border: 1px solid var(--color-border);
+  display: flex;
+  align-items: baseline;
+  gap: var(--spacing-sm);
+  line-height: 1.6;
 }
 
 .category-title {
   font-size: var(--font-size-sm);
   color: var(--color-text-secondary);
-  margin-bottom: var(--spacing-sm);
   font-weight: var(--font-weight-medium);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.category-title::before {
-  display: none;
-}
-
-.tech-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--spacing-xs);
-}
-
-.tech-item {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-xs);
-  padding: 6px 10px;
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: 20px;
-  transition: all var(--transition-fast);
-  cursor: default;
-}
-
-.tech-item:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-sm);
-  border-color: var(--color-secondary);
-}
-
-.tech-item.tech-expert {
-  border-left: none;
-  background: rgba(var(--color-secondary-rgb), 0.1);
-  border-color: var(--color-secondary);
-}
-
-.tech-icon {
-  width: 18px;
-  height: 18px;
+  min-width: 120px;
   flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
-.tech-icon svg {
-  width: 100%;
-  height: 100%;
-}
-
-.tech-info {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  min-width: 0;
-}
-
-.tech-name {
+.tech-list {
   font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
   color: var(--color-primary);
-  white-space: nowrap;
 }
 
-.tech-experience {
-  display: none;
+.separator {
+  color: var(--color-text-secondary);
+  opacity: 0.5;
 }
 
 @media (max-width: 768px) {
@@ -287,25 +210,13 @@ const techStack = [
     padding: var(--spacing-lg) 0;
   }
 
-  .categories {
-    grid-template-columns: 1fr;
-  }
-
   .category {
-    padding: var(--spacing-sm);
+    flex-direction: column;
+    gap: var(--spacing-xs);
   }
 
-  .tech-item {
-    padding: 4px 8px;
-  }
-
-  .tech-icon {
-    width: 16px;
-    height: 16px;
-  }
-
-  .tech-name {
-    font-size: var(--font-size-xs);
+  .category-title {
+    min-width: auto;
   }
 }
 </style>
