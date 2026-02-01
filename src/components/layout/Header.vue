@@ -55,7 +55,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, watch, onUnmounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import ThemeToggle from '../ThemeToggle.vue'
 import LanguageToggle from '../LanguageToggle.vue'
@@ -71,6 +71,35 @@ const toggleMenu = () => {
 const closeMenu = () => {
   isMenuOpen.value = false
 }
+
+// Close menu when clicking outside
+const handleClickOutside = (event) => {
+  const navMenu = document.querySelector('.nav-menu')
+  const navToggle = document.querySelector('.nav-toggle')
+
+  if (navMenu && navToggle &&
+      !navMenu.contains(event.target) &&
+      !navToggle.contains(event.target)) {
+    closeMenu()
+  }
+}
+
+// Add/remove click listener when menu opens/closes
+watch(isMenuOpen, (isOpen) => {
+  if (isOpen) {
+    // Small delay to prevent immediate close from toggle click
+    setTimeout(() => {
+      document.addEventListener('click', handleClickOutside)
+    }, 100)
+  } else {
+    document.removeEventListener('click', handleClickOutside)
+  }
+})
+
+// Cleanup on component unmount
+onUnmounted(() => {
+  document.removeEventListener('click', handleClickOutside)
+})
 </script>
 
 <style scoped>
