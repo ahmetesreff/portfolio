@@ -175,7 +175,8 @@ onUnmounted(() => {
   transition: var(--transition-fast);
   position: relative;
   opacity: 0.88;
-  min-width: 85px;
+  min-width: 105px;
+  white-space: nowrap;
 }
 
 .nav-link:hover {
