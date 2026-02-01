@@ -156,6 +156,7 @@ onMounted(() => {
 .ip-main .label {
   font-size: var(--font-size-sm);
   color: var(--color-text-secondary);
+  min-height: 20px;
 }
 
 .ip-address {
@@ -175,15 +176,20 @@ onMounted(() => {
   display: flex;
   justify-content: space-between;
   font-size: var(--font-size-sm);
+  gap: var(--spacing-sm);
 }
 
 .detail-label {
   color: var(--color-text-secondary);
+  min-width: 130px;
+  flex-shrink: 0;
 }
 
 .detail-value {
   color: var(--color-primary);
   font-weight: var(--font-weight-medium);
+  text-align: right;
+  word-break: break-word;
 }
 
 .error {

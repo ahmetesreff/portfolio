@@ -240,6 +240,7 @@ onMounted(() => {
 .option-row label {
   font-size: var(--font-size-sm);
   color: var(--color-text-secondary);
+  min-width: 120px;
 }
 
 .option-row.checkbox {
@@ -281,7 +282,8 @@ onMounted(() => {
 .strength-text {
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-medium);
-  min-width: 60px;
+  min-width: 70px;
+  text-align: right;
 }
 
 .tool-btn {

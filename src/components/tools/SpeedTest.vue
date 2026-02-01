@@ -261,6 +261,8 @@ const startTest = async () => {
   text-transform: uppercase;
   letter-spacing: 0.5px;
   font-weight: var(--font-weight-medium);
+  min-width: 100px;
+  min-height: 18px;
 }
 
 .metric-value-container {

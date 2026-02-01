@@ -120,6 +120,8 @@ const downloadQr = () => {
   font-size: var(--font-size-sm);
   cursor: pointer;
   transition: var(--transition-fast);
+  min-width: 150px;
+  text-align: center;
 }
 
 .tool-btn.secondary {
