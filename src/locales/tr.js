@@ -1,5 +1,6 @@
 export default {
   nav: {
+    home: 'Ana Sayfa',
     about: 'Hakkımda',
     contact: 'İletişim'
   },

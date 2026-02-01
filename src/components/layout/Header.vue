@@ -13,6 +13,13 @@
             class="nav-link"
             @click="closeMenu"
           >
+            {{ t('nav.home') }}
+          </router-link>
+          <router-link
+            to="/hakkimda"
+            class="nav-link"
+            @click="closeMenu"
+          >
             {{ t('nav.about') }}
           </router-link>
           <router-link

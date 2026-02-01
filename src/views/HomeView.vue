@@ -22,25 +22,11 @@
         </div>
       </div>
     </section>
-
-    <div v-scroll-reveal="{ type: 'fade-up', delay: 100 }">
-      <Skills />
-    </div>
-
-    <section class="about-section">
-      <div class="container">
-        <div v-scroll-reveal="{ type: 'fade-up', delay: 150 }">
-          <AboutText />
-        </div>
-      </div>
-    </section>
   </div>
 </template>
 
 <script setup>
 import ProfileCard from '../components/about/ProfileCard.vue'
-import AboutText from '../components/about/AboutText.vue'
-import Skills from '../components/about/Skills.vue'
 import Terminal from '../components/Terminal.vue'
 </script>
 
@@ -106,13 +92,6 @@ import Terminal from '../components/Terminal.vue'
   z-index: 1;
 }
 
-.about-section {
-  padding: var(--spacing-3xl) 0;
-  background: var(--color-background);
-  position: relative;
-  z-index: 1;
-}
-
 .terminal-section {
   padding: var(--spacing-3xl) 0;
   background: var(--color-surface);
@@ -129,10 +108,6 @@ import Terminal from '../components/Terminal.vue'
 @media (max-width: 768px) {
   .hero-section {
     padding: var(--spacing-xl) 0 var(--spacing-lg) 0;
-  }
-
-  .about-section {
-    padding: var(--spacing-xl) 0;
   }
 
   .terminal-section {
