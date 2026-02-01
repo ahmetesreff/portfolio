@@ -67,14 +67,16 @@ onMounted(() => {
   background: transparent;
   color: var(--color-primary);
   cursor: pointer;
-  transition: var(--transition-fast);
+  transition: background var(--transition-fast);
   border: none;
   padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  user-select: none;
 }
 
 .theme-toggle:hover {
   background: var(--color-accent);
-  opacity: 0.8;
 }
 
 .theme-toggle:active {
@@ -83,6 +85,7 @@ onMounted(() => {
 
 .theme-toggle:focus {
   outline: none;
+  background: transparent;
 }
 
 .theme-toggle:focus-visible {
@@ -92,5 +95,15 @@ onMounted(() => {
 
 .theme-toggle svg {
   display: block;
+}
+
+@media (hover: none) {
+  .theme-toggle:hover {
+    background: transparent;
+  }
+
+  .theme-toggle:active {
+    background: var(--color-accent);
+  }
 }
 </style>

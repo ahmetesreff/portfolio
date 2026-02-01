@@ -35,20 +35,23 @@ const toggleLanguage = () => {
   background: transparent;
   color: var(--color-primary);
   cursor: pointer;
-  transition: var(--transition-fast);
+  transition: background var(--transition-fast);
   border: none;
   font-family: var(--font-primary);
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  user-select: none;
 }
 
 .language-text {
   font-size: 13px;
   font-weight: var(--font-weight-semibold);
   letter-spacing: 0.02em;
+  display: block;
 }
 
 .language-toggle:hover {
   background: var(--color-accent);
-  opacity: 0.8;
 }
 
 .language-toggle:active {
@@ -57,10 +60,21 @@ const toggleLanguage = () => {
 
 .language-toggle:focus {
   outline: none;
+  background: transparent;
 }
 
 .language-toggle:focus-visible {
   outline: 2px solid var(--color-secondary);
   outline-offset: 2px;
+}
+
+@media (hover: none) {
+  .language-toggle:hover {
+    background: transparent;
+  }
+
+  .language-toggle:active {
+    background: var(--color-accent);
+  }
 }
 </style>
