@@ -198,19 +198,38 @@ const startTest = async () => {
   currentPing.value = realPing
   progress.value = 10
 
-  // Download test with larger file sizes for accurate measurement
-  // Total: ~500MB for high-speed connections
-  const testSizes = [
-    10000000,   // 10MB - warm up
-    25000000,   // 25MB
-    50000000,   // 50MB
-    50000000,   // 50MB
-    100000000,  // 100MB
-    100000000,  // 100MB
-    100000000,  // 100MB
-  ]
+  // First, do a quick test to estimate connection speed
+  const initialSpeed = await measureDownloadSpeed(2000000) // 2MB initial test
+  currentSpeed.value = initialSpeed || 0
+  progress.value = 20
 
-  const speeds = []
+  // Determine test sizes based on estimated speed
+  let testSizes
+  if (initialSpeed && initialSpeed > 200) {
+    // Very fast connection (>200 Mbps): use large files
+    testSizes = [
+      50000000,   // 50MB
+      100000000,  // 100MB
+      100000000,  // 100MB
+      100000000,  // 100MB
+    ]
+  } else if (initialSpeed && initialSpeed > 50) {
+    // Fast connection (50-200 Mbps): use medium files
+    testSizes = [
+      25000000,   // 25MB
+      50000000,   // 50MB
+      50000000,   // 50MB
+    ]
+  } else {
+    // Slow connection (<50 Mbps): use small files
+    testSizes = [
+      5000000,    // 5MB
+      10000000,   // 10MB
+      10000000,   // 10MB
+    ]
+  }
+
+  const speeds = [initialSpeed]
 
   for (let i = 0; i < testSizes.length; i++) {
     const speed = await measureDownloadSpeed(testSizes[i])
@@ -218,13 +237,13 @@ const startTest = async () => {
       speeds.push(speed)
       currentSpeed.value = speed
     }
-    progress.value = 10 + ((i + 1) / testSizes.length) * 90
+    progress.value = 20 + ((i + 1) / testSizes.length) * 80
 
     // Update ping with slight variation
     currentPing.value = realPing + (Math.random() - 0.5) * 3
   }
 
-  // Calculate average speed (excluding first warm-up measurement)
+  // Calculate average speed (excluding first initial measurement)
   const relevantSpeeds = speeds.length > 1 ? speeds.slice(1) : speeds
   const avgSpeed = relevantSpeeds.length > 0
     ? relevantSpeeds.reduce((a, b) => a + b, 0) / relevantSpeeds.length
