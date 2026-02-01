@@ -134,7 +134,9 @@ export default {
       average: 'Ortalama hız',
       slow: 'Yavaş bağlantı',
       speed: 'Hız',
-      duration: 'Süre'
+      duration: 'Süre',
+      downloadSpeed: 'İndirme Hızı',
+      ping: 'Ping'
     },
     jsonFormatter: {
       title: 'JSON Formatlayıcı',

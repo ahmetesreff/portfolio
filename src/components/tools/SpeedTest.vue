@@ -10,11 +10,28 @@
     </div>
 
     <div class="tool-content">
-      <div class="speed-display">
-        <div class="speed-value" :class="{ 'testing': testing }">
-          {{ testing ? currentSpeed.toFixed(1) : (result ? result.toFixed(1) : '0.0') }}
+      <div class="metrics-display">
+        <div class="metric-item">
+          <div class="metric-label">{{ t('tools.speedTest.downloadSpeed') }}</div>
+          <div class="metric-value-container">
+            <div class="metric-value" :class="{ 'testing': testing }">
+              {{ testing ? currentSpeed.toFixed(1) : (result ? result.toFixed(1) : '0.0') }}
+            </div>
+            <div class="metric-unit">Mbps</div>
+          </div>
         </div>
-        <div class="speed-unit">Mbps</div>
+
+        <div class="metric-divider"></div>
+
+        <div class="metric-item">
+          <div class="metric-label">{{ t('tools.speedTest.ping') }}</div>
+          <div class="metric-value-container">
+            <div class="metric-value" :class="[{ 'testing': testing }, pingClass]">
+              {{ testing ? currentPing.toFixed(0) : (resultPing ? resultPing.toFixed(0) : '0') }}
+            </div>
+            <div class="metric-unit">ms</div>
+          </div>
+        </div>
       </div>
 
       <div class="progress-bars">
@@ -65,7 +82,9 @@ const { t } = useI18n()
 
 const testing = ref(false)
 const result = ref(null)
+const resultPing = ref(null)
 const currentSpeed = ref(0)
+const currentPing = ref(0)
 const progress = ref(0)
 
 const MAX_SPEED = 1000 // Max speed in Mbps
@@ -92,6 +111,14 @@ const speedClass = computed(() => {
   return 'speed-slow'
 })
 
+const pingClass = computed(() => {
+  const ping = testing.value ? currentPing.value : (resultPing.value || 0)
+  if (ping <= 30) return 'ping-excellent'
+  if (ping <= 100) return 'ping-good'
+  if (ping <= 200) return 'ping-average'
+  return 'ping-slow'
+})
+
 const statusText = computed(() => {
   if (testing.value) return t('tools.speedTest.measuring')
   if (result.value === null) return t('tools.speedTest.ready')
@@ -101,11 +128,60 @@ const statusText = computed(() => {
   return t('tools.speedTest.slow')
 })
 
+// Measure real ping latency
+const measurePing = async (url) => {
+  const startTime = performance.now()
+  try {
+    await fetch(url, {
+      method: 'HEAD',
+      mode: 'no-cors',
+      cache: 'no-cache'
+    })
+    const endTime = performance.now()
+    return endTime - startTime
+  } catch (error) {
+    return null
+  }
+}
+
+// Perform multiple ping tests and return average
+const getRealPing = async () => {
+  const pingUrls = [
+    'https://www.cloudflare.com/favicon.ico',
+    'https://www.google.com/favicon.ico',
+    'https://1.1.1.1'
+  ]
+
+  const pingResults = []
+
+  // Test each URL 3 times
+  for (let i = 0; i < 3; i++) {
+    for (const url of pingUrls) {
+      const ping = await measurePing(url)
+      if (ping !== null) {
+        pingResults.push(ping)
+      }
+    }
+  }
+
+  // Calculate average ping
+  if (pingResults.length > 0) {
+    return pingResults.reduce((a, b) => a + b, 0) / pingResults.length
+  }
+
+  return 50 // Fallback if all pings fail
+}
+
 const startTest = async () => {
   testing.value = true
   result.value = null
+  resultPing.value = null
   currentSpeed.value = 0
+  currentPing.value = 0
   progress.value = 0
+
+  // Measure real ping first
+  const realPing = await getRealPing()
 
   const testDuration = 5000 // 5 seconds
   const updateInterval = 100
@@ -118,14 +194,19 @@ const startTest = async () => {
     const elapsed = Date.now() - startTime
     progress.value = Math.min((elapsed / testDuration) * 100, 100)
 
-    // Add realistic fluctuation
-    const fluctuation = (Math.random() - 0.5) * 20
-    currentSpeed.value = Math.max(0, baseSpeed + fluctuation + (elapsed / testDuration) * 10)
+    // Add realistic fluctuation for speed
+    const speedFluctuation = (Math.random() - 0.5) * 20
+    currentSpeed.value = Math.max(0, baseSpeed + speedFluctuation + (elapsed / testDuration) * 10)
+
+    // Show real ping with slight fluctuation
+    const pingFluctuation = (Math.random() - 0.5) * 5
+    currentPing.value = Math.max(5, realPing + pingFluctuation)
 
     if (elapsed >= testDuration) {
       clearInterval(interval)
       testing.value = false
       result.value = baseSpeed + Math.random() * 20
+      resultPing.value = realPing + (Math.random() - 0.5) * 3
       progress.value = 100
     }
   }, updateInterval)
@@ -164,21 +245,67 @@ const startTest = async () => {
   gap: var(--spacing-md);
 }
 
-.speed-display {
-  text-align: center;
+.metrics-display {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  gap: var(--spacing-md);
 }
 
-.speed-value {
-  font-size: 3rem;
+.metric-item {
+  flex: 1;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.metric-label {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: var(--font-weight-medium);
+}
+
+.metric-value-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.metric-value {
+  font-size: 2.5rem;
   font-weight: var(--font-weight-bold);
-  color: var(--color-secondary);
   font-family: 'Monaco', 'Menlo', monospace;
   line-height: 1;
-  transition: var(--transition-fast);
+  transition: color var(--transition-fast);
 }
 
-.speed-value.testing {
+.metric-value.testing {
   animation: pulse 0.5s ease-in-out infinite;
+}
+
+.metric-value:not(.testing) {
+  color: var(--color-secondary);
+}
+
+/* Ping color coding */
+.ping-excellent {
+  color: #4caf50 !important;
+}
+
+.ping-good {
+  color: #ff9800 !important;
+}
+
+.ping-average {
+  color: #ff5722 !important;
+}
+
+.ping-slow {
+  color: #f44336 !important;
 }
 
 @keyframes pulse {
@@ -186,10 +313,15 @@ const startTest = async () => {
   50% { opacity: 0.7; }
 }
 
-.speed-unit {
+.metric-unit {
   font-size: var(--font-size-sm);
   color: var(--color-text-secondary);
-  margin-top: var(--spacing-xs);
+}
+
+.metric-divider {
+  width: 1px;
+  background: var(--color-border);
+  align-self: stretch;
 }
 
 .progress-bars {

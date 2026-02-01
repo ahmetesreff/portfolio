@@ -134,7 +134,9 @@ export default {
       average: 'Average speed',
       slow: 'Slow connection',
       speed: 'Speed',
-      duration: 'Duration'
+      duration: 'Duration',
+      downloadSpeed: 'Download Speed',
+      ping: 'Ping'
     },
     jsonFormatter: {
       title: 'JSON Formatter',
