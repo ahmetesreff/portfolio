@@ -146,21 +146,16 @@ const measurePing = async (url) => {
 
 // Perform multiple ping tests and return average
 const getRealPing = async () => {
-  const pingUrls = [
-    'https://www.cloudflare.com/favicon.ico',
-    'https://www.google.com/favicon.ico',
-    'https://1.1.1.1'
-  ]
+  // Ping to current server (user's portfolio site)
+  const serverUrl = `${window.location.origin}/favicon.ico`
 
   const pingResults = []
 
-  // Test each URL 3 times
-  for (let i = 0; i < 3; i++) {
-    for (const url of pingUrls) {
-      const ping = await measurePing(url)
-      if (ping !== null) {
-        pingResults.push(ping)
-      }
+  // Test server 5 times for accurate measurement
+  for (let i = 0; i < 5; i++) {
+    const ping = await measurePing(serverUrl)
+    if (ping !== null) {
+      pingResults.push(ping)
     }
   }
 
