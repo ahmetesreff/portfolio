@@ -1,5 +1,6 @@
 <template>
   <div id="app" class="app">
+    <SeoHead />
     <Header />
     <main class="main-content">
       <router-view v-slot="{ Component }">
@@ -16,6 +17,7 @@
 import { onMounted } from 'vue'
 import Header from './components/layout/Header.vue'
 import Footer from './components/layout/Footer.vue'
+import SeoHead from './components/SeoHead.vue'
 
 // Ensure page starts at top on load/refresh
 onMounted(() => {

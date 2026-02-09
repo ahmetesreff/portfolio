@@ -11,6 +11,27 @@ export default {
     bio: 'I develop backend systems while having experience in corporate IT infrastructure and operational processes.',
     contactButton: 'Contact'
   },
+  seo: {
+    site: {
+      description: 'Ahmet Eşref Karabulut | Backend Developer and IT Management experience.'
+    },
+    home: {
+      title: 'Ahmet Eşref Karabulut - Backend Developer | Trabzon',
+      description: 'Backend Developer & IT Management experience. I build multi-tenant systems and REST APIs with NestJS, PostgreSQL, Docker, Redis.'
+    },
+    about: {
+      title: 'About | Ahmet Eşref Karabulut',
+      description: 'Experience in backend development, database design, DevOps, and IT management.'
+    },
+    contact: {
+      title: 'Contact | Ahmet Eşref Karabulut',
+      description: 'Get in touch with Ahmet Eşref Karabulut. Email and social links.'
+    },
+    tools: {
+      title: 'Tools | Ahmet Eşref Karabulut',
+      description: 'IT tools for daily tasks: IP check, speed test, JSON tools, and more.'
+    }
+  },
   about: {
     title: 'About Me',
     p1: 'I started my career by developing web scraping and data collection projects. During this process, I worked on extracting, cleaning, and processing data from different sources.',

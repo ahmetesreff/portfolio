@@ -7,22 +7,42 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: HomeView
+      component: HomeView,
+      meta: {
+        titleKey: 'seo.home.title',
+        descriptionKey: 'seo.home.description',
+        canonicalPath: '/'
+      }
     },
     {
       path: '/hakkimda',
       name: 'about',
-      component: () => import('../views/AboutView.vue')
+      component: () => import('../views/AboutView.vue'),
+      meta: {
+        titleKey: 'seo.about.title',
+        descriptionKey: 'seo.about.description',
+        canonicalPath: '/hakkimda'
+      }
     },
     {
       path: '/iletisim',
       name: 'contact',
-      component: () => import('../views/ContactView.vue')
+      component: () => import('../views/ContactView.vue'),
+      meta: {
+        titleKey: 'seo.contact.title',
+        descriptionKey: 'seo.contact.description',
+        canonicalPath: '/iletisim'
+      }
     },
     {
       path: '/araclar',
       name: 'tools',
-      component: () => import('../views/ToolsView.vue')
+      component: () => import('../views/ToolsView.vue'),
+      meta: {
+        titleKey: 'seo.tools.title',
+        descriptionKey: 'seo.tools.description',
+        canonicalPath: '/araclar'
+      }
     }
   ],
   scrollBehavior(to, from, savedPosition) {
