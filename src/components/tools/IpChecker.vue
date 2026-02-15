@@ -56,6 +56,18 @@ const ipData = ref(null)
 const loading = ref(false)
 const error = ref(null)
 
+const fetchFromIpinfo = async () => {
+  const response = await fetch('https://ipinfo.io/json')
+  if (!response.ok) throw new Error('API error')
+  const data = await response.json()
+  return {
+    ip: data.ip,
+    city: data.city,
+    country: data.country,
+    org: data.org || 'N/A'
+  }
+}
+
 const fetchFromIpapi = async () => {
   const response = await fetch('https://ipapi.co/json/')
   if (!response.ok) throw new Error('API error')
@@ -69,28 +81,15 @@ const fetchFromIpapi = async () => {
   }
 }
 
-const fetchFromIpwho = async () => {
-  const response = await fetch('https://ipwho.is/')
-  if (!response.ok) throw new Error('API error')
-  const data = await response.json()
-  if (data.success === false) throw new Error('API error')
-  return {
-    ip: data.ip,
-    city: data.city,
-    country: data.country,
-    org: data.connection?.isp || data.connection?.org || 'N/A'
-  }
-}
-
 const checkIp = async () => {
   loading.value = true
   error.value = null
 
   try {
-    ipData.value = await fetchFromIpapi()
+    ipData.value = await fetchFromIpinfo()
   } catch {
     try {
-      ipData.value = await fetchFromIpwho()
+      ipData.value = await fetchFromIpapi()
     } catch {
       error.value = t('tools.error')
     }
