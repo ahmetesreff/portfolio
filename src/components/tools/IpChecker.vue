@@ -56,27 +56,44 @@ const ipData = ref(null)
 const loading = ref(false)
 const error = ref(null)
 
+const fetchFromIpapi = async () => {
+  const response = await fetch('https://ipapi.co/json/')
+  if (!response.ok) throw new Error('API error')
+  const data = await response.json()
+  if (data.error) throw new Error('API error')
+  return {
+    ip: data.ip,
+    city: data.city,
+    country: data.country_name,
+    org: data.org || 'N/A'
+  }
+}
+
+const fetchFromIpwho = async () => {
+  const response = await fetch('https://ipwho.is/')
+  if (!response.ok) throw new Error('API error')
+  const data = await response.json()
+  if (data.success === false) throw new Error('API error')
+  return {
+    ip: data.ip,
+    city: data.city,
+    country: data.country,
+    org: data.connection?.isp || data.connection?.org || 'N/A'
+  }
+}
+
 const checkIp = async () => {
   loading.value = true
   error.value = null
 
   try {
-    // Use ipwho.is - reliable free API with no rate limits
-    const response = await fetch('https://ipwho.is/')
-    const data = await response.json()
-
-    if (data.success === false) {
-      throw new Error('API error')
+    ipData.value = await fetchFromIpapi()
+  } catch {
+    try {
+      ipData.value = await fetchFromIpwho()
+    } catch {
+      error.value = t('tools.error')
     }
-
-    ipData.value = {
-      ip: data.ip,
-      city: data.city,
-      country: data.country,
-      org: data.connection?.isp || data.connection?.org || 'N/A'
-    }
-  } catch (err) {
-    error.value = t('tools.error')
   } finally {
     loading.value = false
   }
