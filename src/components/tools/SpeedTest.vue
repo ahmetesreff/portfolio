@@ -147,7 +147,7 @@ const measurePing = async (url) => {
 // Perform multiple ping tests and return average
 const getRealPing = async () => {
   // Ping to current server (user's portfolio site)
-  const serverUrl = `${window.location.origin}/favicon.ico`
+  const serverUrl = `${window.location.origin}/favicon.png`
 
   const pingResults = []
 
@@ -203,25 +203,26 @@ const startTest = async () => {
   currentSpeed.value = initialSpeed || 0
   progress.value = 20
 
-  // Determine test sizes based on estimated speed
+  // Determine test sizes based on estimated speed. Sizes are kept modest
+  // on purpose: this is a portfolio toy, not worth burning users' (mobile)
+  // data — worst case here is ~65MB per run instead of ~350MB.
   let testSizes
   if (initialSpeed && initialSpeed > 200) {
-    // Very fast connection (>200 Mbps): use large files
+    // Very fast connection (>200 Mbps)
     testSizes = [
-      50000000,   // 50MB
-      100000000,  // 100MB
-      100000000,  // 100MB
-      100000000,  // 100MB
+      20000000,   // 20MB
+      25000000,   // 25MB
+      25000000,   // 25MB
     ]
   } else if (initialSpeed && initialSpeed > 50) {
-    // Fast connection (50-200 Mbps): use medium files
+    // Fast connection (50-200 Mbps)
     testSizes = [
-      25000000,   // 25MB
-      50000000,   // 50MB
-      50000000,   // 50MB
+      10000000,   // 10MB
+      20000000,   // 20MB
+      20000000,   // 20MB
     ]
   } else {
-    // Slow connection (<50 Mbps): use small files
+    // Slow connection (<50 Mbps)
     testSizes = [
       5000000,    // 5MB
       10000000,   // 10MB

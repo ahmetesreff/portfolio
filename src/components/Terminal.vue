@@ -189,6 +189,15 @@ const executeCommand = () => {
   scrollToBottom()
 }
 
+// Escape user-controlled input before it is embedded into v-html output
+const escapeHtml = (str) =>
+  String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;')
+
 const processCommand = (cmd) => {
   const parts = cmd.split(' ')
   const command = parts[0].toLowerCase()
@@ -217,7 +226,7 @@ about  contact  experience/  skills/
       if (directories[dir]) {
         return `<div class="ls-output">${directories[dir].join('  ')}</div>`
       }
-      return `<span class="error">ls: ${args[0]}: No such directory</span>`
+      return `<span class="error">ls: ${escapeHtml(args[0])}: No such directory</span>`
 
     case 'cat':
       if (args.length === 0) {
@@ -227,20 +236,21 @@ about  contact  experience/  skills/
       if (files[file]) {
         return `<div class="cat-output">${files[file][lang]}</div>`
       }
-      return `<span class="error">cat: ${args[0]}: No such file</span>`
+      return `<span class="error">cat: ${escapeHtml(args[0])}: No such file</span>`
 
     case 'sudo':
       if (args[0] === 'hire-me') {
         setTimeout(() => router.push('/iletisim'), 1000)
         return `<div class="success">
 ✅ Permission granted!
-🚀 Redirecting to /contact...
+🚀 Redirecting to /iletisim...
 </div>`
       }
-      return `<span class="error">sudo: ${args.join(' ')}: command not found</span>`
+      return `<span class="error">sudo: ${escapeHtml(args.join(' '))}: command not found</span>`
 
     case 'lang':
       locale.value = locale.value === 'tr' ? 'en' : 'tr'
+      localStorage.setItem('locale', locale.value)
       return `<div class="success">Language changed to: ${locale.value.toUpperCase()}</div>`
 
     case 'easter-egg':
@@ -262,7 +272,7 @@ about  contact  experience/  skills/
       return ''
 
     default:
-      return `<span class="error">bash: ${command}: command not found
+      return `<span class="error">bash: ${escapeHtml(command)}: command not found
 <span class="hint">Try '<span class="cmd">help</span>' to see available commands</span></span>`
   }
 }

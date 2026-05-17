@@ -188,7 +188,7 @@ const { t } = useI18n()
 .experience-item {
   margin-bottom: var(--spacing-lg);
   padding-bottom: var(--spacing-lg);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  border-bottom: 1px solid var(--color-border);
 }
 
 .experience-item:last-child {

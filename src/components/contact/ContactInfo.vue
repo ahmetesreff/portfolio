@@ -126,7 +126,7 @@ const socialLinks = [
 
 .contact-subtitle {
   font-size: var(--font-size-lg);
-  color: var(--color-text-light);
+  color: var(--color-text-secondary);
   margin: 0;
 }
 

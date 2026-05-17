@@ -54,14 +54,26 @@ const generateQr = () => {
   qrUrl.value = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${text}`
 }
 
-const downloadQr = () => {
+const downloadQr = async () => {
   if (!qrUrl.value) return
 
-  const link = document.createElement('a')
-  link.href = qrUrl.value
-  link.download = 'qrcode.png'
-  link.target = '_blank'
-  link.click()
+  try {
+    // Fetch as blob: the `download` attribute is ignored for cross-origin
+    // hrefs, so an object URL from the same origin is required.
+    const response = await fetch(qrUrl.value)
+    const blob = await response.blob()
+    const objectUrl = URL.createObjectURL(blob)
+
+    const link = document.createElement('a')
+    link.href = objectUrl
+    link.download = 'qrcode.png'
+    link.click()
+
+    URL.revokeObjectURL(objectUrl)
+  } catch (e) {
+    // Network/CORS failure: fall back to opening in a new tab
+    window.open(qrUrl.value, '_blank')
+  }
 }
 </script>
 
