@@ -1,13 +1,13 @@
 <template>
   <div class="terminal-container">
-    <div class="terminal">
+    <div class="terminal" ref="terminalRoot">
       <div class="terminal-header">
         <div class="terminal-buttons">
           <span class="btn-close"></span>
           <span class="btn-minimize"></span>
           <span class="btn-maximize"></span>
         </div>
-        <div class="terminal-title">visitor@portfolio:~</div>
+        <div class="terminal-title">aek@portfolio:~</div>
       </div>
 
       <div class="terminal-body" ref="terminalBody" @click="focusInput">
@@ -18,8 +18,8 @@
         </div>
 
         <div v-for="(item, index) in history" :key="index" class="terminal-line">
-          <div class="terminal-prompt">
-            <span class="prompt-user">visitor@portfolio</span>
+          <div v-if="!item.raw" class="terminal-prompt">
+            <span class="prompt-user">aek@portfolio</span>
             <span class="prompt-separator">:</span>
             <span class="prompt-path">~</span>
             <span class="prompt-symbol">$</span>
@@ -29,7 +29,7 @@
         </div>
 
         <div class="terminal-input-line">
-          <span class="prompt-user">visitor@portfolio</span>
+          <span class="prompt-user">aek@portfolio</span>
           <span class="prompt-separator">:</span>
           <span class="prompt-path">~</span>
           <span class="prompt-symbol">$</span>
@@ -42,6 +42,10 @@
             @keydown.tab.prevent="autocomplete"
             class="terminal-input"
             spellcheck="false"
+            autocapitalize="off"
+            autocorrect="off"
+            autocomplete="off"
+            :aria-label="t('terminal.inputLabel')"
           />
         </div>
       </div>
@@ -50,19 +54,88 @@
 </template>
 
 <script setup>
-import { ref, nextTick, computed } from 'vue'
+import { ref, nextTick, onMounted, onUnmounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
+
+import profilePhoto from '../assets/images/profile.jpg'
 
 const { t, locale } = useI18n()
 const router = useRouter()
 
 const terminalBody = ref(null)
 const terminalInput = ref(null)
+const terminalRoot = ref(null)
 const currentCommand = ref('')
 const history = ref([])
 const commandHistory = ref([])
 const historyIndex = ref(-1)
+
+// Sentinel: `clear` wipes the screen and must NOT echo its own line
+const CLEAR = Symbol('clear')
+const COMMANDS = ['help', 'whoami', 'neofetch', 'ls', 'cat', 'clear', 'sudo', 'lang', 'easter-egg', 'pwd', 'echo', 'date', 'history']
+
+// neofetch: profile photo rendered to ASCII via canvas (computed once)
+const ASCII_COLS = 64
+// Paul Bourke 70-level ramp, dense -> sparse
+const ASCII_RAMP = `$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\\|()1{}[]?-_+~<>i!lI;:,"^\`'. `
+let lumGrid = null
+
+const loadAsciiSource = () => {
+  const img = new Image()
+  img.src = profilePhoto
+  img.onload = () => {
+    const cols = ASCII_COLS
+    const rows = Math.max(1, Math.round((cols * img.height / img.width) * 0.5))
+    const canvas = document.createElement('canvas')
+    canvas.width = cols
+    canvas.height = rows
+    const ctx = canvas.getContext('2d')
+    ctx.drawImage(img, 0, 0, cols, rows)
+    const { data } = ctx.getImageData(0, 0, cols, rows)
+    const grid = []
+    for (let y = 0; y < rows; y++) {
+      const line = []
+      for (let x = 0; x < cols; x++) {
+        const i = (y * cols + x) * 4
+        line.push((0.299 * data[i] + 0.587 * data[i + 1] + 0.114 * data[i + 2]) / 255)
+      }
+      grid.push(line)
+    }
+    lumGrid = grid
+  }
+}
+
+const buildAscii = () => {
+  if (!lumGrid) return null
+
+  // Stretch contrast across the actual luminance range so the
+  // portrait reads as a shape instead of a washed-out blob.
+  let min = 1
+  let max = 0
+  for (const row of lumGrid) {
+    for (const l of row) {
+      if (l < min) min = l
+      if (l > max) max = l
+    }
+  }
+  const span = max - min || 1
+  const dark = document.documentElement.getAttribute('data-theme') === 'dark'
+  const n = ASCII_RAMP.length - 1
+
+  return lumGrid
+    .map((row) =>
+      row
+        .map((l) => {
+          let v = (l - min) / span // normalize to full 0..1 range
+          v = Math.min(1, Math.max(0, (v - 0.5) * 1.4 + 0.5)) // S-curve contrast
+          const t = dark ? 1 - v : v
+          return ASCII_RAMP[Math.round(t * n)]
+        })
+        .join('')
+    )
+    .join('\n')
+}
 
 const welcomeArt = `
  ____             _                  _   ____
@@ -78,10 +151,15 @@ const commands = {
 <strong>Kullanılabilir Komutlar:</strong>
 
   <span class="cmd">whoami</span>          - Ben kimim?
+  <span class="cmd">neofetch</span>        - Sistem künyesi (ASCII foto)
   <span class="cmd">ls</span>              - Dizin içeriğini listele
   <span class="cmd">ls /skills</span>      - Yeteneklerimi gör
   <span class="cmd">ls /experience</span>  - Deneyimlerimi gör
   <span class="cmd">cat &lt;file&gt;</span>      - Dosya içeriğini göster
+  <span class="cmd">pwd</span>             - Bulunduğun dizin
+  <span class="cmd">echo &lt;metin&gt;</span>    - Metni yazdır
+  <span class="cmd">date</span>            - Tarih ve saat
+  <span class="cmd">history</span>         - Komut geçmişi
   <span class="cmd">clear</span>           - Terminali temizle
   <span class="cmd">help</span>            - Bu yardım mesajı
   <span class="cmd">sudo hire-me</span>    - İletişime geç
@@ -94,10 +172,15 @@ const commands = {
 <strong>Available Commands:</strong>
 
   <span class="cmd">whoami</span>          - Who am I?
+  <span class="cmd">neofetch</span>        - System info (ASCII photo)
   <span class="cmd">ls</span>              - List directory contents
   <span class="cmd">ls /skills</span>      - View my skills
   <span class="cmd">ls /experience</span>  - View my experience
   <span class="cmd">cat &lt;file&gt;</span>      - Display file contents
+  <span class="cmd">pwd</span>             - Print working directory
+  <span class="cmd">echo &lt;text&gt;</span>     - Print text
+  <span class="cmd">date</span>            - Date and time
+  <span class="cmd">history</span>         - Command history
   <span class="cmd">clear</span>           - Clear terminal
   <span class="cmd">help</span>            - Show this help message
   <span class="cmd">sudo hire-me</span>    - Get in touch
@@ -148,6 +231,21 @@ Started with web scraping, worked as IT Manager, now doing backend development.`
     en: `📧 ahmetesrefkarabulut@gmail.com
 🐙 github.com/ahmetesreff
 💼 linkedin.com/in/ahmetesrefkarabulut`
+  },
+  // Hidden: not listed by ls, only reachable via the easter-egg hint
+  secrets: {
+    tr: `🔓 Gizli dosyaya eriştin!
+
+"İyi bir backend, kullanıcının asla görmediği yerde mükemmel çalışandır."
+
+Bu siteyi terminaliyle birlikte Vue 3 + Vite ile sıfırdan yazdım.
+Buraya kadar geldiysen: sudo hire-me 😉`,
+    en: `🔓 You found the secret file!
+
+"A good backend is the one that works flawlessly where the user never looks."
+
+I built this whole site — terminal included — from scratch with Vue 3 + Vite.
+If you made it this far: sudo hire-me 😉`
   }
 }
 
@@ -178,7 +276,13 @@ const executeCommand = () => {
   commandHistory.value.push(cmd)
   historyIndex.value = commandHistory.value.length
 
-  let output = processCommand(cmd)
+  const output = processCommand(cmd)
+
+  if (output === CLEAR) {
+    history.value = []
+    currentCommand.value = ''
+    return
+  }
 
   history.value.push({
     command: cmd,
@@ -212,31 +316,74 @@ const processCommand = (cmd) => {
       return commands.whoami[lang]
 
     case 'clear':
-      history.value = []
-      return ''
+      return CLEAR
 
-    case 'ls':
+    case 'pwd':
+      return `<div class="cat-output">/home/visitor</div>`
+
+    case 'echo':
+      return `<div class="cat-output">${escapeHtml(args.join(' '))}</div>`
+
+    case 'date':
+      return `<div class="cat-output">${escapeHtml(new Date().toString())}</div>`
+
+    case 'history': {
+      if (commandHistory.value.length === 0) {
+        return `<div class="cat-output"></div>`
+      }
+      return `<div class="cat-output">${commandHistory.value
+        .map((c, i) => `${String(i + 1).padStart(3, ' ')}  ${escapeHtml(c)}`)
+        .join('\n')}</div>`
+    }
+
+    case 'neofetch': {
+      const art = buildAscii()
+      if (!art) {
+        return `<span class="hint">rendering... try again in a moment</span>`
+      }
+      const info = `<span class="nf-key">visitor</span>@<span class="nf-key">portfolio</span>
+-----------------
+<span class="nf-key">OS</span>: Portfolio OS (Vue 3 + Vite)
+<span class="nf-key">Host</span>: ahmetesrefkarabulut.com.tr
+<span class="nf-key">Role</span>: Backend Developer
+<span class="nf-key">Stack</span>: NestJS · PostgreSQL · Docker · Redis
+<span class="nf-key">Editor</span>: VS Code
+<span class="nf-key">Location</span>: Trabzon, TR
+<span class="nf-key">Shell</span>: aek-sh 1.0
+<span class="nf-key">Contact</span>: sudo hire-me`
+      return `<div class="neofetch"><pre class="nf-art">${escapeHtml(art)}</pre><div class="nf-info">${info}</div></div>`
+    }
+
+    case 'ls': {
       if (args.length === 0) {
         return `<div class="ls-output">
 about  contact  experience/  skills/
-<span class="hint">Klasör içeriği için: ls /&lt;klasör&gt;</span>
+<span class="hint">${escapeHtml(t('terminal.lsHint'))}</span>
 </div>`
       }
-      const dir = args[0].replace(/^\//, '')
-      if (directories[dir]) {
-        return `<div class="ls-output">${directories[dir].join('  ')}</div>`
+      const name = args[0].replace(/^\//, '')
+      if (directories[name]) {
+        return `<div class="ls-output">${directories[name].join('  ')}</div>`
       }
-      return `<span class="error">ls: ${escapeHtml(args[0])}: No such directory</span>`
+      if (files[name]) {
+        return `<span class="error">ls: ${escapeHtml(args[0])}: Not a directory</span>`
+      }
+      return `<span class="error">ls: ${escapeHtml(args[0])}: No such file or directory</span>`
+    }
 
-    case 'cat':
+    case 'cat': {
       if (args.length === 0) {
         return `<span class="error">cat: missing file operand</span>`
       }
-      const file = args[0].replace(/^\//, '')
-      if (files[file]) {
-        return `<div class="cat-output">${files[file][lang]}</div>`
+      const name = args[0].replace(/^\//, '')
+      if (files[name]) {
+        return `<div class="cat-output">${files[name][lang]}</div>`
       }
-      return `<span class="error">cat: ${escapeHtml(args[0])}: No such file</span>`
+      if (directories[name]) {
+        return `<span class="error">cat: ${escapeHtml(args[0])}: Is a directory</span>`
+      }
+      return `<span class="error">cat: ${escapeHtml(args[0])}: No such file or directory</span>`
+    }
 
     case 'sudo':
       if (args[0] === 'hire-me') {
@@ -298,39 +445,106 @@ const navigateHistory = (direction) => {
 
 const autocomplete = () => {
   const cmd = currentCommand.value.toLowerCase()
-  const availableCommands = ['help', 'whoami', 'ls', 'cat', 'clear', 'sudo', 'lang', 'easter-egg']
-  const matches = availableCommands.filter(c => c.startsWith(cmd))
+  if (!cmd) return
+
+  const matches = COMMANDS.filter(c => c.startsWith(cmd))
+  if (matches.length === 0) return
 
   if (matches.length === 1) {
     currentCommand.value = matches[0]
+    return
   }
+
+  // Complete to the longest common prefix of all matches...
+  let prefix = matches[0]
+  for (const m of matches) {
+    while (!m.startsWith(prefix)) prefix = prefix.slice(0, -1)
+  }
+
+  if (prefix.length > cmd.length) {
+    currentCommand.value = prefix
+    return
+  }
+
+  // ...otherwise list the candidates (bash double-Tab style)
+  history.value.push({
+    raw: true,
+    output: `<div class="ls-output">${matches.join('  ')}</div>`
+  })
+  scrollToBottom()
 }
+
+onMounted(loadAsciiSource)
+
+let viewObserver = null
+
+onMounted(() => {
+  // Focus the input once the terminal scrolls into view, but skip
+  // touch devices so the keyboard doesn't pop up mid-scroll.
+  const isTouch = window.matchMedia('(hover: none)').matches
+  if (isTouch || !('IntersectionObserver' in window)) return
+
+  viewObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        terminalInput.value?.focus({ preventScroll: true })
+        viewObserver.disconnect()
+      }
+    })
+  }, { threshold: 0.6 })
+
+  if (terminalRoot.value) viewObserver.observe(terminalRoot.value)
+})
+
+onUnmounted(() => {
+  if (viewObserver) viewObserver.disconnect()
+})
 </script>
 
 <style scoped>
+/* Theme-aware palette: light "editor" by default, the original
+   dark scheme under the site's [data-theme="dark"]. */
 .terminal-container {
+  /* Inherit the shared terminal design system so the interactive
+     shell matches the hero / About / Contact / Tools windows.
+     --tw-* is already theme-aware, so no dark override is needed. */
+  --tm-bg: var(--tw-bg);
+  --tm-header-bg: var(--tw-bar);
+  --tm-border: var(--tw-edge);
+  --tm-title: var(--tw-dim);
+  --tm-text: var(--tw-fg);
+  --tm-user: var(--tw-green);
+  --tm-path: var(--tw-amber);
+  --tm-hint: var(--tw-dim);
+  --tm-error: #e5484d;
+  --tm-success: var(--tw-green);
+  --tm-easter: var(--tw-amber);
+  --tm-easter-pre: var(--tw-green-soft);
+  --tm-scroll-thumb: var(--tw-edge);
+
   width: 100%;
-  max-width: 900px;
+  max-width: 860px;
   margin: var(--spacing-xl) auto;
   padding: 0 var(--spacing-md);
 }
 
 .terminal {
-  background: #1e1e1e;
-  border-radius: var(--border-radius);
-  box-shadow: var(--shadow-xl);
+  background: var(--tm-bg);
+  border: 1px solid var(--tm-border);
+  border-radius: 14px;
+  box-shadow: var(--tw-win-shadow);
   overflow: hidden;
-  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  font-family: var(--tw-mono);
   font-size: 14px;
 }
 
 .terminal-header {
-  background: #323232;
+  background: var(--tm-header-bg);
   padding: 10px 16px;
   display: flex;
   align-items: center;
   gap: 12px;
-  border-bottom: 1px solid #444;
+  border-bottom: 1px solid var(--tm-border);
 }
 
 .terminal-buttons {
@@ -343,31 +557,33 @@ const autocomplete = () => {
   height: 12px;
   border-radius: 50%;
   display: block;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.08);
 }
 
 .btn-close {
-  background: #ff5f56;
+  background: #e0533b;
 }
 
 .btn-minimize {
-  background: #ffbd2e;
+  background: #e6a417;
 }
 
 .btn-maximize {
-  background: #27c93f;
+  background: #1ba672;
 }
 
 .terminal-title {
-  color: #999;
+  color: var(--tm-title);
   font-size: 12px;
+  letter-spacing: 0.04em;
   flex: 1;
   text-align: center;
   margin-right: 52px;
 }
 
 .terminal-body {
-  background: #1e1e1e;
-  color: #d4d4d4;
+  background: var(--tm-bg);
+  color: var(--tm-text);
   padding: 20px;
   min-height: 500px;
   max-height: 600px;
@@ -380,11 +596,11 @@ const autocomplete = () => {
 }
 
 .terminal-body::-webkit-scrollbar-track {
-  background: #1e1e1e;
+  background: var(--tm-bg);
 }
 
 .terminal-body::-webkit-scrollbar-thumb {
-  background: #444;
+  background: var(--tm-scroll-thumb);
   border-radius: 5px;
 }
 
@@ -393,14 +609,14 @@ const autocomplete = () => {
 }
 
 .terminal-welcome pre {
-  color: #4ec9b0;
+  color: var(--tm-user);
   font-size: 10px;
   line-height: 1.2;
   margin-bottom: 12px;
 }
 
 .terminal-welcome p {
-  color: #d4d4d4;
+  color: var(--tm-text);
   margin-bottom: 8px;
 }
 
@@ -415,28 +631,28 @@ const autocomplete = () => {
 }
 
 .prompt-user {
-  color: #4ec9b0;
+  color: var(--tm-user);
 }
 
 .prompt-separator {
-  color: #d4d4d4;
+  color: var(--tm-text);
 }
 
 .prompt-path {
-  color: #569cd6;
+  color: var(--tm-path);
 }
 
 .prompt-symbol {
-  color: #d4d4d4;
+  color: var(--tm-text);
   margin-right: 8px;
 }
 
 .prompt-command {
-  color: #d4d4d4;
+  color: var(--tm-text);
 }
 
 .terminal-output {
-  color: #d4d4d4;
+  color: var(--tm-text);
   margin-left: 0;
   white-space: pre-wrap;
   word-wrap: break-word;
@@ -453,41 +669,73 @@ const autocomplete = () => {
   background: transparent;
   border: none;
   outline: none;
-  color: #d4d4d4;
+  color: var(--tm-text);
   font-family: inherit;
   font-size: inherit;
   padding: 0;
 }
 
 .hint {
-  color: #858585;
+  color: var(--tm-hint);
   font-size: 13px;
 }
 
 .cmd {
-  color: #4ec9b0;
+  color: var(--tm-user);
   font-weight: 600;
 }
 
 .error {
-  color: #f48771;
+  color: var(--tm-error);
 }
 
 .success {
-  color: #89d185;
+  color: var(--tm-success);
 }
 
 .ls-output {
-  color: #569cd6;
+  color: var(--tm-path);
 }
 
 .cat-output {
-  color: #d4d4d4;
+  color: var(--tm-text);
   line-height: 1.6;
 }
 
+.neofetch {
+  display: flex;
+  gap: 22px;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.nf-art {
+  margin: 0;
+  font-size: 6px;
+  line-height: 1;
+  letter-spacing: 0.5px;
+  white-space: pre;
+  color: var(--tm-user);
+}
+
+.nf-info {
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--tm-text);
+}
+
+.nf-key {
+  color: var(--tm-path);
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .nf-art { font-size: 4px; letter-spacing: 0.3px; }
+  .neofetch { gap: 14px; }
+}
+
 .help-section strong {
-  color: #4ec9b0;
+  color: var(--tm-user);
   display: block;
   margin-bottom: 12px;
 }
@@ -497,17 +745,17 @@ const autocomplete = () => {
 }
 
 .whoami strong {
-  color: #4ec9b0;
+  color: var(--tm-user);
   font-size: 16px;
 }
 
 .easter-egg {
-  color: #ce9178;
+  color: var(--tm-easter);
   text-align: center;
 }
 
 .easter-egg pre {
-  color: #dcdcaa;
+  color: var(--tm-easter-pre);
   font-size: 12px;
 }
 

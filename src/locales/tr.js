@@ -7,7 +7,6 @@ export default {
   },
   profile: {
     name: 'Ahmet Eşref Karabulut',
-    title: 'Backend Developer & IT Management Experience',
     bio: 'Backend sistemler geliştirirken aynı zamanda kurumsal IT altyapısı ve operasyon süreçleri konusunda tecrübeye sahibim.',
     contactButton: 'İletişim'
   },
@@ -39,7 +38,6 @@ export default {
     p3: 'Sonrasında odağımı backend geliştirmeye çevirerek çok kullanıcılı (multi-tenant) çalışan iş uygulamaları geliştirmeye başladım.',
     p4: 'Şu anda backend mimarisi, veri modeli tasarımı ve performans odaklı API geliştirme üzerine çalışıyorum.',
     expertise: {
-      title: 'Uzmanlık Alanlarım',
       backend: {
         title: 'Backend Development',
         i1: 'NestJS (Auth, JWT, Guards, Interceptors)',
@@ -77,7 +75,6 @@ export default {
       }
     },
     experience: {
-      title: 'Deneyim',
       pos1: {
         title: 'Backend Developer',
         company: 'Bibs Teknoloji · Trabzon',
@@ -100,8 +97,6 @@ export default {
       }
     },
     techStack: {
-      title: 'Teknoloji Stack',
-      subtitle: 'Kullandığım teknolojiler ve araçlar',
       categories: {
         backend: 'Backend',
         database: 'Database',
@@ -128,7 +123,9 @@ export default {
   },
   terminal: {
     welcome: 'Terminal simülatörüne hoş geldiniz! Komutları keşfetmek için "help" yazın.',
-    hint: 'İpucu: Tab ile otomatik tamamlama, ↑↓ ile komut geçmişi'
+    hint: 'İpucu: Tab ile otomatik tamamlama, ↑↓ ile komut geçmişi',
+    lsHint: 'Klasör içeriği için: ls /<klasör>',
+    inputLabel: 'Terminal komut girişi'
   },
   tools: {
     title: 'IT Araçları',
