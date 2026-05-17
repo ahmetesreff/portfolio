@@ -147,7 +147,7 @@ const measurePing = async (url) => {
 // Perform multiple ping tests and return average
 const getRealPing = async () => {
   // Ping to current server (user's portfolio site)
-  const serverUrl = `${window.location.origin}/favicon.png`
+  const serverUrl = `${window.location.origin}/favicon.ico`
 
   const pingResults = []
 
