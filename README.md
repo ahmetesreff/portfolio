@@ -1,10 +1,13 @@
 # Kişisel Portfolyo Websitesi
 
-Vue.js ve Vite ile oluşturulmuş minimalist, modern bir portfolyo websitesi.
+Vue.js ve Vite ile oluşturulmuş, terminal/CRT temalı bir portfolyo websitesi.
 
 ## Özellikler
 
-- ✨ Modern ve minimalist tasarım
+- 🖥️ Terminal temalı, tema-duyarlı (açık "editor" / koyu "fosfor") arayüz
+- 🧩 Paylaşılan terminal tasarım sistemi (`terminal.css` `--tw-*` + `TerminalWindow.vue`)
+- ⌨️ İnteraktif terminal simülatörü (komutlar, geçmiş, Tab tamamlama, neofetch)
+- 🌐 i18n (TR/EN, vue-i18n) ve route-bazlı SEO
 - 📱 Tamamen responsive (mobil, tablet, desktop)
 - ⚡ Vite ile hızlı geliştirme ve build
 - 🎨 Vue 3 Composition API
@@ -197,10 +200,12 @@ PDF formatındaki CV dosyanızı `public/assets/cv.pdf` olarak kaydedin.
 
 ### Profil Fotoğrafı Ekleme
 
-Profil fotoğrafınızı `src/assets/images/profile.jpg` olarak kaydedin ve `ProfileCard.vue` dosyasında yolu güncelleyin:
+Profil fotoğrafını `src/assets/images/profile.jpg` olarak kaydetmeniz yeterli.
+`ProfileCard.vue` ve `Terminal.vue` (neofetch) bu dosyayı doğrudan import eder
+(yol değiştirmeye gerek yok):
 
 ```javascript
-const profileImage = '/src/assets/images/profile.jpg'
+import profilePhoto from '../../assets/images/profile.jpg'
 ```
 
 ## Monitoring
@@ -229,13 +234,18 @@ portfolio/
 ├── src/
 │   ├── assets/
 │   │   ├── images/         # Görseller
-│   │   └── styles/         # CSS dosyaları
+│   │   └── styles/         # CSS (variables, reset, main, terminal.css)
 │   ├── components/
 │   │   ├── layout/         # Header, Footer
-│   │   ├── about/          # Hakkımda bileşenleri
-│   │   └── contact/        # İletişim bileşenleri
+│   │   ├── about/          # Hakkımda bileşenleri (ProfileCard, ...)
+│   │   ├── contact/        # İletişim bileşenleri
+│   │   ├── tools/          # Araç bileşenleri (IP, hız, JSON, QR, ...)
+│   │   ├── TerminalWindow.vue  # Paylaşılan terminal pencere kabuğu
+│   │   └── Terminal.vue        # İnteraktif terminal simülatörü
 │   ├── views/              # Sayfa görünümleri
 │   ├── router/             # Vue Router yapılandırması
+│   ├── locales/            # i18n (tr.js, en.js)
+│   ├── directives/         # scrollReveal, parallax
 │   ├── App.vue             # Ana uygulama bileşeni
 │   └── main.js             # Uygulama giriş noktası
 ├── Dockerfile              # Docker yapılandırması

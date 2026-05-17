@@ -34,3 +34,6 @@ dist-ssr
 
 # Claude Code (local per-developer settings)
 .claude/settings.local.json
+
+# Local asset staging (sources copied into public/ & src/assets)
+pics/

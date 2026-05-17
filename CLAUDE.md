@@ -44,9 +44,17 @@ Registered in `src/main.js`, used across views:
 - `v-scroll-reveal="{ type, delay, duration, repeat }"` (`src/directives/scrollReveal.js`) — IntersectionObserver entrance animations.
 - `v-parallax="{ speed, direction }"` (`src/directives/parallax.js`).
 
+### Terminal design system (single source of truth)
+
+The whole UI shares one theme-aware terminal language. `src/assets/styles/terminal.css` (imported globally in `main.js`) defines:
+- `--tw-*` palette tokens on `:root` (light "editor") with a `[data-theme="dark"]` override (dark "phosphor"). This is the **only** place colours are defined for the terminal look.
+- Reusable classes: `.tw-window/.tw-bar/.tw-screen/.tw-body/.tw-line/.tw-out/.tw-chips/.tw-btn/.tw-flag/.tw-heading/.tw-page` + staggered `.tw-body > *` reveal.
+
+`src/components/TerminalWindow.vue` is the shared window-chrome wrapper (traffic lights + `aek@portfolio:<path>` title + optional `live`), used by About/Contact/Tools views. `ProfileCard.vue` (hero, with extra CRT effects) and `Terminal.vue` (interactive shell) keep their own scoped styles but **alias their local vars to `--tw-*`** so everything stays visually unified and theme-switches together. Persona is `aek@portfolio` everywhere — keep it consistent.
+
 ### Components
 
-`src/components/tools/*` are self-contained interactive widgets rendered by `ToolsView.vue`; each must expose `.tool` / `.tool-content` / `.tool-header h3` / `.tool-btn` classes because `ToolsView.vue` styles them via `:deep()` for uniform card sizing.
+`src/components/tools/*` are self-contained interactive widgets rendered by `ToolsView.vue`. Each exposes `.tool` / `.tool-content` / `.tool-header h3` / `.tool-btn` classes. `ToolsView.vue` themes all six at once by **remapping the site `--color-*` tokens to `--tw-*`** on the grid wrapper (custom-property inheritance into child components) — no per-tool rewrite. A few semantic hex colours (status red/green, JSON syntax) are intentionally left hardcoded.
 
 ## Deployment (auto-deploy on push to main)
 
