@@ -1,53 +1,21 @@
 <template>
-  <div class="about-view">
-    <section class="about-section">
-      <div class="container">
-        <h1 class="about-title">{{ t('about.title') }}</h1>
-        <AboutText />
-      </div>
-    </section>
-
-    <TechStack />
+  <div class="tw-page">
+    <TerminalWindow path="~/about">
+      <p class="tw-line">
+        <span class="tw-usr">aek@portfolio</span><span class="tw-sep">:</span><span class="tw-cwd">~/about</span><span class="tw-dollar">$</span><span class="tw-kw">whoami</span> --verbose
+      </p>
+      <h1 class="tw-heading">{{ t('about.title') }}</h1>
+      <AboutText />
+      <TechStack />
+    </TerminalWindow>
   </div>
 </template>
 
 <script setup>
+import TerminalWindow from '../components/TerminalWindow.vue'
 import AboutText from '../components/about/AboutText.vue'
 import TechStack from '../components/about/TechStack.vue'
 import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()
 </script>
-
-<style scoped>
-.about-view {
-  flex: 1;
-  background: var(--color-background);
-}
-
-.about-section {
-  padding: var(--spacing-3xl) 0;
-  background: var(--color-background);
-}
-
-.about-title {
-  color: var(--color-primary);
-  margin-bottom: var(--spacing-xl);
-  font-size: var(--font-size-h1);
-  font-weight: var(--font-weight-bold);
-  letter-spacing: -0.02em;
-  text-align: center;
-}
-
-.container {
-  max-width: var(--max-width);
-  margin: 0 auto;
-  padding: 0 var(--spacing-md);
-}
-
-@media (max-width: 768px) {
-  .about-section {
-    padding: var(--spacing-xl) 0;
-  }
-}
-</style>

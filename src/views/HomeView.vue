@@ -53,8 +53,8 @@ import Terminal from '../components/Terminal.vue'
 .shape {
   position: absolute;
   border-radius: 50%;
-  opacity: 0.03;
-  background: var(--color-secondary);
+  opacity: 0.05;
+  background: var(--tw-green);
   filter: blur(60px);
 }
 
@@ -81,8 +81,8 @@ import Terminal from '../components/Terminal.vue'
 
 /* Dark mode shape adjustments */
 [data-theme="dark"] .shape {
-  opacity: 0.05;
-  background: var(--color-secondary);
+  opacity: 0.07;
+  background: var(--tw-green);
 }
 
 .hero-section {

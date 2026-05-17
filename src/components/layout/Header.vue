@@ -2,8 +2,10 @@
   <header class="header">
     <div class="container">
       <nav class="nav">
-        <router-link to="/" class="logo">
-          <span class="logo-initials">AEK</span>
+        <router-link to="/" class="logo" aria-label="aek@portfolio">
+          <span class="logo-prompt">
+            <span class="lp-user">aek</span><span class="lp-dim">@</span><span class="lp-host">portfolio</span><span class="lp-dim">:</span><span class="lp-path">~</span><span class="lp-dollar">$</span>
+          </span>
         </router-link>
 
         <div class="nav-right">
@@ -139,17 +141,23 @@ onUnmounted(() => {
   text-decoration: none;
 }
 
-.logo-initials {
-  font-size: 20px;
-  font-weight: var(--font-weight-bold);
-  color: var(--color-primary);
+.logo-prompt {
+  font-family: var(--tw-mono);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
   transition: var(--transition-fast);
-  letter-spacing: -0.02em;
-  font-family: var(--font-primary);
 }
 
-.logo:hover .logo-initials {
-  opacity: 0.7;
+.lp-user { color: var(--tw-green); }
+.lp-host { color: var(--color-primary); }
+.lp-path { color: var(--tw-amber); }
+.lp-dim { color: var(--color-text-secondary); }
+.lp-dollar { color: var(--tw-green); margin-left: 4px; }
+
+.logo:hover .logo-prompt {
+  opacity: 0.75;
 }
 
 .nav-right {
@@ -166,7 +174,8 @@ onUnmounted(() => {
 
 .nav-link {
   color: var(--color-primary);
-  font-size: 14px;
+  font-family: var(--tw-mono);
+  font-size: 13px;
   font-weight: var(--font-weight-normal);
   padding: 0 var(--spacing-sm);
   height: 52px;
@@ -186,6 +195,7 @@ onUnmounted(() => {
 
 .nav-link.router-link-active {
   opacity: 1;
+  color: var(--tw-green);
 }
 
 .nav-link.router-link-active::after {
@@ -194,8 +204,8 @@ onUnmounted(() => {
   bottom: 0;
   left: var(--spacing-sm);
   right: var(--spacing-sm);
-  height: 1px;
-  background: var(--color-primary);
+  height: 2px;
+  background: var(--tw-green);
 }
 
 .nav-toggle {

@@ -1,24 +1,14 @@
 <template>
-  <div class="tech-stack-section">
-    <div class="tech-stack-container">
-      <h2 class="section-title" v-scroll-reveal="{ type: 'fade-up' }">
-        {{ t('about.techStack.title') }}
-      </h2>
-
-      <div class="categories" v-scroll-reveal="{ type: 'fade-up', delay: 50 }">
-        <div
-          v-for="category in techStack"
-          :key="category.key"
-          class="category"
-        >
-          <span class="category-title">{{ t(`about.techStack.categories.${category.key}`) }}</span>
-          <span class="tech-list">
-            <span
-              v-for="(tech, index) in category.technologies"
-              :key="tech"
-            >{{ tech }}<span v-if="index < category.technologies.length - 1" class="separator"> · </span></span>
-          </span>
-        </div>
+  <div class="tech-stack">
+    <p class="tw-line dim">
+      <span class="tw-dollar">$</span><span class="tw-kw">ls</span> <span class="tw-arg">./stack</span>
+    </p>
+    <div class="stack-grid">
+      <div v-for="category in techStack" :key="category.key" class="stack-cat">
+        <span class="stack-label">{{ t(`about.techStack.categories.${category.key}`) }}/</span>
+        <ul class="tw-chips">
+          <li v-for="tech in category.technologies" :key="tech">{{ tech }}</li>
+        </ul>
       </div>
     </div>
   </div>
@@ -30,93 +20,39 @@ import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
 
 const techStack = [
-  {
-    key: 'backend',
-    technologies: ['NestJS', 'Node.js', 'TypeScript', 'REST API']
-  },
-  {
-    key: 'database',
-    technologies: ['PostgreSQL', 'Redis', 'TypeORM']
-  },
-  {
-    key: 'devops',
-    technologies: ['Docker', 'GitHub Actions', 'Nginx', 'Git', 'Linux']
-  },
-  {
-    key: 'frontend',
-    technologies: ['Vue.js', 'HTML/CSS', 'JavaScript']
-  },
-  {
-    key: 'tools',
-    technologies: ['VS Code', 'Postman', 'JWT', 'REST API']
-  }
+  { key: 'backend', technologies: ['NestJS', 'Node.js', 'TypeScript', 'REST API'] },
+  { key: 'database', technologies: ['PostgreSQL', 'Redis', 'TypeORM'] },
+  { key: 'devops', technologies: ['Docker', 'GitHub Actions', 'Nginx', 'Git', 'Linux'] },
+  { key: 'frontend', technologies: ['Vue.js', 'HTML/CSS', 'JavaScript'] },
+  { key: 'tools', technologies: ['VS Code', 'Postman', 'JWT', 'REST API'] }
 ]
 </script>
 
 <style scoped>
-.tech-stack-section {
-  width: 100%;
-  padding: var(--spacing-xl) 0;
-  background: var(--color-surface);
-}
-
-.tech-stack-container {
-  max-width: var(--max-width);
-  margin: 0 auto;
-  padding: 0 var(--spacing-md);
-}
-
-.section-title {
-  font-size: var(--font-size-lg);
-  text-align: center;
-  margin-bottom: var(--spacing-lg);
-  color: var(--color-primary);
-  font-weight: var(--font-weight-semibold);
-}
-
-.categories {
+.tech-stack {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-sm);
+  gap: 14px;
 }
 
-.category {
+.stack-grid {
   display: flex;
-  align-items: baseline;
-  gap: var(--spacing-sm);
-  line-height: 1.6;
+  flex-direction: column;
+  gap: 16px;
+  padding-left: 16px;
+  border-left: 1px solid var(--tw-line);
 }
 
-.category-title {
-  font-size: var(--font-size-sm);
-  color: var(--color-text-secondary);
-  font-weight: var(--font-weight-medium);
-  min-width: 120px;
-  flex-shrink: 0;
+.stack-cat {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
-.tech-list {
-  font-size: var(--font-size-sm);
-  color: var(--color-primary);
-}
-
-.separator {
-  color: var(--color-text-secondary);
-  opacity: 0.5;
-}
-
-@media (max-width: 768px) {
-  .tech-stack-section {
-    padding: var(--spacing-lg) 0;
-  }
-
-  .category {
-    flex-direction: column;
-    gap: var(--spacing-xs);
-  }
-
-  .category-title {
-    min-width: auto;
-  }
+.stack-label {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--tw-green);
+  letter-spacing: 0.02em;
 }
 </style>
