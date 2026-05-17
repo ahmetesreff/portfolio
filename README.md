@@ -251,4 +251,4 @@ MIT
 
 ## İletişim
 
-Sorularınız için [ornek@email.com](mailto:ornek@email.com) adresinden ulaşabilirsiniz.
+Sorularınız için [ahmetesrefkarabulut@gmail.com](mailto:ahmetesrefkarabulut@gmail.com) adresinden ulaşabilirsiniz.

@@ -2,7 +2,7 @@ export const siteConfig = {
   siteName: 'Ahmet Eşref Karabulut',
   baseUrl: 'https://ahmetesrefkarabulut.com.tr',
   author: 'Ahmet Eşref Karabulut',
-  ogImage: '/og-image.svg',
+  ogImage: '/og-image.png',
   locale: 'tr_TR'
 }
 
@@ -11,7 +11,7 @@ export const personSchema = {
   '@type': 'Person',
   name: 'Ahmet Eşref Karabulut',
   url: 'https://ahmetesrefkarabulut.com.tr',
-  image: 'https://ahmetesrefkarabulut.com.tr/og-image.svg',
+  image: 'https://ahmetesrefkarabulut.com.tr/og-image.png',
   jobTitle: 'Backend Developer',
   worksFor: {
     '@type': 'Organization',
