@@ -7,25 +7,32 @@
       <div class="tools-head">
         <h1 class="tw-heading">{{ t('tools.title') }}</h1>
         <p class="tw-out">{{ t('tools.subtitle') }}</p>
+        <p class="tools-note">{{ t('tools.privacy') }}</p>
       </div>
 
       <div class="tools-grid">
         <div class="tool-card" v-scroll-reveal="{ type: 'fade-up', delay: 0 }">
           <IpChecker />
         </div>
-        <div class="tool-card" v-scroll-reveal="{ type: 'fade-up', delay: 50 }">
-          <SpeedTest />
+        <div class="tool-card" v-scroll-reveal="{ type: 'fade-up', delay: 40 }">
+          <DnsLookup />
         </div>
-        <div class="tool-card" v-scroll-reveal="{ type: 'fade-up', delay: 100 }">
-          <JsonFormatter />
+        <div class="tool-card" v-scroll-reveal="{ type: 'fade-up', delay: 80 }">
+          <JwtDecoder />
         </div>
-        <div class="tool-card" v-scroll-reveal="{ type: 'fade-up', delay: 150 }">
-          <JsonViewer />
+        <div class="tool-card" v-scroll-reveal="{ type: 'fade-up', delay: 120 }">
+          <JsonTool />
+        </div>
+        <div class="tool-card" v-scroll-reveal="{ type: 'fade-up', delay: 160 }">
+          <TimestampConverter />
         </div>
         <div class="tool-card" v-scroll-reveal="{ type: 'fade-up', delay: 200 }">
+          <CronExplainer />
+        </div>
+        <div class="tool-card" v-scroll-reveal="{ type: 'fade-up', delay: 240 }">
           <PasswordGenerator />
         </div>
-        <div class="tool-card" v-scroll-reveal="{ type: 'fade-up', delay: 250 }">
+        <div class="tool-card" v-scroll-reveal="{ type: 'fade-up', delay: 280 }">
           <QrGenerator />
         </div>
       </div>
@@ -37,9 +44,11 @@
 import { useI18n } from 'vue-i18n'
 import TerminalWindow from '../components/TerminalWindow.vue'
 import IpChecker from '../components/tools/IpChecker.vue'
-import SpeedTest from '../components/tools/SpeedTest.vue'
-import JsonFormatter from '../components/tools/JsonFormatter.vue'
-import JsonViewer from '../components/tools/JsonViewer.vue'
+import DnsLookup from '../components/tools/DnsLookup.vue'
+import JwtDecoder from '../components/tools/JwtDecoder.vue'
+import JsonTool from '../components/tools/JsonTool.vue'
+import TimestampConverter from '../components/tools/TimestampConverter.vue'
+import CronExplainer from '../components/tools/CronExplainer.vue'
 import PasswordGenerator from '../components/tools/PasswordGenerator.vue'
 import QrGenerator from '../components/tools/QrGenerator.vue'
 
@@ -57,14 +66,20 @@ const { t } = useI18n()
   gap: 8px;
 }
 
+.tools-note {
+  margin: 0;
+  font-size: 13px;
+  color: var(--tw-dim);
+}
+
 .tools-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 400px), 1fr));   /* masaüstünde 2 geniş sütun */
   gap: 18px;
 
   /* Remap the site design tokens to the terminal palette for the
      whole tools subtree. Custom properties inherit into the child
-     tool components, so all six adopt the theme without per-rule
+     tool components, so every tool adopts the theme without per-rule
      overrides. */
   --color-secondary: var(--tw-green);
   --color-hover: var(--tw-green-soft);
@@ -149,11 +164,15 @@ const { t } = useI18n()
   font-family: var(--tw-mono);
 }
 
+/* Dolgulu düğmede yazı zemin renginde: karanlık temada parlak yeşil üstünde beyaz 1,9:1 kalıyordu */
+.tool-card :deep(.tool-btn:not(.secondary)) {
+  color: var(--tw-bg);
+}
+
 .tool-card :deep(.tool-btn) {
   font-family: var(--tw-mono);
   font-weight: 600;
   letter-spacing: 0.02em;
-  min-width: 100px;
   text-align: center;
 }
 

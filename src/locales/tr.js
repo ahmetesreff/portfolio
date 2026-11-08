@@ -29,7 +29,7 @@ export default {
     },
     tools: {
       title: 'Araçlar | Ahmet Eşref Karabulut',
-      description: 'Günlük IT işleriniz için IP kontrolü, hız testi, JSON araçları ve daha fazlası.'
+      description: 'IP ve DNS sorgulama, JWT çözücü, JSON biçimlendirme, zaman damgası çevirici, cron açıklayıcı, şifre ve QR kod oluşturucu.'
     }
   },
   about: {
@@ -142,6 +142,8 @@ export default {
     error: 'Bir hata oluştu',
     copy: 'Kopyala',
     copied: 'Kopyalandı!',
+    example: 'Örnek',
+    privacy: 'IP ve DNS dışındaki araçlar tamamen tarayıcınızda çalışır; girdiğiniz veri hiçbir yere gönderilmez.',
     ipChecker: {
       title: 'IP Adresi',
       yourIp: 'IP Adresiniz',
@@ -149,34 +151,74 @@ export default {
       isp: 'İnternet Sağlayıcı',
       refresh: 'Yenile'
     },
-    speedTest: {
-      title: 'Hız Testi',
-      start: 'Testi Başlat',
-      testing: 'Test Ediliyor...',
-      measuring: 'Hız ölçülüyor...',
-      ready: 'Teste hazır',
-      excellent: 'Mükemmel hız!',
-      good: 'İyi hız',
-      average: 'Ortalama hız',
-      slow: 'Yavaş bağlantı',
-      speed: 'Hız',
-      duration: 'Süre',
-      downloadSpeed: 'İndirme Hızı',
-      ping: 'Ping'
+    dns: {
+      title: 'DNS Sorgulama',
+      domain: 'Alan adı',
+      placeholder: 'ornek.com',
+      type: 'Kayıt türü',
+      all: 'Tümü',
+      lookup: 'Sorgula',
+      invalid: 'Geçerli bir alan adı girin (ör. ornek.com).',
+      nxdomain: 'Böyle bir alan adı yok (NXDOMAIN).',
+      servfail: 'DNS sunucusu yanıt veremedi (SERVFAIL).',
+      failed: 'DNS sorgusu yapılamadı',
+      empty: 'Bu türde kayıt yok.',
+      via: 'Çözümleyici'
     },
-    jsonFormatter: {
-      title: 'JSON Formatlayıcı',
-      placeholder: 'JSON kodunuzu buraya yapıştırın...',
-      format: 'Formatla',
+    jwt: {
+      title: 'JWT Çözücü',
+      placeholder: 'Token yapıştırın (eyJhbGciOi...)',
+      sample: 'Örnek token',
+      notJwt: 'Geçerli bir JWT değil: noktayla ayrılmış üç parça (header.payload.signature) bekleniyor.',
+      jwe: 'Bu şifreli bir token (JWE); içeriği anahtar olmadan çözülemez.',
+      badPart: '{part} çözülemedi: Base64URL ya da JSON hatalı.',
+      valid: 'Geçerli · {rel} sona eriyor',
+      expired: 'Süresi dolmuş · {rel}',
+      notYet: 'Henüz geçerli değil · {rel} başlıyor',
+      noExp: 'Süresiz: exp alanı yok',
+      algNone: 'İmzasız token (alg: none).',
+      note: 'İmza doğrulanmaz; token tarayıcınızdan dışarı çıkmaz.',
+      claims: {
+        exp: 'Bitiş (exp)',
+        iat: 'Oluşturulma (iat)',
+        nbf: 'Başlangıç (nbf)'
+      }
+    },
+    json: {
+      title: 'JSON Araçları',
+      placeholder: 'JSON yapıştırın...',
+      view: 'Görünüm',
+      pretty: 'Biçimlendir',
       minify: 'Küçült',
-      invalidJson: 'Geçersiz JSON formatı'
+      tree: 'Ağaç',
+      valid: 'Geçerli JSON',
+      invalid: 'Geçersiz JSON',
+      invalidAt: 'Geçersiz JSON: satır {line}, sütun {col}',
+      expandAll: 'Tümünü aç',
+      collapseAll: 'Tümünü kapat'
     },
-    jsonViewer: {
-      title: 'JSON Görüntüleyici',
-      placeholder: 'JSON kodunuzu buraya yapıştırın...',
-      expandAll: 'Tümünü Aç',
-      collapseAll: 'Tümünü Kapat',
-      invalidJson: 'Geçersiz JSON formatı'
+    timestamp: {
+      title: 'Zaman Damgası',
+      placeholder: '1794150000 ya da 08.11.2026 14:30',
+      now: 'Şimdi',
+      current: 'Şu an',
+      seconds: 'Unix (saniye)',
+      millis: 'Unix (ms)',
+      iso: 'ISO 8601 (UTC)',
+      local: 'Yerel saat',
+      relative: 'Göreli',
+      detectedMs: 'Sayı milisaniye olarak algılandı.',
+      invalid: 'Tanınmayan biçim. Örnekler: 1794150000 · 2026-11-08T14:30:00Z · 08.11.2026 14:30'
+    },
+    cron: {
+      title: 'Cron Açıklayıcı',
+      label: 'Cron ifadesi',
+      fields: 'dakika · saat · ayın günü · ay · haftanın günü',
+      next: 'Sonraki çalışmalar',
+      none: 'Önümüzdeki 5 yılda çalışma zamanı yok.',
+      onlyFive: 'Sonraki zamanlar yalnızca standart 5 alanlı ifadeler için hesaplanır.',
+      invalid: 'Geçersiz cron ifadesi.',
+      reboot: 'Sistem her açıldığında'
     },
     passwordGenerator: {
       title: 'Şifre Oluşturucu',
@@ -194,8 +236,9 @@ export default {
     qrGenerator: {
       title: 'QR Kod Oluşturucu',
       placeholder: 'Metin veya URL girin...',
-      generate: 'QR Kod Oluştur',
-      download: 'İndir'
+      label: 'Oluşturulan QR kod',
+      download: 'PNG indir',
+      tooLong: 'Metin QR kod için çok uzun.'
     }
   }
 }

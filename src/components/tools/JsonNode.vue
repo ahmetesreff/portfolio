@@ -2,16 +2,17 @@
   <div class="json-node">
     <!-- Object or Array -->
     <div v-if="isExpandable" class="node-line">
-      <span class="toggle" @click="$emit('toggle', path)">
+      <button type="button" class="toggle" :aria-expanded="isExpanded"
+              :aria-label="nodeKey !== null ? String(nodeKey) : 'JSON'" @click="$emit('toggle', path)">
         {{ isExpanded ? '▼' : '▶' }}
-      </span>
-      <span v-if="nodeKey" class="key">{{ nodeKey }}:</span>
+      </button>
+      <span v-if="nodeKey !== null" class="key">{{ nodeKey }}:</span>
       <span class="bracket">{{ openBracket }}</span>
       <span v-if="!isExpanded" class="collapsed-preview">
         {{ collapsedPreview }}
       </span>
       <span v-if="!isExpanded" class="bracket">{{ closeBracket }}</span>
-      <button v-if="!isExpanded" @click="copyValue" class="copy-icon" :title="copied ? 'Copied!' : 'Copy'">
+      <button v-if="!isExpanded" @click="copyValue" class="copy-icon" :title="copied ? t('tools.copied') : t('tools.copy')" :aria-label="copied ? t('tools.copied') : t('tools.copy')">
         <svg v-if="!copied" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
           <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
@@ -40,9 +41,9 @@
 
     <!-- Primitive values -->
     <div v-else class="node-line">
-      <span v-if="nodeKey" class="key">{{ nodeKey }}:</span>
+      <span v-if="nodeKey !== null" class="key">{{ nodeKey }}:</span>
       <span :class="['value', `value-${valueType}`]">{{ formattedValue }}</span>
-      <button @click="copyValue" class="copy-icon" :title="copied ? 'Copied!' : 'Copy'">
+      <button @click="copyValue" class="copy-icon" :title="copied ? t('tools.copied') : t('tools.copy')" :aria-label="copied ? t('tools.copied') : t('tools.copy')">
         <svg v-if="!copied" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
           <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
@@ -57,6 +58,9 @@
 
 <script setup>
 import { computed, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 
 const props = defineProps({
   data: {
@@ -155,6 +159,10 @@ const copyValue = async () => {
 }
 
 .toggle {
+  background: none;
+  border: 0;
+  padding: 0;
+  font: inherit;
   cursor: pointer;
   user-select: none;
   width: 16px;

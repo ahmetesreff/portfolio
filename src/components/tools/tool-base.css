@@ -1,0 +1,187 @@
+/* Araç kartlarının ortak iskeleti. Yeni araçlar bunu
+   <style scoped src="./tool-base.css"></style> ile alır; renkler ToolsView'in
+   --color-* → --tw-* eşlemesinden gelir, böylece iki temada da çalışır. */
+
+.tool-header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
+}
+
+.tool-icon {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  border-radius: var(--border-radius-sm);
+  background: var(--color-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-secondary);
+}
+
+.tool-header h2 {
+  font-size: var(--font-size-lg);
+  color: var(--color-primary);
+  margin: 0;
+}
+
+.tool-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  min-width: 0;
+}
+
+.tool-input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-sm);
+  font-family: var(--tw-mono, monospace);
+  font-size: 14px;
+  background: var(--color-background);
+  color: var(--color-primary);
+}
+
+textarea.tool-input {
+  min-height: 104px;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.tool-input:focus {
+  outline: none;
+  border-color: var(--color-secondary);
+}
+
+.tool-row {
+  display: flex;
+  gap: var(--spacing-xs);
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.tool-btn {
+  flex: 1;
+  padding: 10px 14px;
+  background: var(--color-secondary);
+  color: var(--tw-bg);
+  border: 1px solid transparent;
+  border-radius: var(--border-radius-sm);
+  font-size: 14px;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+/* Sütun düzeninde (tool-content'in doğrudan çocuğu) düğme dikeyde uzamasın */
+.tool-content > .tool-btn {
+  flex: 0 0 auto;
+}
+
+.tool-btn.secondary {
+  background: var(--color-accent);
+  color: var(--color-primary);
+  border-color: var(--color-border);
+}
+
+.tool-btn[aria-pressed='true'] {
+  background: var(--color-secondary);
+  color: var(--tw-bg);
+  border-color: transparent;
+}
+
+.tool-btn:hover:not(:disabled) {
+  filter: brightness(1.06);
+}
+
+.tool-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Küçük, metin gibi duran ikincil düğme (ör. "örnek", "şimdi") */
+.tool-link {
+  background: none;
+  border: 0;
+  padding: 2px 0;
+  font: inherit;
+  font-size: 13px;
+  color: var(--color-secondary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.tool-error {
+  color: #d93025;
+  font-size: 13px;
+  padding: 8px 10px;
+  background: rgba(229, 72, 77, 0.1);
+  border-radius: var(--border-radius-sm);
+  overflow-wrap: anywhere;
+}
+
+.tool-hint {
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+.tool-output {
+  margin: 0;
+  background: var(--color-background);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-sm);
+  padding: 10px 12px;
+  font-family: var(--tw-mono, monospace);
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--color-primary);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  max-height: 320px;
+  overflow: auto;
+}
+
+.tool-label {
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+  margin: 4px 0 -2px;
+}
+
+/* Anahtar–değer listesi (sonuç satırları) */
+.kv {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: 8px 14px;
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.kv dt {
+  color: var(--color-text-secondary);
+}
+
+.kv dd {
+  margin: 0;
+  color: var(--color-primary);
+  overflow-wrap: anywhere;
+  user-select: all;   /* tek tıkla tüm değer seçilsin, kopyalaması kolay */
+}
+
+@media (max-width: 420px) {
+  .kv {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2px;
+  }
+
+  .kv dd {
+    margin-bottom: 8px;
+  }
+}

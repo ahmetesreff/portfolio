@@ -1,8 +1,8 @@
 <template>
   <div class="tool qr-generator">
     <div class="tool-header">
-      <div class="tool-icon">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <div class="tool-icon" aria-hidden="true">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <rect x="3" y="3" width="7" height="7"/>
           <rect x="14" y="3" width="7" height="7"/>
           <rect x="3" y="14" width="7" height="7"/>
@@ -16,154 +16,101 @@
     </div>
 
     <div class="tool-content">
+      <label class="sr-only" for="qr-input">{{ t('tools.qrGenerator.title') }}</label>
       <input
-        v-model="inputText"
+        id="qr-input"
+        v-model="text"
         type="text"
+        class="tool-input"
+        maxlength="1200"
         :placeholder="t('tools.qrGenerator.placeholder')"
-        class="qr-input"
-        @keyup.enter="generateQr"
+        spellcheck="false"
+        autocomplete="off"
       />
 
-      <button @click="generateQr" class="tool-btn" :disabled="!inputText.trim()">
-        {{ t('tools.qrGenerator.generate') }}
-      </button>
+      <p v-if="tooLong" class="tool-error" role="alert">{{ t('tools.qrGenerator.tooLong') }}</p>
 
-      <div v-if="qrUrl" class="qr-result">
-        <img :src="qrUrl" alt="QR Code" class="qr-image" />
-        <button @click="downloadQr" class="tool-btn secondary">
-          {{ t('tools.qrGenerator.download') }}
-        </button>
+      <div v-show="ready" class="qr-result">
+        <canvas ref="canvas" class="qr-canvas" role="img" :aria-label="t('tools.qrGenerator.label')"></canvas>
+        <button type="button" class="tool-btn" @click="download">{{ t('tools.qrGenerator.download') }}</button>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { encode } from 'uqr'
 
 const { t } = useI18n()
 
-const inputText = ref('')
-const qrUrl = ref('')
+const MODULE_PX = 10   // modül başına piksel: indirilen PNG baskıya da yetsin
 
-const generateQr = () => {
-  if (!inputText.value.trim()) return
+const text = ref('')
+const canvas = ref(null)
+const ready = ref(false)
+const tooLong = ref(false)
 
-  const text = encodeURIComponent(inputText.value)
-  qrUrl.value = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${text}`
+// QR tamamen tarayıcıda üretilir; metin hiçbir servise gönderilmez
+const draw = (value) => {
+  tooLong.value = false
+  ready.value = false
+  if (!value.trim() || !canvas.value) return
+  let qr
+  try {
+    qr = encode(value, { ecc: 'M', border: 2 })
+  } catch {
+    tooLong.value = true
+    return
+  }
+  const el = canvas.value
+  el.width = el.height = qr.size * MODULE_PX
+  const ctx = el.getContext('2d')
+  // Temadan bağımsız: okuyucular için beyaz zemin, siyah modül
+  ctx.fillStyle = '#fff'
+  ctx.fillRect(0, 0, el.width, el.height)
+  ctx.fillStyle = '#000'
+  qr.data.forEach((row, y) => row.forEach((on, x) => {
+    if (on) ctx.fillRect(x * MODULE_PX, y * MODULE_PX, MODULE_PX, MODULE_PX)
+  }))
+  ready.value = true
 }
 
-const downloadQr = async () => {
-  if (!qrUrl.value) return
+watch(text, draw)
 
-  try {
-    // Fetch as blob: the `download` attribute is ignored for cross-origin
-    // hrefs, so an object URL from the same origin is required.
-    const response = await fetch(qrUrl.value)
-    const blob = await response.blob()
-    const objectUrl = URL.createObjectURL(blob)
-
+const download = () => {
+  canvas.value?.toBlob((blob) => {
+    if (!blob) return
+    const url = URL.createObjectURL(blob)
     const link = document.createElement('a')
-    link.href = objectUrl
+    link.href = url
     link.download = 'qrcode.png'
     link.click()
-
-    URL.revokeObjectURL(objectUrl)
-  } catch (e) {
-    // Network/CORS failure: fall back to opening in a new tab
-    window.open(qrUrl.value, '_blank')
-  }
+    setTimeout(() => URL.revokeObjectURL(url), 1000)
+  }, 'image/png')
 }
 </script>
 
+<style scoped src="./tool-base.css"></style>
 <style scoped>
-.tool-header {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-sm);
-  margin-bottom: var(--spacing-md);
-}
-
-.tool-icon {
-  width: 40px;
-  height: 40px;
-  border-radius: var(--border-radius-sm);
-  background: var(--color-accent);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--color-secondary);
-}
-
-.tool-header h2 {
-  font-size: var(--font-size-lg);
-  color: var(--color-primary);
-  margin: 0;
-}
-
-.tool-content {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-md);
-}
-
-.qr-input {
-  width: 100%;
-  padding: var(--spacing-sm);
-  border: 1px solid var(--color-border);
-  border-radius: var(--border-radius-sm);
-  font-size: var(--font-size-sm);
-  background: var(--color-background);
-  color: var(--color-primary);
-}
-
-.qr-input:focus {
-  outline: none;
-  border-color: var(--color-secondary);
-}
-
-.tool-btn {
-  padding: var(--spacing-sm) var(--spacing-md);
-  background: var(--color-secondary);
-  color: white;
-  border: none;
-  border-radius: var(--border-radius-sm);
-  font-size: var(--font-size-sm);
-  cursor: pointer;
-  transition: var(--transition-fast);
-  min-width: 150px;
-  text-align: center;
-}
-
-.tool-btn.secondary {
-  background: var(--color-accent);
-  color: var(--color-primary);
-}
-
-.tool-btn:hover {
-  opacity: 0.9;
-}
-
-.tool-btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
 .qr-result {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--spacing-md);
-  padding: var(--spacing-md);
-  background: var(--color-background);
-  border-radius: var(--border-radius-sm);
-  border: 1px solid var(--color-border);
+  gap: var(--spacing-sm);
 }
 
-.qr-image {
-  width: 200px;
-  height: 200px;
+.qr-canvas {
+  width: min(220px, 100%);
+  height: auto;
+  aspect-ratio: 1;
+  image-rendering: pixelated;
+  border: 1px solid var(--color-border);
   border-radius: var(--border-radius-sm);
+}
+
+.qr-result .tool-btn {
+  align-self: stretch;
 }
 </style>

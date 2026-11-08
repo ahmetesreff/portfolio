@@ -29,7 +29,7 @@ export default {
     },
     tools: {
       title: 'Tools | Ahmet Eşref Karabulut',
-      description: 'IT tools for daily tasks: IP check, speed test, JSON tools, and more.'
+      description: 'IP and DNS lookup, JWT decoder, JSON formatter, timestamp converter, cron explainer, password and QR code generator.'
     }
   },
   about: {
@@ -142,6 +142,8 @@ export default {
     error: 'An error occurred',
     copy: 'Copy',
     copied: 'Copied!',
+    example: 'Example',
+    privacy: 'Apart from IP and DNS, every tool runs entirely in your browser; nothing you enter is sent anywhere.',
     ipChecker: {
       title: 'IP Address',
       yourIp: 'Your IP Address',
@@ -149,34 +151,74 @@ export default {
       isp: 'ISP',
       refresh: 'Refresh'
     },
-    speedTest: {
-      title: 'Speed Test',
-      start: 'Start Test',
-      testing: 'Testing...',
-      measuring: 'Measuring speed...',
-      ready: 'Ready to test',
-      excellent: 'Excellent speed!',
-      good: 'Good speed',
-      average: 'Average speed',
-      slow: 'Slow connection',
-      speed: 'Speed',
-      duration: 'Duration',
-      downloadSpeed: 'Download Speed',
-      ping: 'Ping'
+    dns: {
+      title: 'DNS Lookup',
+      domain: 'Domain',
+      placeholder: 'example.com',
+      type: 'Record type',
+      all: 'All',
+      lookup: 'Look up',
+      invalid: 'Enter a valid domain (e.g. example.com).',
+      nxdomain: 'No such domain (NXDOMAIN).',
+      servfail: 'The DNS server could not answer (SERVFAIL).',
+      failed: 'DNS lookup failed',
+      empty: 'No records of this type.',
+      via: 'Resolver'
     },
-    jsonFormatter: {
-      title: 'JSON Formatter',
-      placeholder: 'Paste your JSON code here...',
-      format: 'Format',
+    jwt: {
+      title: 'JWT Decoder',
+      placeholder: 'Paste a token (eyJhbGciOi...)',
+      sample: 'Sample token',
+      notJwt: 'Not a valid JWT: expected three dot-separated parts (header.payload.signature).',
+      jwe: 'This is an encrypted token (JWE); its contents cannot be read without the key.',
+      badPart: 'Could not decode {part}: invalid Base64URL or JSON.',
+      valid: 'Valid · expires {rel}',
+      expired: 'Expired · {rel}',
+      notYet: 'Not valid yet · starts {rel}',
+      noExp: 'No expiry: exp claim missing',
+      algNone: 'Unsigned token (alg: none).',
+      note: 'The signature is not verified; the token never leaves your browser.',
+      claims: {
+        exp: 'Expires (exp)',
+        iat: 'Issued (iat)',
+        nbf: 'Not before (nbf)'
+      }
+    },
+    json: {
+      title: 'JSON Tools',
+      placeholder: 'Paste JSON...',
+      view: 'View',
+      pretty: 'Format',
       minify: 'Minify',
-      invalidJson: 'Invalid JSON format'
+      tree: 'Tree',
+      valid: 'Valid JSON',
+      invalid: 'Invalid JSON',
+      invalidAt: 'Invalid JSON: line {line}, column {col}',
+      expandAll: 'Expand all',
+      collapseAll: 'Collapse all'
     },
-    jsonViewer: {
-      title: 'JSON Viewer',
-      placeholder: 'Paste your JSON code here...',
-      expandAll: 'Expand All',
-      collapseAll: 'Collapse All',
-      invalidJson: 'Invalid JSON format'
+    timestamp: {
+      title: 'Timestamp',
+      placeholder: '1794150000 or 2026-11-08 14:30',
+      now: 'Now',
+      current: 'Now',
+      seconds: 'Unix (seconds)',
+      millis: 'Unix (ms)',
+      iso: 'ISO 8601 (UTC)',
+      local: 'Local time',
+      relative: 'Relative',
+      detectedMs: 'Number detected as milliseconds.',
+      invalid: 'Unrecognised format. Examples: 1794150000 · 2026-11-08T14:30:00Z · 08.11.2026 14:30'
+    },
+    cron: {
+      title: 'Cron Explainer',
+      label: 'Cron expression',
+      fields: 'minute · hour · day of month · month · day of week',
+      next: 'Next runs',
+      none: 'No run time in the next 5 years.',
+      onlyFive: 'Next run times are only calculated for standard 5-field expressions.',
+      invalid: 'Invalid cron expression.',
+      reboot: 'Every time the system boots'
     },
     passwordGenerator: {
       title: 'Password Generator',
@@ -194,8 +236,9 @@ export default {
     qrGenerator: {
       title: 'QR Code Generator',
       placeholder: 'Enter text or URL...',
-      generate: 'Generate QR Code',
-      download: 'Download'
+      label: 'Generated QR code',
+      download: 'Download PNG',
+      tooLong: 'The text is too long for a QR code.'
     }
   }
 }

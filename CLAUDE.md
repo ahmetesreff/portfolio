@@ -56,7 +56,14 @@ The whole UI shares one theme-aware terminal language. `src/assets/styles/termin
 
 ### Components
 
-`src/components/tools/*` are self-contained interactive widgets rendered by `ToolsView.vue`. Each exposes `.tool` / `.tool-content` / `.tool-header h2` / `.tool-btn` classes (h2: they sit directly under the page h1). `ToolsView.vue` themes all six at once by **remapping the site `--color-*` tokens to `--tw-*`** on the grid wrapper (custom-property inheritance into child components) — no per-tool rewrite. A few semantic hex colours (status red/green, JSON syntax) are intentionally left hardcoded.
+`src/components/tools/*` are self-contained interactive widgets rendered by `ToolsView.vue`. The current set is IP, DNS, JWT, JSON, timestamp, cron, password and QR. Each exposes `.tool` / `.tool-content` / `.tool-header h2` / `.tool-btn` classes (h2: they sit directly under the page h1). `ToolsView.vue` themes every tool at once by **remapping the site `--color-*` tokens to `--tw-*`** on the grid wrapper (custom-property inheritance into child components), so no per-tool rewrite is needed. A few semantic hex colours (status red/green, JSON syntax) are intentionally left hardcoded.
+
+- Newer tools share `tool-base.css` via `<style scoped src="./tool-base.css">` (header, inputs, buttons, `.kv` result list). Prefer it over copying CSS into a new tool.
+- Helpers live next to the tools:
+  - `time.js`: Intl date and relative-time formatting.
+  - `cron.js`: 5-field cron parser and next-run calculator, Vixie day-of-month/day-of-week OR rule. It was checked against a brute-force minute scan.
+  - `json-error.js`: finds the line and column of a JSON syntax error, because Chrome's `JSON.parse` messages often omit the position.
+- **Privacy rule:** only IP (`ipinfo.io`, falling back to `ipapi.co`) and DNS (`cloudflare-dns.com`, falling back to `dns.google`, DoH JSON) call external services. Everything else runs in the browser, and the page tells visitors so (`tools.privacy`). QR codes are generated locally with `uqr`; do not reintroduce a QR API. If a CSP is ever added, whitelist those four hosts in `connect-src`.
 
 ### Typography and layout gotchas
 
