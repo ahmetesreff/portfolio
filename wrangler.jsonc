@@ -1,20 +1,23 @@
-// Cloudflare Workers, yalnız statik dosya (dist/). Workers Builds: build `npm run build`, deploy `npx wrangler deploy`.
-// Alan adı route ile bağlı. Ayrıca Worker'sız iki istisna route'u var (panel/API, burada değil):
-//   ahmetesrefkarabulut.com.tr/jarvis-ses/*               → sunucu (iPhone sesli asistan ucu)
-//   ahmetesrefkarabulut.com.tr/.well-known/acme-challenge/* → sunucu (certbot yenilemesi)
-// Bunlar silinirse sesli asistan ve sunucu sertifikası yenilemesi bozulur.
+// Cloudflare Workers: statik site (dist/) + küçük yönlendirme kodu (worker/index.js).
+// Workers Builds: build `npm run build`, deploy `npx wrangler deploy`.
+// Alan adları Worker'a doğrudan bağlı (custom domain; DNS kaydını Cloudflare yönetir, sunucuya bağ yok).
+// www ve http istekleri koddan https://ahmetesrefkarabulut.com.tr'ye 301'lenir.
+// Sesli asistan ucu ana alanda değil: https://nobetci.ahmetesrefkarabulut.com.tr/jarvis-ses/sor (sunucu).
 {
   "name": "portfolio",
+  "main": "worker/index.js",
   "compatibility_date": "2026-11-01",
   "workers_dev": false,
   "preview_urls": false,
-  // Yalnız https: http istekleri sunucudaki nginx'e gider, o da https'ye 301'ler. Böylece certbot'un
-  // http-01 doğrulaması bugünkü gibi çalışır ("Always Use HTTPS" bu yolu da yönlendirip bozabilirdi).
   "routes": [
-    { "pattern": "https://ahmetesrefkarabulut.com.tr/*", "zone_name": "ahmetesrefkarabulut.com.tr" }
+    { "pattern": "ahmetesrefkarabulut.com.tr", "custom_domain": true },
+    { "pattern": "www.ahmetesrefkarabulut.com.tr", "custom_domain": true }
   ],
   "assets": {
     "directory": "./dist",
-    "not_found_handling": "404-page"
+    "binding": "ASSETS",
+    "not_found_handling": "404-page",
+    // Yönlendirme kodu sayfa isteklerinde çalışsın; hash'li /assets/* doğrudan (ücretsiz) sunulsun.
+    "run_worker_first": ["/*", "!/assets/*"]
   }
 }

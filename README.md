@@ -11,8 +11,8 @@ Vue.js ve Vite ile oluşturulmuş, terminal/CRT temalı bir portfolyo websitesi.
 - 📱 Tamamen responsive (mobil, tablet, desktop)
 - ⚡ Vite ile hızlı geliştirme ve build
 - 🎨 Vue 3 Composition API
-- 🚀 Docker ile kolay deployment
-- 🔄 GitHub Actions ile otomatik CI/CD
+- 🚀 Cloudflare Workers'ta sunucusuz statik yayın
+- 🔄 `main`'e her push'ta otomatik yayın (Workers Builds)
 - 🎯 SEO optimizasyonu
 - ♿ Accessibility standartlarına uygun
 
@@ -21,8 +21,8 @@ Vue.js ve Vite ile oluşturulmuş, terminal/CRT temalı bir portfolyo websitesi.
 - **Frontend:** Vue 3, Vue Router
 - **Build Tool:** Vite
 - **Styling:** Vanilla CSS (CSS Variables)
-- **Deployment:** Docker, Nginx
-- **CI/CD:** GitHub Actions / GitLab CI
+- **Yayın:** Cloudflare Workers (statik dosyalar)
+- **CI/CD:** Cloudflare Workers Builds
 
 ## Geliştirme
 
@@ -47,143 +47,21 @@ npm run build
 npm run preview
 ```
 
-## Docker ile Çalıştırma
+## Yayın (Cloudflare Workers)
 
-### Lokal olarak test etmek için:
+Site, Cloudflare Workers üzerinde statik dosya olarak yayınlanır; sunucu gerekmez.
 
-```bash
-# Docker image oluştur
-docker build -t portfolio:latest .
+- `main` dalına her push'ta **Workers Builds** derler ve yayınlar (build: `npm run build`, deploy: `npx wrangler deploy`). Derleme başarısız olursa önceki sürüm yayında kalır.
+- Ayarlar `wrangler.jsonc`'ta: `dist/` klasörü, `ahmetesrefkarabulut.com.tr` ve `www` alan adları (custom domain).
+- `worker/index.js` yalnızca `http` → `https` ve `www` → ana adres yönlendirmesini yapar; gerisi statik dosyadır.
+- `scripts/postbuild.mjs` her sayfa için kendi başlık/açıklama/canonical etiketli HTML'i ve gerçek 404 sayfasını üretir.
+- Güvenlik başlıkları ve önbellek kuralları: `public/_headers`.
 
-# Container'ı çalıştır
-docker run -p 3000:80 portfolio:latest
-```
-
-### Docker Compose ile:
+Elle yayınlamak gerekirse (Cloudflare API anahtarıyla):
 
 ```bash
-# Container'ı başlat
-docker compose up -d
-
-# Logları görüntüle
-docker compose logs -f
-
-# Container'ı durdur
-docker compose down
-```
-
-## Deployment
-
-### Hetzner Sunucuya Deployment
-
-#### 1. Sunucu Hazırlığı
-
-```bash
-# Docker kurulumu
-curl -fsSL https://get.docker.com -o get-docker.sh
-sudo sh get-docker.sh
-
-# Docker Compose plugin kurulumu
-sudo apt-get update
-sudo apt-get install docker-compose-plugin
-
-# Kullanıcıyı docker grubuna ekle
-sudo usermod -aG docker $USER
-newgrp docker
-
-# Proje klasörünü oluştur
-mkdir -p ~/portfolio
-cd ~/portfolio
-```
-
-#### 2. Nginx Reverse Proxy Kurulumu
-
-Ana sunucuda `/etc/nginx/sites-available/portfolio` dosyası oluşturun:
-
-```nginx
-server {
-    listen 80;
-    listen [::]:80;
-    server_name your-domain.com www.your-domain.com;
-
-    location / {
-        proxy_pass http://localhost:3000;
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection 'upgrade';
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-        proxy_cache_bypass $http_upgrade;
-    }
-}
-```
-
-Site'ı aktif edin ve SSL ekleyin:
-
-```bash
-sudo ln -s /etc/nginx/sites-available/portfolio /etc/nginx/sites-enabled/
-sudo nginx -t
-sudo systemctl reload nginx
-
-# Certbot ile SSL
-sudo apt install certbot python3-certbot-nginx
-sudo certbot --nginx -d your-domain.com -d www.your-domain.com
-```
-
-#### 3. GitHub Secrets Yapılandırması
-
-GitHub repository'nizde **Settings > Secrets and variables > Actions** bölümünden aşağıdaki secrets'ları ekleyin:
-
-- `SERVER_HOST`: Hetzner sunucu IP adresi
-- `SERVER_USER`: SSH kullanıcı adı
-- `SSH_PRIVATE_KEY`: SSH private key
-
-SSH key oluşturma:
-
-```bash
-# Lokal makinede
-ssh-keygen -t ed25519 -C "github-actions" -f ~/.ssh/portfolio_deploy
-
-# Public key'i sunucuya ekle
-ssh-copy-id -i ~/.ssh/portfolio_deploy.pub user@server-ip
-
-# Private key'i kopyala (GitHub secret olarak eklenecek)
-cat ~/.ssh/portfolio_deploy
-```
-
-#### 4. Otomatik Deployment
-
-Kod değişikliklerinizi `main` branch'ine push ettiğinizde, GitHub Actions otomatik olarak:
-1. Docker image build eder
-2. Sunucuya transfer eder
-3. Container'ı yeniden başlatır
-4. Health check yapar
-
-```bash
-git add .
-git commit -m "Update website"
-git push origin main
-```
-
-### Manuel Deployment
-
-```bash
-# Lokal makinede build et
-docker build -t portfolio:latest .
-
-# Test et
-docker run -p 3000:80 portfolio:latest
-
-# Sunucuya image'ı gönder
-docker save portfolio:latest | gzip | ssh user@server-ip 'cat > ~/portfolio/portfolio.tar.gz'
-
-# Sunucuda deploy et
-ssh user@server-ip
-cd ~/portfolio
-docker load < portfolio.tar.gz
-docker compose up -d
+npm run build
+npx wrangler deploy
 ```
 
 ## İçerik Güncelleme
@@ -208,27 +86,13 @@ Profil fotoğrafını `src/assets/images/profile.jpg` olarak kaydetmeniz yeterli
 import profilePhoto from '../../assets/images/profile.jpg'
 ```
 
-## Monitoring
-
-```bash
-# Container durumunu kontrol et
-docker ps
-
-# Logları görüntüle
-docker compose logs -f
-
-# Container'a bağlan
-docker exec -it portfolio-web sh
-
-# Resource kullanımı
-docker stats portfolio-web
-```
-
 ## Proje Yapısı
 
 ```
 portfolio/
-├── .github/workflows/       # GitHub Actions workflows
+├── scripts/postbuild.mjs    # Sayfa başına HTML + 404.html
+├── worker/index.js          # http/www yönlendirmesi
+├── wrangler.jsonc           # Cloudflare Workers ayarı
 ├── public/                  # Statik dosyalar
 │   └── assets/             # CV ve diğer dosyalar
 ├── src/
@@ -239,7 +103,7 @@ portfolio/
 │   │   ├── layout/         # Header, Footer
 │   │   ├── about/          # Hakkımda bileşenleri (ProfileCard, ...)
 │   │   ├── contact/        # İletişim bileşenleri
-│   │   ├── tools/          # Araç bileşenleri (IP, hız, JSON, QR, ...)
+│   │   ├── tools/          # Araç bileşenleri (IP, DNS, JWT, JSON, cron, QR, ...)
 │   │   ├── TerminalWindow.vue  # Paylaşılan terminal pencere kabuğu
 │   │   └── Terminal.vue        # İnteraktif terminal simülatörü
 │   ├── views/              # Sayfa görünümleri
@@ -248,9 +112,6 @@ portfolio/
 │   ├── directives/         # scrollReveal, parallax
 │   ├── App.vue             # Ana uygulama bileşeni
 │   └── main.js             # Uygulama giriş noktası
-├── Dockerfile              # Docker yapılandırması
-├── docker-compose.yml      # Docker Compose yapılandırması
-├── nginx.conf              # Nginx yapılandırması
 ├── vite.config.js          # Vite yapılandırması
 └── package.json            # Bağımlılıklar
 ```

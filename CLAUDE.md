@@ -75,15 +75,16 @@ The whole UI shares one theme-aware terminal language. `src/assets/styles/termin
 
 ## Deployment (Cloudflare Workers, auto-deploy on push to main)
 
-Since 2026-11-08 the site is a static-assets-only Cloudflare Worker named `portfolio` (`wrangler.jsonc`, serving `dist/`). Workers Builds deploys every push to `main`, with build command `npm run build` and deploy command `npx wrangler deploy`. A failed build leaves the previous version live. Treat pushes to `main` as production deploys.
+Since 2026-11-08 the site is a Cloudflare Worker named `portfolio` (`wrangler.jsonc`) that serves the static `dist/`. No server is involved. Workers Builds deploys every push to `main`, with build command `npm run build` and deploy command `npx wrangler deploy`. A failed build leaves the previous version live. Treat pushes to `main` as production deploys.
 
+- **Domains:** `ahmetesrefkarabulut.com.tr` and `www.` are Worker **custom domains**, so Cloudflare manages their DNS records. The zone's MX/TXT records (Google mail, verifications) are separate; leave them alone.
+- **`worker/index.js`** only canonicalises the address: http, www, or a non-default port gets a 301 to `https://ahmetesrefkarabulut.com.tr` with path and query kept. Everything else goes to `env.ASSETS`, which applies `_headers`, the trailing-slash 307 and the 404 page.
+  - `run_worker_first: ["/*", "!/assets/*"]` lets hashed assets skip the script, so they are served free and uncounted.
+  - The redirect lives in code on purpose. Do **not** enable zone-wide "Always Use HTTPS" instead: `valteris.` (on the server) renews its certificate through certbot's nginx http-01, which that setting can break.
 - `public/_headers` sets the security headers and long-lived caching for hashed `/assets/*`. If you add a CSP, see the privacy rule above for the hosts it must allow.
-- **Routing.** The Worker is attached by route `https://ahmetesrefkarabulut.com.tr/*`, not a custom domain, so the apex DNS record still points (proxied) at the server.
-  - **http is excluded on purpose:** plain-http requests reach the server's nginx, which 301s to https. That keeps certbot's http-01 renewal working.
-  - Two Worker-less routes, defined in the Cloudflare dashboard/API and not in `wrangler.jsonc`, send `/jarvis-ses/*` (the iPhone voice-assistant endpoint) and `/.well-known/acme-challenge/*` to the server. **Do not delete them.**
-- The `www` host redirects to the apex through a Cloudflare Redirect Rule (dashboard).
+- The iPhone voice-assistant endpoint is no longer on this domain. It lives on the server at `https://nobetci.ahmetesrefkarabulut.com.tr/jarvis-ses/sor`, so on the apex `/jarvis-ses/*` is just a 404.
 
-Legacy: `Dockerfile`, `nginx.conf` and `docker-compose.yml` are the old self-hosted setup (nginx container on host port 3000). The SSH deploy workflow was removed. The container is kept running briefly as a rollback target; to roll back, delete the `https://ahmetesrefkarabulut.com.tr/*` route.
+The old self-hosted setup (Docker + nginx container, SSH deploy workflow) was removed on 2026-11-08. It is in git history before commit `79b2563`.
 
 ## OG image regeneration
 
