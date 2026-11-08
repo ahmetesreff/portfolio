@@ -86,6 +86,7 @@ const resultPing = ref(null)
 const currentSpeed = ref(0)
 const currentPing = ref(0)
 const progress = ref(0)
+const failed = ref(false)
 
 const MAX_SPEED = 1000 // Max speed in Mbps
 
@@ -121,6 +122,7 @@ const pingClass = computed(() => {
 
 const statusText = computed(() => {
   if (testing.value) return t('tools.speedTest.measuring')
+  if (failed.value) return t('tools.error')
   if (result.value === null) return t('tools.speedTest.ready')
   if (result.value > 100) return t('tools.speedTest.excellent')
   if (result.value > 50) return t('tools.speedTest.good')
@@ -172,14 +174,15 @@ const measureDownloadSpeed = async (bytes) => {
   const startTime = performance.now()
   try {
     const response = await fetch(`https://speed.cloudflare.com/__down?bytes=${bytes}`, {
-      cache: 'no-cache'
+      cache: 'no-store'
     })
-    await response.blob()
-    const endTime = performance.now()
-    const durationSeconds = (endTime - startTime) / 1000
-    const bitsLoaded = bytes * 8
-    const speedMbps = (bitsLoaded / durationSeconds) / 1000000
-    return speedMbps
+    // Hata yanıtında (ör. 429) birkaç baytlık gövde "20 MB indi" sayılıp
+    // binlerce Mbps gösteriliyordu: durumu kontrol et, gerçekten inen baytı kullan.
+    if (!response.ok) return null
+    const blob = await response.blob()
+    const durationSeconds = (performance.now() - startTime) / 1000
+    if (blob.size < bytes || durationSeconds <= 0) return null
+    return (blob.size * 8 / durationSeconds) / 1000000
   } catch (error) {
     return null
   }
@@ -187,6 +190,7 @@ const measureDownloadSpeed = async (bytes) => {
 
 const startTest = async () => {
   testing.value = true
+  failed.value = false
   result.value = null
   resultPing.value = null
   currentSpeed.value = 0
@@ -244,13 +248,19 @@ const startTest = async () => {
     currentPing.value = realPing + (Math.random() - 0.5) * 3
   }
 
-  // Calculate average speed (excluding first initial measurement)
-  const relevantSpeeds = speeds.length > 1 ? speeds.slice(1) : speeds
-  const avgSpeed = relevantSpeeds.length > 0
-    ? relevantSpeeds.reduce((a, b) => a + b, 0) / relevantSpeeds.length
-    : 0
+  // Ortalama: ilk tahmin ölçümü hariç; başarısız ölçümler (null) sayılmaz
+  const measured = speeds.slice(1).filter(s => s !== null)
+  const relevantSpeeds = measured.length ? measured : speeds.filter(s => s !== null)
 
   testing.value = false
+  if (!relevantSpeeds.length) {
+    // Hiç ölçüm alınamadı: "0.0 Mbps · Yavaş" yerine hata göster
+    failed.value = true
+    currentSpeed.value = 0
+    progress.value = 0
+    return
+  }
+  const avgSpeed = relevantSpeeds.reduce((a, b) => a + b, 0) / relevantSpeeds.length
   result.value = avgSpeed
   resultPing.value = realPing
   progress.value = 100

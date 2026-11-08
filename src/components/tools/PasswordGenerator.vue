@@ -93,13 +93,14 @@ const includeNumbers = ref(true)
 const includeSymbols = ref(true)
 const copied = ref(false)
 
-const charset = computed(() => {
-  let chars = ''
-  if (includeUppercase.value) chars += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-  if (includeLowercase.value) chars += 'abcdefghijklmnopqrstuvwxyz'
-  if (includeNumbers.value) chars += '0123456789'
-  if (includeSymbols.value) chars += '!@#$%^&*()_+-=[]{}|;:,.<>?'
-  return chars
+// Seçili karakter grupları (her biri şifrede en az bir kez bulunacak)
+const groups = computed(() => {
+  const g = []
+  if (includeUppercase.value) g.push('ABCDEFGHIJKLMNOPQRSTUVWXYZ')
+  if (includeLowercase.value) g.push('abcdefghijklmnopqrstuvwxyz')
+  if (includeNumbers.value) g.push('0123456789')
+  if (includeSymbols.value) g.push('!@#$%^&*()_+-=[]{}|;:,.<>?')
+  return g
 })
 
 const strength = computed(() => {
@@ -127,18 +128,30 @@ const strengthText = computed(() => {
   return t('tools.passwordGenerator.strong')
 })
 
+// 0..n-1 arası kriptografik rastgele sayı; reddetme örneklemesiyle modulo yanlılığı yok
+const randomIndex = (n) => {
+  const limit = Math.floor(0x100000000 / n) * n
+  const buf = new Uint32Array(1)
+  do { crypto.getRandomValues(buf) } while (buf[0] >= limit)
+  return buf[0] % n
+}
+
 const generatePassword = () => {
-  if (!charset.value) return
+  if (!groups.value.length) return
 
-  let result = ''
-  const array = new Uint32Array(length.value)
-  crypto.getRandomValues(array)
-
-  for (let i = 0; i < length.value; i++) {
-    result += charset.value[array[i] % charset.value.length]
+  const len = Number(length.value)   // range girdisi v-model'de metin döner
+  const all = groups.value.join('')
+  // Önce her seçili türden bir karakter: aksi halde 16 karakterde ~%15 olasılıkla
+  // "Rakamlar" seçiliyken rakamsız şifre çıkıyordu.
+  const chars = groups.value.map(g => g[randomIndex(g.length)])
+  while (chars.length < len) chars.push(all[randomIndex(all.length)])
+  // Zorunlu karakterler başta kalmasın: Fisher–Yates karıştırma
+  for (let i = chars.length - 1; i > 0; i--) {
+    const j = randomIndex(i + 1)
+    ;[chars[i], chars[j]] = [chars[j], chars[i]]
   }
 
-  password.value = result
+  password.value = chars.join('')
 }
 
 const copyPassword = async () => {
