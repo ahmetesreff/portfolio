@@ -7,11 +7,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ```powershell
 npm install        # install deps (Node 20+)
 npm run dev        # dev server with HMR — http://localhost:5173
-npm run build      # production build to dist/
+npm run build      # production build to dist/ (vite build + scripts/postbuild.mjs)
 npm run preview    # serve the built dist/ — http://localhost:4173
 ```
 
-There is **no test runner and no linter** configured. CI does not build either (see Deployment), so run `npm run build` locally to catch build errors before pushing.
+There is **no test runner and no linter** configured. Run `npm run build` locally before pushing: a push to `main` is a production deploy (see Deployment).
 
 To preview the static SEO/OG `<head>` tags (see SEO below) you must use `npm run preview`, not `npm run dev` — those tags only matter for the production `index.html`.
 
@@ -32,12 +32,14 @@ Because this is a client-rendered SPA, `SeoHead.vue` runs only after JS executes
 
 `public/sitemap.xml` lists the same routes with hand-maintained `lastmod` dates and must be updated when routes change.
 
+`scripts/postbuild.mjs` (runs after `vite build`) writes one HTML copy per page (`dist/hakkimda.html`, …) with that page's title, description, canonical and OG/Twitter tags taken from `tr.js` `seo.*`, plus `dist/404.html` (noindex, no canonical). Its `PAGES` list must match the sitemap, or the build fails on purpose. It also fails if it can't find a static tag in `index.html` exactly once, so keep those tags' shape (`<meta name="…" content="…">`) when editing them. When adding a route, add it to `PAGES` and the sitemap.
+
 ### Routing and i18n
 
 - Route paths are Turkish (`/`, `/hakkimda`, `/iletisim`, `/araclar`); `HomeView` is eager, the rest lazy-loaded.
 - Default locale `tr`, fallback `tr`; selection persisted in `localStorage` under `locale` (`src/i18n.js`). vue-i18n runs in non-legacy (Composition) mode — use `useI18n()` / `t()`.
-- SPA routing in production relies on `nginx.conf` `try_files ... /index.html`.
-- Unknown paths hit the catch-all route → `NotFoundView.vue` with `meta.noindex` (SeoHead then writes `noindex, follow`). The HTTP status is still 200 (soft 404) until the hosting serves a real 404.
+- In production, Cloudflare Workers static assets serve `/hakkimda` from `hakkimda.html` (written by the postbuild script), with status 200. A trailing slash (`/hakkimda/`) gets a 307 to the slash-less URL.
+- Unknown paths get `404.html` with a **real 404 status**. It is the same SPA, so the catch-all route renders `NotFoundView.vue` with `meta.noindex`.
 - `main.js` mounts only after `router.isReady()`. Without it, the header and footer paint before the lazy route chunk arrives, and the footer jumps down (CLS ≈ 0.13 on `/hakkimda` and `/araclar`). Keep it.
 
 ### Global custom directives
@@ -71,11 +73,17 @@ The whole UI shares one theme-aware terminal language. `src/assets/styles/termin
 - `main.css` has a global `p { font-size: var(--font-size-lg) }` (≈19px). Any `<p>` inside terminal-style UI must set `font-size: inherit`, as `.tw-out p` and `.terminal-welcome p` do. Otherwise text balloons, especially on phones.
 - The interactive terminal's ASCII banner has two variants: `.art-wide`, and `.art-narrow` ("Backend" / "Dev" stacked, ≤600px). This keeps it at ≥12px on phones, which is Lighthouse's legible-font-size threshold.
 
-## Deployment (auto-deploy on push to main)
+## Deployment (Cloudflare Workers, auto-deploy on push to main)
 
-`.github/workflows/deploy.yml`: any push to `main` SSHes into the server, runs `git pull` + `docker compose build --no-cache` + `up -d`. **There is no build/test gate** — a broken build only surfaces on the server, briefly taking the site down (old container is stopped before the new one's build is validated). Treat pushes to `main` as production deploys.
+Since 2026-11-08 the site is a static-assets-only Cloudflare Worker named `portfolio` (`wrangler.jsonc`, serving `dist/`). Workers Builds deploys every push to `main`, with build command `npm run build` and deploy command `npx wrangler deploy`. A failed build leaves the previous version live. Treat pushes to `main` as production deploys.
 
-The Docker image is a multi-stage build (`Dockerfile`): Node builds `dist/`, then nginx (`nginx.conf`) serves it on port 80, exposed as 3000 on the host.
+- `public/_headers` sets the security headers and long-lived caching for hashed `/assets/*`. If you add a CSP, see the privacy rule above for the hosts it must allow.
+- **Routing.** The Worker is attached by route `https://ahmetesrefkarabulut.com.tr/*`, not a custom domain, so the apex DNS record still points (proxied) at the server.
+  - **http is excluded on purpose:** plain-http requests reach the server's nginx, which 301s to https. That keeps certbot's http-01 renewal working.
+  - Two Worker-less routes, defined in the Cloudflare dashboard/API and not in `wrangler.jsonc`, send `/jarvis-ses/*` (the iPhone voice-assistant endpoint) and `/.well-known/acme-challenge/*` to the server. **Do not delete them.**
+- The `www` host redirects to the apex through a Cloudflare Redirect Rule (dashboard).
+
+Legacy: `Dockerfile`, `nginx.conf` and `docker-compose.yml` are the old self-hosted setup (nginx container on host port 3000). The SSH deploy workflow was removed. The container is kept running briefly as a rollback target; to roll back, delete the `https://ahmetesrefkarabulut.com.tr/*` route.
 
 ## OG image regeneration
 

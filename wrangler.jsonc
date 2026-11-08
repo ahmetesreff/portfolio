@@ -1,0 +1,20 @@
+// Cloudflare Workers, yalnız statik dosya (dist/). Workers Builds: build `npm run build`, deploy `npx wrangler deploy`.
+// Alan adı route ile bağlı. Ayrıca Worker'sız iki istisna route'u var (panel/API, burada değil):
+//   ahmetesrefkarabulut.com.tr/jarvis-ses/*               → sunucu (iPhone sesli asistan ucu)
+//   ahmetesrefkarabulut.com.tr/.well-known/acme-challenge/* → sunucu (certbot yenilemesi)
+// Bunlar silinirse sesli asistan ve sunucu sertifikası yenilemesi bozulur.
+{
+  "name": "portfolio",
+  "compatibility_date": "2026-11-01",
+  "workers_dev": false,
+  "preview_urls": false,
+  // Yalnız https: http istekleri sunucudaki nginx'e gider, o da https'ye 301'ler. Böylece certbot'un
+  // http-01 doğrulaması bugünkü gibi çalışır ("Always Use HTTPS" bu yolu da yönlendirip bozabilirdi).
+  "routes": [
+    { "pattern": "https://ahmetesrefkarabulut.com.tr/*", "zone_name": "ahmetesrefkarabulut.com.tr" }
+  ],
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "404-page"
+  }
+}
