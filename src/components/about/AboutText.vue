@@ -18,9 +18,9 @@
       </p>
       <div class="exp-grid">
         <div v-for="cat in expertise" :key="cat.key" class="exp-cat">
-          <h3 class="exp-cat-title">
+          <h2 class="exp-cat-title">
             <span class="exp-arrow">▸</span>{{ t(`about.expertise.${cat.key}.title`) }}
-          </h3>
+          </h2>
           <ul class="exp-list">
             <li v-for="i in cat.items" :key="i">
               {{ t(`about.expertise.${cat.key}.i${i}`) }}

@@ -2,7 +2,7 @@
   <button
     @click="toggleLanguage"
     class="language-toggle"
-    :aria-label="currentLocale === 'tr' ? 'Switch to English' : 'Türkçeye geç'"
+    :aria-label="currentLocale === 'tr' ? 'TR – Switch to English' : 'EN – Türkçeye geç'"
   >
     <span class="language-text">{{ currentLocale.toUpperCase() }}</span>
   </button>

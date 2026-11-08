@@ -6,7 +6,7 @@
           <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
         </svg>
       </div>
-      <h3>{{ t('tools.speedTest.title') }}</h3>
+      <h2>{{ t('tools.speedTest.title') }}</h2>
     </div>
 
     <div class="tool-content">
@@ -276,7 +276,7 @@ const startTest = async () => {
   color: var(--color-secondary);
 }
 
-.tool-header h3 {
+.tool-header h2 {
   font-size: var(--font-size-lg);
   color: var(--color-primary);
   margin: 0;
@@ -324,7 +324,7 @@ const startTest = async () => {
 .metric-value {
   font-size: 2.5rem;
   font-weight: var(--font-weight-bold);
-  font-family: 'Monaco', 'Menlo', monospace;
+  font-family: var(--tw-mono, monospace);
   line-height: 1;
   transition: color var(--transition-fast);
 }
@@ -394,7 +394,7 @@ const startTest = async () => {
 .progress-value {
   font-weight: var(--font-weight-medium);
   color: var(--color-primary);
-  font-family: 'Monaco', 'Menlo', monospace;
+  font-family: var(--tw-mono, monospace);
 }
 
 .progress-bar {

@@ -131,10 +131,12 @@ const { t } = useI18n()
   flex-direction: column;
 }
 
-.tool-card :deep(.tool-header h3) {
+.tool-card :deep(.tool-header h2) {   /* sayfa h1'inin altında doğru başlık sırası için h2 */
   font-family: var(--tw-mono);
   font-size: 15px;
   font-weight: 600;
+  line-height: 1.14286;
+  letter-spacing: -0.01em;
   white-space: nowrap;
 }
 
@@ -162,6 +164,7 @@ const { t } = useI18n()
 
   .tool-card {
     padding: 18px 16px;
+    min-height: 0;   /* tek sütunda eşit yükseklik gerekmiyor; kısa kartlarda boşluk bırakıyordu */
   }
 }
 </style>

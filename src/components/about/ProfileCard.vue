@@ -20,7 +20,7 @@
 
           <div class="term-id">
             <div class="term-avatar">
-              <img :src="profileImage" alt="Ahmet Eşref Karabulut" />
+              <img :src="profileImage" width="400" height="400" alt="Ahmet Eşref Karabulut" />
               <span class="term-scan" aria-hidden="true"></span>
               <span class="term-bracket tl" aria-hidden="true"></span>
               <span class="term-bracket br" aria-hidden="true"></span>
@@ -77,7 +77,7 @@
 import { useI18n } from 'vue-i18n'
 import TypeWriter from '../TypeWriter.vue'
 
-import profilePhoto from '../../assets/images/profile.jpg'
+import profilePhoto from '../../assets/images/profile.webp'
 
 const { t } = useI18n()
 const profileImage = profilePhoto
@@ -131,7 +131,7 @@ const socialLinks = [
 
 .term-window {
   width: 100%;
-  max-width: 720px;
+  max-width: 860px;
   border-radius: 14px;
   background: var(--t-bg);
   border: 1px solid var(--t-edge);
@@ -175,6 +175,10 @@ const socialLinks = [
 
 .term-path {
   flex: 1;
+  min-width: 0;            /* çok dar ekranda "live" etiketini dışarı itmesin */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   text-align: center;
   font-size: 12px;
   letter-spacing: 0.04em;
@@ -316,8 +320,8 @@ const socialLinks = [
 .term-avatar {
   position: relative;
   flex-shrink: 0;
-  width: clamp(96px, 22vw, 132px);
-  height: clamp(96px, 22vw, 132px);
+  width: clamp(104px, 24vw, 164px);
+  height: clamp(104px, 24vw, 164px);
 }
 
 .term-avatar img {
@@ -399,7 +403,7 @@ const socialLinks = [
 .term-id-text { min-width: 0; }
 
 .term-name {
-  font-size: clamp(1.5rem, 5.5vw, 2.45rem);
+  font-size: clamp(1.6rem, 5.5vw, 2.75rem);
   font-weight: 600;
   line-height: 1.05;
   letter-spacing: -0.01em;
@@ -428,7 +432,7 @@ const socialLinks = [
 
 /* ---- Bio ---- */
 .term-bio {
-  font-size: 14px;
+  font-size: 15px;
   line-height: 1.65;
   color: var(--t-bio);
   margin: 0;
@@ -486,11 +490,11 @@ const socialLinks = [
   font-size: 13.5px;
   font-weight: 600;
   letter-spacing: 0.02em;
-  color: var(--t-green);
-  padding: 11px 22px;
+  color: var(--t-bg);
+  padding: 12px 22px;
   border: 1px solid var(--t-green);
   border-radius: 4px;
-  background: transparent;
+  background: var(--t-green);
   text-decoration: none;
   transition: background 0.18s ease, color 0.18s ease,
     box-shadow 0.18s ease, transform 0.18s ease;
@@ -499,8 +503,7 @@ const socialLinks = [
 .term-btn .glyph { transition: transform 0.18s ease; }
 
 .term-btn:hover {
-  background: var(--t-green);
-  color: var(--t-bg);
+  filter: brightness(1.08);
   box-shadow: 0 0 22px -2px rgba(15, 157, 107, 0.45);
 }
 
@@ -514,18 +517,27 @@ const socialLinks = [
 .term-flags {
   display: flex;
   flex-wrap: wrap;
-  gap: 18px;
+  gap: 10px;
 }
 
+/* sosyal bağlantılar: dokunması kolay etiketler (en az 40px) */
 .term-flag {
   font-size: 13px;
-  color: var(--t-dim);
+  color: var(--t-fg);
   text-decoration: none;
   position: relative;
-  transition: color 0.18s ease;
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 0 14px;
+  border: 1px solid var(--t-edge);
+  border-radius: 4px;
+  background: var(--t-stack-bg);
+  transition: color 0.18s ease, border-color 0.18s ease;
 }
 
 .term-flag::after {
+  display: none;
   content: '';
   position: absolute;
   left: 0;
@@ -536,7 +548,7 @@ const socialLinks = [
   transition: right 0.22s ease;
 }
 
-.term-flag:hover { color: var(--t-amber); }
+.term-flag:hover { color: var(--t-green); border-color: var(--t-green); }
 .term-flag:hover::after { right: 0; }
 
 /* ---- Focus states ---- */

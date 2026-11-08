@@ -1,12 +1,5 @@
 <template>
   <div class="home-view">
-    <!-- Parallax Background Shapes -->
-    <div class="parallax-shapes">
-      <div class="shape shape-1" v-parallax="{ speed: 0.3, direction: 'up' }"></div>
-      <div class="shape shape-2" v-parallax="{ speed: 0.5, direction: 'down' }"></div>
-      <div class="shape shape-3" v-parallax="{ speed: 0.4, direction: 'up' }"></div>
-    </div>
-
     <section class="hero-section">
       <div class="container">
         <div v-scroll-reveal="{ type: 'fade-up', duration: 800 }">
@@ -33,71 +26,23 @@ import Terminal from '../components/Terminal.vue'
 <style scoped>
 .home-view {
   flex: 1;
-  background: var(--color-background);
+  background: transparent;
   position: relative;
   overflow: hidden;
-}
-
-/* Parallax Background Shapes */
-.parallax-shapes {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 0;
-  overflow: hidden;
-}
-
-.shape {
-  position: absolute;
-  border-radius: 50%;
-  opacity: 0.05;
-  background: var(--tw-green);
-  filter: blur(60px);
-}
-
-.shape-1 {
-  width: 600px;
-  height: 600px;
-  top: -200px;
-  right: -200px;
-}
-
-.shape-2 {
-  width: 400px;
-  height: 400px;
-  top: 50%;
-  left: -150px;
-}
-
-.shape-3 {
-  width: 500px;
-  height: 500px;
-  bottom: -100px;
-  right: 10%;
-}
-
-/* Dark mode shape adjustments */
-[data-theme="dark"] .shape {
-  opacity: 0.07;
-  background: var(--tw-green);
 }
 
 .hero-section {
-  background: var(--color-background);
-  padding: var(--spacing-2xl) 0 var(--spacing-xl) 0;
+  background: transparent;
+  padding: var(--spacing-2xl) 0 var(--spacing-lg) 0;
   position: relative;
   z-index: 1;
-  min-height: 600px;
   display: flex;
   align-items: center;
 }
 
 .terminal-section {
-  padding: var(--spacing-3xl) 0;
-  background: var(--color-surface);
+  padding: var(--spacing-lg) 0 var(--spacing-3xl);
+  background: transparent;
   position: relative;
   z-index: 1;
 }
@@ -115,6 +60,10 @@ import Terminal from '../components/Terminal.vue'
 
   .terminal-section {
     padding: var(--spacing-xl) 0;
+  }
+
+  .container {
+    padding: 0 var(--spacing-sm);   /* diğer sayfalar gibi 16px kenar boşluğu */
   }
 }
 </style>

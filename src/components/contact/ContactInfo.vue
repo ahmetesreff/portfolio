@@ -22,7 +22,7 @@
     <p class="tw-line dim">
       <span class="tw-dollar">$</span><span class="tw-kw">ls</span> <span class="tw-arg">./social</span>
     </p>
-    <nav class="c-flags" :aria-label="t('contact.social')">
+    <nav class="c-flags tw-flags" :aria-label="t('contact.social')">
       <a
         v-for="link in socialLinks"
         :key="link.flag"
@@ -37,7 +37,7 @@
     <div class="c-cta">
       <a class="tw-btn" href="mailto:ahmetesrefkarabulut@gmail.com">
         <span class="glyph" aria-hidden="true">▸</span>
-        {{ t('profile.contactButton') }}
+        {{ t('contact.sendEmail') }}
       </a>
     </div>
   </div>

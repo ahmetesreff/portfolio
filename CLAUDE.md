@@ -37,12 +37,14 @@ Because this is a client-rendered SPA, `SeoHead.vue` runs only after JS executes
 - Route paths are Turkish (`/`, `/hakkimda`, `/iletisim`, `/araclar`); `HomeView` is eager, the rest lazy-loaded.
 - Default locale `tr`, fallback `tr`; selection persisted in `localStorage` under `locale` (`src/i18n.js`). vue-i18n runs in non-legacy (Composition) mode — use `useI18n()` / `t()`.
 - SPA routing in production relies on `nginx.conf` `try_files ... /index.html`.
+- Unknown paths hit the catch-all route → `NotFoundView.vue` with `meta.noindex` (SeoHead then writes `noindex, follow`). The HTTP status is still 200 (soft 404) until the hosting serves a real 404.
+- `main.js` mounts only after `router.isReady()`. Without it, the header and footer paint before the lazy route chunk arrives, and the footer jumps down (CLS ≈ 0.13 on `/hakkimda` and `/araclar`). Keep it.
 
 ### Global custom directives
 
-Registered in `src/main.js`, used across views:
+Registered in `src/main.js`:
 - `v-scroll-reveal="{ type, delay, duration, repeat }"` (`src/directives/scrollReveal.js`) — IntersectionObserver entrance animations.
-- `v-parallax="{ speed, direction }"` (`src/directives/parallax.js`).
+- `v-parallax="{ speed, direction }"` (`src/directives/parallax.js`) — currently unused (the home page parallax shapes were removed).
 
 ### Terminal design system (single source of truth)
 
@@ -54,7 +56,13 @@ The whole UI shares one theme-aware terminal language. `src/assets/styles/termin
 
 ### Components
 
-`src/components/tools/*` are self-contained interactive widgets rendered by `ToolsView.vue`. Each exposes `.tool` / `.tool-content` / `.tool-header h3` / `.tool-btn` classes. `ToolsView.vue` themes all six at once by **remapping the site `--color-*` tokens to `--tw-*`** on the grid wrapper (custom-property inheritance into child components) — no per-tool rewrite. A few semantic hex colours (status red/green, JSON syntax) are intentionally left hardcoded.
+`src/components/tools/*` are self-contained interactive widgets rendered by `ToolsView.vue`. Each exposes `.tool` / `.tool-content` / `.tool-header h2` / `.tool-btn` classes (h2: they sit directly under the page h1). `ToolsView.vue` themes all six at once by **remapping the site `--color-*` tokens to `--tw-*`** on the grid wrapper (custom-property inheritance into child components) — no per-tool rewrite. A few semantic hex colours (status red/green, JSON syntax) are intentionally left hardcoded.
+
+### Typography and layout gotchas
+
+- Fonts are self-hosted. IBM Plex Mono (OFL) lives in `src/assets/fonts/`, and its `@font-face` rules are in `src/assets/styles/fonts.css` (imported first in `main.js`). `index.html` preloads the 400/600 latin and latin-ext files through `/src/assets/fonts/...` hrefs, and Vite rewrites those to the same hashed URLs the CSS uses. Do not re-add the Google Fonts `<link>`.
+- `main.css` has a global `p { font-size: var(--font-size-lg) }` (≈19px). Any `<p>` inside terminal-style UI must set `font-size: inherit`, as `.tw-out p` and `.terminal-welcome p` do. Otherwise text balloons, especially on phones.
+- The interactive terminal's ASCII banner has two variants: `.art-wide`, and `.art-narrow` ("Backend" / "Dev" stacked, ≤600px). This keeps it at ≥12px on phones, which is Lighthouse's legible-font-size threshold.
 
 ## Deployment (auto-deploy on push to main)
 

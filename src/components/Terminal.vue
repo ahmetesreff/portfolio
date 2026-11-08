@@ -12,7 +12,9 @@
 
       <div class="terminal-body" ref="terminalBody" @click="focusInput">
         <div class="terminal-welcome">
-          <pre>{{ welcomeArt }}</pre>
+          <pre class="art-wide" aria-hidden="true">{{ welcomeArt }}</pre>
+          <pre class="art-narrow" aria-hidden="true">{{ welcomeArtNarrow }}</pre>
+          <span class="sr-only">Backend Dev</span>
           <p>{{ t('terminal.welcome') }}</p>
           <p class="hint">{{ t('terminal.hint') }}</p>
         </div>
@@ -58,7 +60,7 @@ import { ref, nextTick, onMounted, onUnmounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 
-import profilePhoto from '../assets/images/profile.jpg'
+import profilePhoto from '../assets/images/profile.webp'
 
 const { t, locale } = useI18n()
 const router = useRouter()
@@ -143,6 +145,20 @@ const welcomeArt = `
 |  _ \\ / _\` |/ __| |/ / _ \\ '_ \\ / _\` | | | | |/ _ \\ \\ / /
 | |_) | (_| | (__|   <  __/ | | | (_| | | |_| |  __/\\ V /
 |____/ \\__,_|\\___|_|\\_\\___|_| |_|\\__,_| |____/ \\___| \\_/
+`
+
+// Dar ekranlar için aynı yazı iki satırda ("Backend" / "Dev"): 39 sütun, telefonda 12px'te sığar
+const welcomeArtNarrow = `
+ ____             _                  _
+| __ )  __ _  ___| | _____ _ __   __| |
+|  _ \\ / _\` |/ __| |/ / _ \\ '_ \\ / _\` |
+| |_) | (_| | (__|   <  __/ | | | (_| |
+|____/ \\__,_|\\___|_|\\_\\___|_| |_|\\__,_|
+ ____
+|  _ \\  _____   __
+| | | |/ _ \\ \\ / /
+| |_| |  __/\\ V /
+|____/ \\___| \\_/
 `
 
 const commands = {
@@ -523,9 +539,8 @@ onUnmounted(() => {
   --tm-scroll-thumb: var(--tw-edge);
 
   width: 100%;
-  max-width: 860px;
-  margin: var(--spacing-xl) auto;
-  padding: 0 var(--spacing-md);
+  max-width: 860px;   /* üstteki profil penceresiyle aynı genişlik */
+  margin: 0 auto;     /* dikey boşluğu bölüm (terminal-section) veriyor */
 }
 
 .terminal {
@@ -585,8 +600,8 @@ onUnmounted(() => {
   background: var(--tm-bg);
   color: var(--tm-text);
   padding: 20px;
-  min-height: 500px;
-  max-height: 600px;
+  min-height: 340px;
+  max-height: 540px;
   overflow-y: auto;
   cursor: text;
 }
@@ -610,12 +625,26 @@ onUnmounted(() => {
 
 .terminal-welcome pre {
   color: var(--tm-user);
-  font-size: 10px;
+  font-size: clamp(9px, 1.6vw, 12px);
   line-height: 1.2;
+  max-width: 100%;
+  overflow-x: auto;
   margin-bottom: 12px;
 }
 
+/* Telefonda tek satırlık başlık 7px'e düşüyordu; iki satırlık sürüm okunur boyutta kalır */
+.terminal-welcome pre.art-narrow { display: none; }
+
+@media (max-width: 600px) {
+  .terminal-welcome pre.art-wide { display: none; }
+  .terminal-welcome pre.art-narrow {
+    display: block;
+    font-size: clamp(9px, calc((100vw - 70px) / 24), 12px);
+  }
+}
+
 .terminal-welcome p {
+  font-size: inherit;   /* genel p kuralı (≈19px) yerine terminal yazı boyutu */
   color: var(--tm-text);
   margin-bottom: 8px;
 }
@@ -764,13 +793,10 @@ onUnmounted(() => {
     font-size: 12px;
   }
 
-  .terminal-welcome pre {
-    font-size: 8px;
-  }
 
   .terminal-body {
-    min-height: 400px;
-    max-height: 500px;
+    min-height: 300px;
+    max-height: 460px;
     padding: 16px;
   }
 }

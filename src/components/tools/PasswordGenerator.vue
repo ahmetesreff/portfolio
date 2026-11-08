@@ -7,7 +7,7 @@
           <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
         </svg>
       </div>
-      <h3>{{ t('tools.passwordGenerator.title') }}</h3>
+      <h2>{{ t('tools.passwordGenerator.title') }}</h2>
     </div>
 
     <div class="tool-content">
@@ -17,6 +17,7 @@
           :value="password"
           readonly
           class="password-input"
+          :aria-label="t('tools.passwordGenerator.output')"
         />
         <button @click="copyPassword" class="copy-btn" :title="t('tools.copy')">
           <svg v-if="!copied" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -31,8 +32,8 @@
 
       <div class="password-options">
         <div class="option-row">
-          <label>{{ t('tools.passwordGenerator.length') }}: {{ length }}</label>
-          <input type="range" v-model="length" min="8" max="32" class="range-input" />
+          <label for="pw-length">{{ t('tools.passwordGenerator.length') }}: {{ length }}</label>
+          <input id="pw-length" type="range" v-model="length" min="8" max="32" class="range-input" />
         </div>
 
         <div class="option-row checkbox">
@@ -179,7 +180,7 @@ onMounted(() => {
   color: var(--color-secondary);
 }
 
-.tool-header h3 {
+.tool-header h2 {
   font-size: var(--font-size-lg);
   color: var(--color-primary);
   margin: 0;
@@ -201,7 +202,7 @@ onMounted(() => {
   padding: var(--spacing-sm);
   border: 1px solid var(--color-border);
   border-radius: var(--border-radius-sm);
-  font-family: 'Monaco', 'Menlo', monospace;
+  font-family: var(--tw-mono, monospace);
   font-size: var(--font-size-sm);
   background: var(--color-background);
   color: var(--color-primary);

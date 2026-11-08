@@ -12,7 +12,7 @@
           <rect x="18" y="18" width="3" height="3"/>
         </svg>
       </div>
-      <h3>{{ t('tools.qrGenerator.title') }}</h3>
+      <h2>{{ t('tools.qrGenerator.title') }}</h2>
     </div>
 
     <div class="tool-content">
@@ -96,7 +96,7 @@ const downloadQr = async () => {
   color: var(--color-secondary);
 }
 
-.tool-header h3 {
+.tool-header h2 {
   font-size: var(--font-size-lg);
   color: var(--color-primary);
   margin: 0;

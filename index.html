@@ -1,20 +1,19 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="tr">
   <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-    <link rel="manifest" href="/site.webmanifest" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Kritik yazı tipleri JS ile paralel insin: yoksa SPA çizildikten sonra istenir ve metin kayar (CLS) -->
+    <link rel="preload" href="/src/assets/fonts/ibm-plex-mono-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/src/assets/fonts/ibm-plex-mono-400-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/src/assets/fonts/ibm-plex-mono-600-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/src/assets/fonts/ibm-plex-mono-600-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
 
     <title>Ahmet Eşref Karabulut - Backend Developer | Trabzon</title>
 
@@ -23,45 +22,38 @@
          bunlari rota bazli gunceller. -->
     <meta
       name="description"
-      content="Backend Developer & IT Management deneyimi. NestJS, PostgreSQL, Docker, Redis ile multi-tenant sistemler ve REST API geliştiriyorum."
-    />
-    <meta name="author" content="Ahmet Eşref Karabulut" />
-    <meta name="robots" content="index, follow" />
-    <meta name="theme-color" content="#0a0d0c" />
-    <link rel="canonical" href="https://ahmetesrefkarabulut.com.tr/" />
+      content="Backend Developer & IT Management deneyimi. NestJS, PostgreSQL, Docker, Redis ile multi-tenant sistemler ve REST API geliştiriyorum.">
+    <meta name="author" content="Ahmet Eşref Karabulut">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#0a0d0c">
+    <link rel="canonical" href="https://ahmetesrefkarabulut.com.tr/">
 
-    <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Ahmet Eşref Karabulut" />
-    <meta property="og:locale" content="tr_TR" />
-    <meta property="og:url" content="https://ahmetesrefkarabulut.com.tr/" />
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Ahmet Eşref Karabulut">
+    <meta property="og:locale" content="tr_TR">
+    <meta property="og:url" content="https://ahmetesrefkarabulut.com.tr/">
     <meta
       property="og:title"
-      content="Ahmet Eşref Karabulut - Backend Developer | Trabzon"
-    />
+      content="Ahmet Eşref Karabulut - Backend Developer | Trabzon">
     <meta
       property="og:description"
-      content="Backend Developer & IT Management deneyimi. NestJS, PostgreSQL, Docker, Redis ile multi-tenant sistemler ve REST API geliştiriyorum."
-    />
+      content="Backend Developer & IT Management deneyimi. NestJS, PostgreSQL, Docker, Redis ile multi-tenant sistemler ve REST API geliştiriyorum.">
     <meta
       property="og:image"
-      content="https://ahmetesrefkarabulut.com.tr/og-image.png"
-    />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
+      content="https://ahmetesrefkarabulut.com.tr/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
 
-    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:card" content="summary_large_image">
     <meta
       name="twitter:title"
-      content="Ahmet Eşref Karabulut - Backend Developer | Trabzon"
-    />
+      content="Ahmet Eşref Karabulut - Backend Developer | Trabzon">
     <meta
       name="twitter:description"
-      content="Backend Developer & IT Management deneyimi. NestJS, PostgreSQL, Docker, Redis ile multi-tenant sistemler ve REST API geliştiriyorum."
-    />
+      content="Backend Developer & IT Management deneyimi. NestJS, PostgreSQL, Docker, Redis ile multi-tenant sistemler ve REST API geliştiriyorum.">
     <meta
       name="twitter:image"
-      content="https://ahmetesrefkarabulut.com.tr/og-image.png"
-    />
+      content="https://ahmetesrefkarabulut.com.tr/og-image.png">
   </head>
   <body>
     <div id="app"></div>

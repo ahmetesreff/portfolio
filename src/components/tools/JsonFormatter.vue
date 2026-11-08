@@ -9,7 +9,7 @@
           <path d="M5 16h9"/>
         </svg>
       </div>
-      <h3>{{ t('tools.jsonFormatter.title') }}</h3>
+      <h2>{{ t('tools.jsonFormatter.title') }}</h2>
     </div>
 
     <div class="tool-content">
@@ -107,7 +107,7 @@ const copyResult = async () => {
   color: var(--color-secondary);
 }
 
-.tool-header h3 {
+.tool-header h2 {
   font-size: var(--font-size-lg);
   color: var(--color-primary);
   margin: 0;
@@ -125,7 +125,7 @@ const copyResult = async () => {
   padding: var(--spacing-sm);
   border: 1px solid var(--color-border);
   border-radius: var(--border-radius-sm);
-  font-family: 'Monaco', 'Menlo', monospace;
+  font-family: var(--tw-mono, monospace);
   font-size: var(--font-size-sm);
   resize: vertical;
   background: var(--color-background);
@@ -188,7 +188,7 @@ const copyResult = async () => {
 
 .json-output pre {
   margin: 0;
-  font-family: 'Monaco', 'Menlo', monospace;
+  font-family: var(--tw-mono, monospace);
   font-size: var(--font-size-sm);
   color: var(--color-secondary);
   white-space: pre-wrap;

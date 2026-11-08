@@ -8,10 +8,12 @@
   --tw-bg: #fbfdfb;
   --tw-bar: #eef2ee;
   --tw-fg: #28332c;
-  --tw-green: #0f9d6b;
+  --tw-green: #087a52;          /* metin olarak 4,7:1+ (eski #0f9d6b 3,4:1 idi) */
   --tw-green-soft: #0c7a54;
   --tw-amber: #c2410c;
-  --tw-dim: #6c7d72;
+  --tw-dim: #5f7066;            /* başlık çubuğunda 4,6:1 */
+  --tw-page: #f3f6f4;
+  --tw-dot: rgba(12, 60, 40, 0.10);
   --tw-line: rgba(15, 157, 107, 0.18);
   --tw-edge: rgba(15, 157, 107, 0.28);
   --tw-name: #0c1f17;
@@ -30,6 +32,8 @@
   --tw-green-soft: #7fe9be;
   --tw-amber: #f4b740;
   --tw-dim: #6f8579;
+  --tw-page: #050706;
+  --tw-dot: rgba(52, 211, 153, 0.07);
   --tw-line: rgba(52, 211, 153, 0.10);
   --tw-edge: rgba(52, 211, 153, 0.22);
   --tw-name: #f1fff7;
@@ -40,13 +44,26 @@
     0 0 80px -30px rgba(52, 211, 153, 0.3);
 }
 
+/* ---- Page background: tek zemin, ince nokta ızgara (editör/terminal çalışma alanı) ---- */
+html {
+  -webkit-text-size-adjust: 100%;   /* Android Chrome yazıları kendiliğinden büyütmesin */
+  text-size-adjust: 100%;
+  accent-color: var(--tw-green);    /* kaydırıcı ve onay kutuları temaya uysun */
+}
+
+body {
+  background-color: var(--tw-page);
+  background-image: radial-gradient(circle, var(--tw-dot) 1px, transparent 1.3px);
+  background-size: 24px 24px;
+}
+
 /* ---- Page shell ---- */
 .tw-page {
   flex: 1;
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  background: var(--color-background);
+  background: transparent;
   padding: clamp(2rem, 6vw, 5rem) var(--spacing-md);
 }
 
@@ -185,12 +202,17 @@
 /* ---- Output text ---- */
 .tw-out {
   color: var(--tw-bio);
-  font-size: 14px;
+  font-size: 15px;
   line-height: 1.65;
   margin: 0;
   max-width: 70ch;
   padding-left: 16px;
   border-left: 1px solid var(--tw-line);
+}
+/* main.css'teki genel p kuralı (≈19px) terminal metnini büyütmesin */
+.tw-out p { font-size: inherit; color: inherit; }
+@media (max-width: 560px) {
+  .tw-out { font-size: 14px; }
 }
 
 .tw-heading {
@@ -241,11 +263,11 @@
   font-size: 13.5px;
   font-weight: 600;
   letter-spacing: 0.02em;
-  color: var(--tw-green);
-  padding: 11px 22px;
+  color: var(--tw-bg);
+  padding: 12px 22px;
   border: 1px solid var(--tw-green);
   border-radius: 4px;
-  background: transparent;
+  background: var(--tw-green);
   text-decoration: none;
   cursor: pointer;
   transition: background 0.18s ease, color 0.18s ease,
@@ -254,8 +276,7 @@
 
 .tw-btn .glyph { transition: transform 0.18s ease; }
 .tw-btn:hover {
-  background: var(--tw-green);
-  color: var(--tw-bg);
+  filter: brightness(1.08);
   box-shadow: 0 0 22px -2px rgba(15, 157, 107, 0.45);
 }
 [data-theme="dark"] .tw-btn:hover {
@@ -285,6 +306,26 @@
 
 .tw-flag:hover { color: var(--tw-amber); }
 .tw-flag:hover::after { right: 0; }
+
+/* sosyal bağlantılar: düz yazı yerine dokunması kolay etiketler */
+.tw-flags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.tw-flags .tw-flag {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 0 14px;
+  color: var(--tw-fg);
+  border: 1px solid var(--tw-edge);
+  border-radius: 4px;
+  background: var(--tw-stack-bg);
+  transition: color 0.18s ease, border-color 0.18s ease;
+}
+.tw-flags .tw-flag::after { display: none; }
+.tw-flags .tw-flag:hover { color: var(--tw-green); border-color: var(--tw-green); }
 
 /* ---- Focus ---- */
 .tw-btn:focus-visible,

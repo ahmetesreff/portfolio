@@ -8,7 +8,7 @@
           <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
         </svg>
       </div>
-      <h3>{{ t('tools.ipChecker.title') }}</h3>
+      <h2>{{ t('tools.ipChecker.title') }}</h2>
     </div>
 
     <div class="tool-content">
@@ -122,7 +122,7 @@ onMounted(() => {
   color: var(--color-secondary);
 }
 
-.tool-header h3 {
+.tool-header h2 {
   font-size: var(--font-size-lg);
   color: var(--color-primary);
   margin: 0;
@@ -179,7 +179,7 @@ onMounted(() => {
   font-size: var(--font-size-xl);
   font-weight: var(--font-weight-bold);
   color: var(--color-secondary);
-  font-family: 'Monaco', 'Menlo', monospace;
+  font-family: var(--tw-mono, monospace);
 }
 
 .ip-details {
@@ -190,6 +190,7 @@ onMounted(() => {
 
 .detail-row {
   display: flex;
+  flex-wrap: wrap;   /* uzun değer (ör. sağlayıcı adı) sığmazsa alt satıra tam genişlikte geçsin */
   justify-content: space-between;
   font-size: var(--font-size-sm);
   gap: var(--spacing-sm);
@@ -197,11 +198,11 @@ onMounted(() => {
 
 .detail-label {
   color: var(--color-text-secondary);
-  min-width: 130px;
-  flex-shrink: 0;
+  flex-shrink: 0;   /* etiketler kısa; sabit 130px telefonda değeri iki satıra itiyordu */
 }
 
 .detail-value {
+  margin-left: auto;
   color: var(--color-primary);
   font-weight: var(--font-weight-medium);
   text-align: right;

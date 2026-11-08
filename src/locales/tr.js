@@ -11,6 +11,7 @@ export default {
     contactButton: 'İletişim'
   },
   seo: {
+    notFound: { title: 'Sayfa bulunamadı | Ahmet Eşref Karabulut', description: 'Aradığınız sayfa bulunamadı.' },
     site: {
       description: 'Ahmet Eşref Karabulut | Backend Developer ve IT Management deneyimi.'
     },
@@ -112,7 +113,14 @@ export default {
     email: 'E-posta',
     location: 'Konum',
     locationValue: 'Trabzon, Türkiye',
-    social: 'Sosyal Medya'
+    social: 'Sosyal Medya',
+    sendEmail: 'E-posta gönder'
+  },
+  notFound: {
+    error: 'Böyle bir dosya ya da dizin yok',
+    title: '404 · Sayfa bulunamadı',
+    text: 'Aradığınız sayfa taşınmış ya da hiç var olmamış olabilir.',
+    home: 'Ana sayfaya dön'
   },
   footer: {
     copyright: 'Ahmet Eşref Karabulut · Trabzon'
@@ -172,6 +180,7 @@ export default {
     },
     passwordGenerator: {
       title: 'Şifre Oluşturucu',
+      output: 'Oluşturulan şifre',
       length: 'Uzunluk',
       uppercase: 'Büyük harf',
       lowercase: 'Küçük harf',

@@ -9,7 +9,7 @@
           <path d="M9 15l3 3 3-3"/>
         </svg>
       </div>
-      <h3>{{ t('tools.jsonViewer.title') }}</h3>
+      <h2>{{ t('tools.jsonViewer.title') }}</h2>
     </div>
 
     <div class="tool-content">
@@ -119,7 +119,7 @@ const collapseAll = () => {
   color: var(--color-secondary);
 }
 
-.tool-header h3 {
+.tool-header h2 {
   font-size: var(--font-size-lg);
   color: var(--color-primary);
   margin: 0;
@@ -137,7 +137,7 @@ const collapseAll = () => {
   padding: var(--spacing-sm);
   border: 1px solid var(--color-border);
   border-radius: var(--border-radius-sm);
-  font-family: 'Monaco', 'Menlo', monospace;
+  font-family: var(--tw-mono, monospace);
   font-size: var(--font-size-sm);
   resize: vertical;
   background: var(--color-background);

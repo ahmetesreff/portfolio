@@ -43,6 +43,16 @@ const router = createRouter({
         descriptionKey: 'seo.tools.description',
         canonicalPath: '/araclar'
       }
+    },
+    {
+      path: '/:pathMatch(.*)*',
+      name: 'not-found',
+      component: () => import('../views/NotFoundView.vue'),
+      meta: {
+        titleKey: 'seo.notFound.title',
+        descriptionKey: 'seo.notFound.description',
+        noindex: true
+      }
     }
   ],
   scrollBehavior(to, from, savedPosition) {

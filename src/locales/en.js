@@ -11,6 +11,7 @@ export default {
     contactButton: 'Contact'
   },
   seo: {
+    notFound: { title: 'Page not found | Ahmet Eşref Karabulut', description: 'The page you are looking for could not be found.' },
     site: {
       description: 'Ahmet Eşref Karabulut | Backend Developer and IT Management experience.'
     },
@@ -112,7 +113,14 @@ export default {
     email: 'Email',
     location: 'Location',
     locationValue: 'Trabzon, Turkey',
-    social: 'Social Media'
+    social: 'Social Media',
+    sendEmail: 'Send email'
+  },
+  notFound: {
+    error: 'No such file or directory',
+    title: '404 · Page not found',
+    text: 'The page you are looking for may have moved or never existed.',
+    home: 'Back to home'
   },
   footer: {
     copyright: 'Ahmet Eşref Karabulut · Trabzon'
@@ -172,6 +180,7 @@ export default {
     },
     passwordGenerator: {
       title: 'Password Generator',
+      output: 'Generated password',
       length: 'Length',
       uppercase: 'Uppercase',
       lowercase: 'Lowercase',

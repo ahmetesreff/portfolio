@@ -66,8 +66,9 @@ const applyHead = () => {
     name: 'keywords',
     content: 'Backend Developer, NestJS, PostgreSQL, Docker, Redis, API Developer, Trabzon, Türkiye, IT Management, Web Developer'
   })
-  setMeta('meta[name="robots"]', { name: 'robots', content: 'index, follow' })
-  setMeta('meta[name="googlebot"]', { name: 'googlebot', content: 'index, follow' })
+  const robots = route.meta?.noindex ? 'noindex, follow' : 'index, follow'
+  setMeta('meta[name="robots"]', { name: 'robots', content: robots })
+  setMeta('meta[name="googlebot"]', { name: 'googlebot', content: robots })
 
   setMeta('meta[property="og:type"]', { property: 'og:type', content: 'website' })
   setMeta('meta[property="og:url"]', { property: 'og:url', content: canonicalUrl.value })

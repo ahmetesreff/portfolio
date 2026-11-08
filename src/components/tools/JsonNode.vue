@@ -134,7 +134,7 @@ const copyValue = async () => {
 
 <style scoped>
 .json-node {
-  font-family: 'Monaco', 'Menlo', monospace;
+  font-family: var(--tw-mono, monospace);
   font-size: var(--font-size-sm);
 }
 
