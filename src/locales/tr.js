@@ -13,11 +13,11 @@ export default {
   seo: {
     notFound: { title: 'Sayfa bulunamadı | Ahmet Eşref Karabulut', description: 'Aradığınız sayfa bulunamadı.' },
     site: {
-      description: 'Ahmet Eşref Karabulut | Backend Developer ve IT Management deneyimi.'
+      description: 'Ahmet Eşref Karabulut | Backend yazılım geliştirici, IT yönetimi deneyimi.'
     },
     home: {
-      title: 'Ahmet Eşref Karabulut - Backend Developer | Trabzon',
-      description: 'Backend Developer & IT Management deneyimi. NestJS, PostgreSQL, Docker, Redis ile multi-tenant sistemler ve REST API geliştiriyorum.'
+      title: 'Ahmet Eşref Karabulut - Backend Yazılım Geliştirici | Trabzon',
+      description: "Trabzon'da backend yazılım geliştirici. NestJS, PostgreSQL, Docker ve Redis ile multi-tenant sistemler ve REST API'ler geliştiriyorum; IT yönetimi deneyimi."
     },
     about: {
       title: 'Hakkımda | Ahmet Eşref Karabulut',
