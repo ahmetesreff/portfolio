@@ -32,7 +32,7 @@ Because this is a client-rendered SPA, `SeoHead.vue` runs only after JS executes
 
 `public/sitemap.xml` lists the same routes with hand-maintained `lastmod` dates and must be updated when routes change.
 
-`scripts/postbuild.mjs` (runs after `vite build`) writes one HTML copy per page (`dist/hakkimda.html`, …) with that page's title, description, canonical and OG/Twitter tags taken from `tr.js` `seo.*`, plus `dist/404.html` (noindex, no canonical). Its `PAGES` list must match the sitemap, or the build fails on purpose. It also fails if it can't find a static tag in `index.html` exactly once, so keep those tags' shape (`<meta name="…" content="…">`) when editing them. When adding a route, add it to `PAGES` and the sitemap.
+`scripts/postbuild.mjs` (runs after `vite build`) first adds the Person and WebSite JSON-LD from `src/seo.js` (`personSchema`, `websiteSchema()`) to the static HTML as `<script data-seo="person|website">`. `SeoHead.vue` finds those same tags by `data-seo` and updates them, so they are never duplicated. Google takes the search-result site name from the home page's WebSite data, so it must not depend on JS. The script then writes one HTML copy per page (`dist/hakkimda.html`, …) with that page's title, description, canonical and OG/Twitter tags taken from `tr.js` `seo.*`, plus `dist/404.html` (noindex, no canonical). Its `PAGES` list must match the sitemap, or the build fails on purpose. It also fails if it can't find a static tag in `index.html` exactly once, so keep those tags' shape (`<meta name="…" content="…">`) when editing them. When adding a route, add it to `PAGES` and the sitemap.
 
 ### Routing and i18n
 

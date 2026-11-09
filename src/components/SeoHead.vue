@@ -2,7 +2,7 @@
 import { computed, watch, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
-import { siteConfig, personSchema } from '../seo'
+import { siteConfig, personSchema, websiteSchema } from '../seo'
 
 const route = useRoute()
 const { t, locale } = useI18n()
@@ -87,13 +87,7 @@ const applyHead = () => {
   setLink('canonical', canonicalUrl.value)
 
   setJsonLd('person', personSchema)
-  setJsonLd('website', {
-    '@context': 'https://schema.org',
-    '@type': 'WebSite',
-    name: siteConfig.siteName,
-    url: siteConfig.baseUrl,
-    description: t('seo.site.description')
-  })
+  setJsonLd('website', websiteSchema(t('seo.site.description')))
   setJsonLd('webpage', {
     '@context': 'https://schema.org',
     '@type': 'WebPage',

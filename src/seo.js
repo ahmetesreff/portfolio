@@ -38,3 +38,13 @@ export const personSchema = {
     'Linux'
   ]
 }
+
+// Google arama sonucunda alan adı yerine site adını göstermek için (ana sayfada olmalı).
+// SeoHead.vue (tarayıcıda) ve scripts/postbuild.mjs (statik HTML'e) aynı nesneyi kullanır.
+export const websiteSchema = (description) => ({
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: siteConfig.siteName,
+  url: `${siteConfig.baseUrl}/`,
+  description
+})

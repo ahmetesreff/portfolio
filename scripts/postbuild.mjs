@@ -1,4 +1,7 @@
-// `vite build` sonrası çalışır (package.json "build"). İki iş yapar:
+// `vite build` sonrası çalışır (package.json "build"). Üç iş yapar:
+//  0. Kişi ve site (WebSite) yapılandırılmış verisini src/seo.js'ten statik HTML'e koyar
+//     (data-seo öznitelikleriyle; SeoHead.vue aynı etiketleri günceller, kopya oluşmaz).
+//     Google arama sonucundaki site adı ana sayfadaki WebSite verisinden gelir; JS beklemesin.
 //  1. Her sayfa için kendi <head>'i olan bir HTML kopyası yazar (dist/hakkimda.html ...).
 //     Cloudflare Workers /hakkimda isteğine hakkimda.html'i 200 ile verir; JS çalıştırmayan
 //     botlar ve paylaşım önizlemeleri de doğru başlık, açıklama ve canonical görür.
@@ -7,7 +10,7 @@
 // Yeni sayfa eklerken PAGES'e ve public/sitemap.xml'e ekle; ikisi uyuşmazsa build durur.
 import { readFileSync, writeFileSync } from 'node:fs'
 import tr from '../src/locales/tr.js'
-import { siteConfig } from '../src/seo.js'
+import { siteConfig, personSchema, websiteSchema } from '../src/seo.js'
 
 const PAGES = [
   { path: '/hakkimda', seo: 'about' },
@@ -16,9 +19,18 @@ const PAGES = [
 ]
 
 const dist = new URL('../dist/', import.meta.url)
-const template = readFileSync(new URL('index.html', dist), 'utf8')
 
 const esc = (s) => s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;')
+
+// 0. Yapılandırılmış veri: <script> içinde "</" kapanışa dönüşmesin diye < kaçırılır
+const jsonLd = (id, obj) =>
+  `    <script type="application/ld+json" data-seo="${id}">${JSON.stringify(obj).replace(/</g, '\\u003c')}</script>\n`
+const built = readFileSync(new URL('index.html', dist), 'utf8')
+if (built.split('</head>').length !== 2) throw new Error('postbuild: </head> tam bir kez bulunmalı')
+if (built.includes('data-seo=')) throw new Error('postbuild: index.html zaten data-seo içeriyor (iki kez çalıştı mı?)')
+const template = built.replace('</head>',
+  jsonLd('person', personSchema) + jsonLd('website', websiteSchema(tr.seo.site.description)) + '  </head>')
+writeFileSync(new URL('index.html', dist), template)
 
 // Şablondaki etiketi tam bir kez bulup değerini değiştirir; bulamazsa build'i durdurur
 // (index.html'deki statik etiketler değişirse sessizce yanlış sayfa üretilmesin).
@@ -76,4 +88,4 @@ for (const { path, seo } of PAGES) {
 const { title, description } = tr.seo.notFound
 writeFileSync(new URL('404.html', dist), render({ title, description, url: null, robots: 'noindex, follow' }))
 
-console.log(`postbuild: ${PAGES.length} sayfa + 404.html yazıldı`)
+console.log(`postbuild: yapılandırılmış veri + ${PAGES.length} sayfa + 404.html yazıldı`)
