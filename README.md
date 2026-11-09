@@ -78,13 +78,15 @@ PDF formatındaki CV dosyanızı `public/assets/cv.pdf` olarak kaydedin.
 
 ### Profil Fotoğrafı Ekleme
 
-Profil fotoğrafını `src/assets/images/profile.jpg` olarak kaydetmeniz yeterli.
-`ProfileCard.vue` ve `Terminal.vue` (neofetch) bu dosyayı doğrudan import eder
-(yol değiştirmeye gerek yok):
+Profil fotoğrafı `src/assets/images/ahmet-esref-karabulut.webp` (400×400 WebP).
+Yenisini aynı adla kaydetmeniz yeterli. `ProfileCard.vue` ve `Terminal.vue` (neofetch)
+bu dosyayı doğrudan import eder:
 
 ```javascript
-import profilePhoto from '../../assets/images/profile.jpg'
+import profilePhoto from '../../assets/images/ahmet-esref-karabulut.webp'
 ```
+
+Dosya adı Google Görseller için açıklayıcı tutulur (Türkçe harfsiz, tireli).
 
 ## Proje Yapısı
 

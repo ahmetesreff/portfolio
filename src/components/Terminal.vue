@@ -60,7 +60,7 @@ import { ref, nextTick, onMounted, onUnmounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 
-import profilePhoto from '../assets/images/profile.webp'
+import profilePhoto from '../assets/images/ahmet-esref-karabulut.webp'
 
 const { t, locale } = useI18n()
 const router = useRouter()

@@ -77,7 +77,7 @@
 import { useI18n } from 'vue-i18n'
 import TypeWriter from '../TypeWriter.vue'
 
-import profilePhoto from '../../assets/images/profile.webp'
+import profilePhoto from '../../assets/images/ahmet-esref-karabulut.webp'
 
 const { t } = useI18n()
 const profileImage = profilePhoto
